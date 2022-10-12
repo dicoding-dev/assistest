@@ -1,0 +1,9 @@
+{
+  "name": "assistest",
+  "version": "1.0.0",
+  "description": "Run server and newman testing",
+  "main": "index.js",
+  "repository": "git@github.com:agissept/assistest.git",
+  "author": "agissept",
+  "license": "MIT"
+}
