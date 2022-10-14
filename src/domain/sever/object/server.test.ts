@@ -11,8 +11,11 @@ describe('create server test', () => {
     });
 
     it('should create server properly', function () {
-        const server = createServer('.', '', 0, 'start')
+        const server = createServer('.', 'localhost', 5000, 'start')
         expect(server.projectPath).toStrictEqual('.')
+        expect(server.host).toStrictEqual('localhost')
+        expect(server.port).toStrictEqual(5000)
+        expect(server.packageJSONScript).toStrictEqual('start')
     });
 
     const createServer = (
