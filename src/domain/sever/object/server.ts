@@ -23,21 +23,38 @@ export default class Server {
             throw new InvariantException('Path not contain package.json')
         }
 
-        const {scripts} = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
+        const {scripts} = this.getPackageJSONContent(packageJSONPath)
+        if (!scripts){
+            throw new InvariantException('package.json not contain "scripts" property')
+        }
 
         if (!Object.keys(scripts).includes(packageJSONScript)) {
             throw new InvariantException('Runner script not found')
         }
     }
+
+    private getPackageJSONContent = (packageJSONPath: string) => {
+        try {
+            return JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
+        } catch (e) {
+            if (e.message.includes("Unexpected token")) {
+                throw new InvariantException('Cannot parse package.json')
+            }
+        }
+    }
+
     get packageJSONScript(): string {
         return this._packageJSONScript;
     }
+
     get port(): number {
         return this._port;
     }
+
     get host(): string {
         return this._host;
     }
+
     get projectPath(): string {
         return this._projectPath;
     }
