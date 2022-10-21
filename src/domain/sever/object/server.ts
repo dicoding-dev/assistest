@@ -17,14 +17,14 @@ export default class Server {
         this._runnerCommand = packageJSONScript;
     }
 
-    private validate = (projectPath: string, host: string, port: number, runnerCommand: string) => {
+    private validate(projectPath: string, host: string, port: number, runnerCommand: string) {
         const packageJSONPath = path.resolve(projectPath, 'package.json')
         if (!fs.existsSync(packageJSONPath)) {
             throw new InvariantException('Path not contain package.json')
         }
 
         const {scripts} = this.getPackageJSONContent(packageJSONPath)
-        if (!scripts){
+        if (!scripts) {
             throw new InvariantException('package.json not contain "scripts" property')
         }
 
@@ -33,7 +33,7 @@ export default class Server {
         }
     }
 
-    private getPackageJSONContent = (packageJSONPath: string) => {
+    private getPackageJSONContent(packageJSONPath: string) {
         try {
             return JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
         } catch (e) {
