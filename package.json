@@ -4,7 +4,6 @@
   "description": "Run server and newman testing",
   "main": "index.js",
   "repository": "git@github.com:agissept/assistest.git",
-  "type": "module",
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest"
