@@ -23,7 +23,13 @@ describe('run server test', ()=> {
         await expect(runServer.run(server)).rejects.toThrow(new InvariantException(`Port ${port} is used`))
     });
 
+    it('should run server properly', async function () {
+        const port = 5000
+        const server = new Server('./test/student-project/sample-project', 'localhost', port, 'start')
 
+        const runServer = new RunServer()
+        await expect(runServer.run(server)).resolves.not.toThrow()
+    });
 
 
 })
