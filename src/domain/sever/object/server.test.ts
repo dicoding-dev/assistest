@@ -2,7 +2,7 @@ import Server from "./server";
 import InvariantException from "../../../exception/invariant-exception";
 import * as fs from "fs";
 
-// jest.mock('fs');
+jest.mock('fs');
 const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs
 
 describe('create server test', () => {
