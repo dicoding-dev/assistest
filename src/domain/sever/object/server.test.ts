@@ -1,12 +1,19 @@
 import Server from "./server";
 import InvariantException from "../../../exception/invariant-exception";
+import * as fs from "fs";
+
+jest.mock('fs');
+const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>> fs
 
 describe('create server test', () => {
     it('should throw error when project path not contain package.json', function () {
+        mockFS.existsSync.mockReturnValue(false)
         expect(() => createServer('./xxxx')).toThrow(new InvariantException('Path not contain package.json'))
     });
 
     it('should throw error when runner script not found', function () {
+        mockFS.existsSync.mockReturnValue(true)
+        mockFS.readFileSync.mockReturnValue('{ "scripts": { "start": "node src/index.js" }}')
         expect(() => createServer('.', '', 0, 'invalid-runner')).toThrow(new InvariantException('Runner script not found'))
     });
 
