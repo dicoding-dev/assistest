@@ -4,8 +4,7 @@ import * as tcpPortUsed from 'tcp-port-used';
 import InvariantException from "../../exception/invariant-exception";
 
 
-class RunServer {
-
+class ServerStarter {
     async run(server: Server) {
         await this.validateBeforeStart(server)
         const {runnerCommand, projectPath, port} = server
@@ -13,11 +12,11 @@ class RunServer {
         const runningServer = exec(command, {cwd: projectPath});
 
         runningServer.stdout.on('data', async (data) => {
-            console.log(`stdout ${data}`);
+            // console.log(`stdout ${data}`);
         });
 
         runningServer.stderr.on('data', (data) => {
-            console.log(`stderr ${data}`)
+            // console.log(`stderr ${data}`)
         });
 
         try {
@@ -39,4 +38,4 @@ class RunServer {
     }
 }
 
-export default RunServer
+export default ServerStarter
