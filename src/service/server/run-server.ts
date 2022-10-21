@@ -10,12 +10,7 @@ class RunServer {
     }
 
     async validateBeforeStart({port, host}) {
-        let isUsed = true
-        try {
-            isUsed = await tcpPortUsed.check(port, host)
-        } catch (e) {
-            throw new Error(e.message)
-        }
+        const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
             throw new InvariantException(`Port ${port} is used`)
