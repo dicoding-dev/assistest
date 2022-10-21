@@ -37,12 +37,12 @@ describe('create server test', () => {
         expect(server.projectPath).toStrictEqual('.')
         expect(server.host).toStrictEqual('localhost')
         expect(server.port).toStrictEqual(5000)
-        expect(server.packageJSONScript).toStrictEqual('start')
+        expect(server.runnerCommand).toStrictEqual('start')
     });
 
     const createServer = (
-        projectPath: string = '', host: string = '', port: number = 0, packageJSONScript: string = ''
+        projectPath: string = '', host: string = '', port: number = 0, runnerCommand: string = ''
     ) => {
-        return new Server(projectPath, host, port, packageJSONScript);
+        return new Server(projectPath, host, port, runnerCommand);
     }
 })

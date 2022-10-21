@@ -6,7 +6,7 @@ export default class Server {
     private readonly _projectPath: string;
     private readonly _host: string;
     private readonly _port: number;
-    private readonly _packageJSONScript: string;
+    private readonly _runnerCommand: string;
 
     constructor(projectPath: string, host: string, port: number, packageJSONScript: string) {
         this.validate(projectPath, host, port, packageJSONScript)
@@ -14,10 +14,10 @@ export default class Server {
         this._projectPath = projectPath;
         this._host = host;
         this._port = port;
-        this._packageJSONScript = packageJSONScript;
+        this._runnerCommand = packageJSONScript;
     }
 
-    private validate = (projectPath: string, host: string, port: number, packageJSONScript: string) => {
+    private validate = (projectPath: string, host: string, port: number, runnerCommand: string) => {
         const packageJSONPath = path.resolve(projectPath, 'package.json')
         if (!fs.existsSync(packageJSONPath)) {
             throw new InvariantException('Path not contain package.json')
@@ -28,7 +28,7 @@ export default class Server {
             throw new InvariantException('package.json not contain "scripts" property')
         }
 
-        if (!Object.keys(scripts).includes(packageJSONScript)) {
+        if (!Object.keys(scripts).includes(runnerCommand)) {
             throw new InvariantException('Runner script not found')
         }
     }
@@ -43,8 +43,8 @@ export default class Server {
         }
     }
 
-    get packageJSONScript(): string {
-        return this._packageJSONScript;
+    get runnerCommand(): string {
+        return this._runnerCommand;
     }
 
     get port(): number {
