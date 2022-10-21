@@ -2,10 +2,11 @@ import RunServer from "../run-server";
 import Server from "../../../domain/sever/object/server";
 import * as kill from 'kill-port';
 import InvariantException from "../../../exception/invariant-exception";
+import axios from "axios";
 
 
-describe('run server test', ()=> {
-    afterEach( () => {
+describe('run server test', () => {
+    afterEach(() => {
         kill(5000, 'tcp')
     })
 
@@ -25,11 +26,14 @@ describe('run server test', ()=> {
 
     it('should run server properly', async function () {
         const port = 5000
-        const server = new Server('./test/student-project/sample-project', 'localhost', port, 'start')
+        const host = 'localhost'
+        const server = new Server('./test/student-project/sample-project', host, port, 'start')
 
         const runServer = new RunServer()
         await expect(runServer.run(server)).resolves.not.toThrow()
-    });
 
+        const response = await axios.get(`http://${host}:${port}`)
+        await expect(response.status).toStrictEqual(200)
+    });
 
 })
