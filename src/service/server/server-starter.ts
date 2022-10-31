@@ -1,5 +1,5 @@
 import Server from "../../domain/sever/object/server";
-import {exec} from "child_process";
+import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import InvariantException from "../../exception/invariant-exception";
 import * as kill from 'tree-kill';
@@ -13,22 +13,14 @@ class ServerStarter {
     async run(server: Server) {
         await this.validateBeforeStart(server)
         const {runnerCommand, projectPath, port} = server
+
         this.serverPort = port
+
         const command = `npm ${runnerCommand}`
         const runningServer = exec(command, {cwd: projectPath});
         this.serverPid = runningServer.pid
 
-        runningServer.stdout.on('data', async (data) => {
-            console.log(`stdout ${data}`);
-        });
-
-        runningServer.stderr.on('data', (data) => {
-            this._errorLog.push(data)
-        });
-
-        runningServer.on('close', () => {
-            console.log('server killed')
-        })
+        this.listenRunningServer(runningServer)
 
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
@@ -40,6 +32,20 @@ class ServerStarter {
             hint: Maybe the port server is not 5000`
             )
         }
+    }
+
+    private listenRunningServer(runningServer: ChildProcess) {
+        runningServer.stdout.on('data', async (data) => {
+            console.log(`stdout ${data}`);
+        });
+
+        runningServer.stderr.on('data', (data) => {
+            this._errorLog.push(data)
+        });
+
+        runningServer.on('close', () => {
+            console.log('server killed')
+        })
     }
 
     async stop() {
