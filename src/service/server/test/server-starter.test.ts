@@ -1,6 +1,5 @@
 import ServerStarter from "../server-starter";
 import Server from "../../../domain/sever/object/server";
-import * as kill from 'tree-kill';
 import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
 
@@ -54,7 +53,7 @@ describe('run server test', () => {
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
 
-        kill(port, 'tcp')
+        await serverStarter.stop()
     });
 
 })
