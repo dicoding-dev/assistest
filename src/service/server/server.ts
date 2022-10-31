@@ -10,9 +10,9 @@ class Server {
     private serverPort: number;
     private serverPid: number
 
-    async run(server: SubmissionProject) {
-        await this.validateBeforeStart(server)
-        const {runnerCommand, projectPath, port} = server
+    async run(submissionProject: SubmissionProject) {
+        await this.validateBeforeStart(submissionProject)
+        const {runnerCommand, projectPath, port} = submissionProject
 
         this.serverPort = port
 
