@@ -58,7 +58,7 @@ class ServerStarter {
 
     }
 
-      private async validateBeforeStart({port, host}) {
+    private async validateBeforeStart({port, host}) {
         const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
