@@ -2,9 +2,14 @@ import ServerStarter from "../server-starter";
 import Server from "../../../domain/sever/object/server";
 import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
-
+import * as tcpPortUsed from 'tcp-port-used';
 
 describe('run server test', () => {
+    afterEach(() => {
+        // restore the spy created with spyOn
+        jest.restoreAllMocks();
+    });
+
     it('should throw error when port is used', async function () {
         const port = 5000
         const server = new Server('./test/student-project/sample-project', 'localhost', port, 'start')
@@ -19,6 +24,24 @@ describe('run server test', () => {
         // test second sever in same port
         await expect(serverStarter.run(server)).rejects.toThrow(new InvariantException(`Port ${port} is used`))
         fakeServer.close()
+    });
+
+    it('should throw error and stop server when port is not used after project running', async function () {
+        const wrongPort = 9999
+        const host = 'localhost'
+        // real project port is 5000
+        const realPort = 5000
+        const server = new Server('./test/student-project/sample-project', host, wrongPort, 'start')
+
+        const serverStarter = new ServerStarter()
+
+        const spy = jest.spyOn(serverStarter, 'stop');
+
+        await expect(serverStarter.run(server)).rejects.toThrow(Error)
+        await expect(spy).toBeCalled()
+
+        //wait real port to close
+        await tcpPortUsed.waitUntilFree(realPort, null, 2000)
     });
 
     it('should stop server properly', async function () {

@@ -25,6 +25,7 @@ class ServerStarter {
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
+            await this.stop()
             throw new Error(`Server cannot started
             message: ${e.message}
             command: ${command}
