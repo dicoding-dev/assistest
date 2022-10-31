@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from 'path';
 import InvariantException from "../../../exception/invariant-exception";
 
-export default class Server {
+export default class SubmissionProject {
     private readonly _projectPath: string;
     private readonly _host: string;
     private readonly _port: number;

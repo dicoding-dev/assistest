@@ -1,4 +1,4 @@
-import Server from "../../domain/sever/object/server";
+import SubmissionProject from "../../domain/sever/object/submissionProject";
 import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import InvariantException from "../../exception/invariant-exception";
@@ -10,7 +10,7 @@ class ServerStarter {
     private serverPort: number;
     private serverPid: number
 
-    async run(server: Server) {
+    async run(server: SubmissionProject) {
         await this.validateBeforeStart(server)
         const {runnerCommand, projectPath, port} = server
 
