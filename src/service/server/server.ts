@@ -5,7 +5,7 @@ import InvariantException from "../../exception/invariant-exception";
 import * as kill from 'tree-kill';
 
 
-class ServerStarter {
+class Server {
     private _errorLog = [];
     private serverPort: number;
     private serverPid: number
@@ -68,4 +68,4 @@ class ServerStarter {
     }
 }
 
-export default ServerStarter
+export default Server

@@ -1,4 +1,4 @@
-import ServerStarter from "../server-starter";
+import Server from "../server";
 import SubmissionProject from "../../../domain/sever/object/submissionProject";
 import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
@@ -14,7 +14,7 @@ describe('run server test', () => {
         const port = 5000
         const submissionProject = new SubmissionProject('./test/student-project/sample-project', 'localhost', port, 'start')
 
-        const serverStarter = new ServerStarter()
+        const server = new Server()
 
         //fake server for first server
         const http = require('http')
@@ -22,7 +22,7 @@ describe('run server test', () => {
         fakeServer.listen(port)
 
         // test second sever in same port
-        await expect(serverStarter.run(submissionProject)).rejects.toThrow(new InvariantException(`Port ${port} is used`))
+        await expect(server.run(submissionProject)).rejects.toThrow(new InvariantException(`Port ${port} is used`))
         fakeServer.close()
     });
 
@@ -33,11 +33,11 @@ describe('run server test', () => {
         const realPort = 5000
         const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, wrongPort, 'start')
 
-        const serverStarter = new ServerStarter()
+        const server = new Server()
 
-        const spy = jest.spyOn(serverStarter, 'stop');
+        const spy = jest.spyOn(server, 'stop');
 
-        await expect(serverStarter.run(submissionProject)).rejects.toThrow(Error)
+        await expect(server.run(submissionProject)).rejects.toThrow(Error)
         await expect(spy).toBeCalled()
 
         //wait real port to close
@@ -49,14 +49,14 @@ describe('run server test', () => {
         const host = 'localhost'
         const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, port, 'start')
 
-        const serverStarter = new ServerStarter()
-        await serverStarter.run(submissionProject)
+        const server = new Server()
+        await server.run(submissionProject)
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
 
         //kill server
-        await serverStarter.stop()
+        await server.stop()
 
         //validate port 5000 is not used
         const http = require('http')
@@ -70,13 +70,13 @@ describe('run server test', () => {
         const host = 'localhost'
         const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, port, 'start')
 
-        const serverStarter = new ServerStarter()
-        await expect(serverStarter.run(submissionProject)).resolves.not.toThrow()
+        const server = new Server()
+        await expect(server.run(submissionProject)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
 
-        await serverStarter.stop()
+        await server.stop()
     });
 
 })
