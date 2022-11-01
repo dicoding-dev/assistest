@@ -1,11 +1,12 @@
 import SubmissionProject from "./submissionProject";
 import InvariantException from "../../../exception/invariant-exception";
 import * as fs from "fs";
+import ProjectPath from "./project-path";
 
 jest.mock('fs');
 const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs
 
-describe('create server test', () => {
+describe('create submission project test', () => {
     it('should throw error when project path not contain package.json', function () {
         mockFS.existsSync.mockReturnValue(false)
         expect(() => createSubmissionProject('./xxxx')).toThrow(new InvariantException('Path not contain package.json'))
@@ -41,8 +42,10 @@ describe('create server test', () => {
     });
 
     const createSubmissionProject = (
-        projectPath: string = '', host: string = '', port: number = 0, runnerCommand: string = ''
+        submissionPath: string = '', host: string = '', port: number = 0, runnerCommand: string = ''
     ) => {
-        return new SubmissionProject(projectPath, host, port, runnerCommand);
+        const mockProjectPath = <ProjectPath>{}
+        mockProjectPath.toString = jest.fn(()=>submissionPath)
+        return new SubmissionProject(mockProjectPath, host, port, runnerCommand);
     }
 })
