@@ -7,12 +7,11 @@ class ProjectPath {
 
     constructor(projectPath: string) {
         const files = this.getFilesRecursively(projectPath)
-        const packageJsonPath = files.find((file) => path.basename(file).includes('package.json'))
-        console.log(packageJsonPath)
+        const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
         if (!packageJsonPath) {
             throw new InvariantException('package.json not found')
         }
-        this.value = packageJsonPath
+        this.value = path.dirname(packageJsonPath)
     }
 
     toString() {
