@@ -37,7 +37,7 @@ class ProjectPath {
         function getFiles(directory) {
             fs.readdirSync(directory).forEach(file => {
                 const absolute = path.join(directory, file);
-                if (fs.statSync(absolute).isDirectory() && !absolute.split(path.sep).includes('node-modules')) {
+                if (fs.statSync(absolute).isDirectory() && !absolute.split(path.sep).includes('node_modules')) {
                     getFiles(absolute);
                 } else {
                     files.push(absolute);
