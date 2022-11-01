@@ -1,8 +1,8 @@
-import SubmissionProject from "../../domain/sever/object/submission-project";
 import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import InvariantException from "../../exception/invariant-exception";
 import * as kill from 'tree-kill';
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 
 class Server {

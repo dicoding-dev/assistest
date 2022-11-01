@@ -1,5 +1,5 @@
-import SubmissionProject from "../../domain/sever/object/submission-project";
 import {execSync} from "child_process";
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 class ProjectPreparation{
     private submissionProject: SubmissionProject;

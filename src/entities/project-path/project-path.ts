@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import InvariantException from "../../../exception/invariant-exception";
+import InvariantException from "../../exception/invariant-exception";
 
 class ProjectPath {
     private readonly value: string;

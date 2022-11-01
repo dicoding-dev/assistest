@@ -1,5 +1,5 @@
 import ProjectPath from "./project-path";
-import InvariantException from "../../../exception/invariant-exception";
+import InvariantException from "../../exception/invariant-exception";
 
 describe('project discovery test', () => {
     it('should found package.json when path is in root folder', function () {

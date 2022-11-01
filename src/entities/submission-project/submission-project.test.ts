@@ -1,7 +1,7 @@
 import SubmissionProject from "./submission-project";
-import InvariantException from "../../../exception/invariant-exception";
 import * as fs from "fs";
-import ProjectPath from "./project-path";
+import InvariantException from "../../exception/invariant-exception";
+import ProjectPath from "../project-path/project-path";
 
 jest.mock('fs');
 const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs
