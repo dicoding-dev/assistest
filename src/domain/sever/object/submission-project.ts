@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from 'path';
 import InvariantException from "../../../exception/invariant-exception";
+import ProjectPath from "./project-path";
 
 export default class SubmissionProject {
     private readonly _projectPath: string;
@@ -8,17 +9,17 @@ export default class SubmissionProject {
     private readonly _port: number;
     private readonly _runnerCommand: string;
 
-    constructor(projectPath: string, host: string, port: number, packageJSONScript: string) {
+    constructor(projectPath: ProjectPath, host: string, port: number, packageJSONScript: string) {
         this.validate(projectPath, host, port, packageJSONScript)
 
-        this._projectPath = projectPath;
+        this._projectPath = projectPath.toString();
         this._host = host;
         this._port = port;
         this._runnerCommand = packageJSONScript;
     }
 
-    private validate(projectPath: string, host: string, port: number, runnerCommand: string) {
-        const packageJSONPath = path.resolve(projectPath, 'package.json')
+    private validate(projectPath: ProjectPath, host: string, port: number, runnerCommand: string) {
+        const packageJSONPath = path.resolve(projectPath.toString(), 'package.json')
         if (!fs.existsSync(packageJSONPath)) {
             throw new InvariantException('Path not contain package.json')
         }
