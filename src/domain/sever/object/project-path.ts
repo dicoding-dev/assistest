@@ -5,23 +5,34 @@ import InvariantException from "../../../exception/invariant-exception";
 class ProjectPath {
     private readonly value: string;
 
-    constructor(projectPath: string) {
-        const files = this.getFilesRecursively(projectPath)
-        const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
-        if (!packageJsonPath) {
-            throw new InvariantException('package.json not found')
-        }
-        this.value = path.dirname(packageJsonPath)
+    constructor(submissionPath: string) {
+        this.validate(submissionPath)
+        this.value = this.getPackageJsonDirectory(submissionPath)
     }
 
     toString() {
         return this.value
     }
 
+    private validate(submissionPath){
+        if (!fs.existsSync(submissionPath)){
+            throw new InvariantException('Submission path is not found')
+        }
+    }
 
-    private getFilesRecursively(parentPath) {
+    private getPackageJsonDirectory(submissionPath): string{
+        const files = this.getFilesRecursively(submissionPath)
+        const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
+        if (!packageJsonPath) {
+            throw new InvariantException('package.json not found')
+        }
+        return  path.dirname(packageJsonPath)
+    }
+
+
+    private getFilesRecursively(submissionPath) {
         const files = []
-        getFiles(parentPath)
+        getFiles(submissionPath)
 
         function getFiles(directory) {
             fs.readdirSync(directory).forEach(file => {
