@@ -1,10 +1,11 @@
 import SubmissionProject from "../../../domain/sever/object/submissionProject";
 import * as fs from "fs";
 import ProjectPreparation from "../project-preparation";
+import ProjectPath from "../../../domain/sever/object/project-path";
 
 describe('project preparation test', () => {
     it('should install project properly', function () {
-        const submissionProject = new SubmissionProject('./test/student-project/project-with-dependencies', '', 0, 'test')
+        const submissionProject = new SubmissionProject(new ProjectPath('./test/student-project/project-with-dependencies'), '', 0, 'test')
 
         const projectPreparation = new ProjectPreparation(submissionProject)
         projectPreparation.install()
