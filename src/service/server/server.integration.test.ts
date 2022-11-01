@@ -1,9 +1,9 @@
-import Server from "../server";
-import SubmissionProject from "../../../domain/sever/object/submission-project";
-import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
-import ProjectPath from "../../../domain/sever/object/project-path";
+import SubmissionProject from "../../entities/submission-project/submission-project";
+import ProjectPath from "../../entities/project-path/project-path";
+import Server from "./server";
+import InvariantException from "../../exception/invariant-exception";
 
 describe('run server test', () => {
     afterEach(() => {

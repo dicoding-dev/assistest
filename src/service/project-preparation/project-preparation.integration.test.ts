@@ -1,7 +1,7 @@
-import SubmissionProject from "../../../domain/sever/object/submission-project";
 import * as fs from "fs";
-import ProjectPreparation from "../project-preparation";
-import ProjectPath from "../../../domain/sever/object/project-path";
+import ProjectPath from "../../entities/project-path/project-path";
+import ProjectPreparation from "./project-preparation";
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 describe('project preparation test', () => {
     it('should install project properly', function () {

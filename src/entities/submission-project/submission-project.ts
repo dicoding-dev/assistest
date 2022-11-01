@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from 'path';
-import InvariantException from "../../../exception/invariant-exception";
-import ProjectPath from "./project-path";
+import ProjectPath from "../project-path/project-path";
+import InvariantException from "../../exception/invariant-exception";
 
 export default class SubmissionProject {
     private readonly _projectPath: string;
