@@ -3,6 +3,7 @@ import SubmissionProject from "../../../domain/sever/object/submissionProject";
 import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
+import ProjectPath from "../../../domain/sever/object/project-path";
 
 describe('run server test', () => {
     afterEach(() => {
@@ -12,7 +13,7 @@ describe('run server test', () => {
 
     it('should throw error when port is used', async function () {
         const port = 5000
-        const submissionProject = new SubmissionProject('./test/student-project/sample-project', 'localhost', port, 'start')
+        const submissionProject = new SubmissionProject(new ProjectPath('test/student-project/sample-project'), 'localhost', port, 'start')
 
         const server = new Server()
 
@@ -31,7 +32,7 @@ describe('run server test', () => {
         const host = 'localhost'
         // real project port is 5000
         const realPort = 5000
-        const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, wrongPort, 'start')
+        const submissionProject = new SubmissionProject(new ProjectPath('./test/student-project/sample-project'), host, wrongPort, 'start')
 
         const server = new Server()
 
@@ -47,7 +48,7 @@ describe('run server test', () => {
     it('should stop server properly', async function () {
         const port = 5000
         const host = 'localhost'
-        const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, port, 'start')
+        const submissionProject = new SubmissionProject(new ProjectPath('./test/student-project/sample-project'), host, port, 'start')
 
         const server = new Server()
         await server.run(submissionProject)
@@ -68,7 +69,7 @@ describe('run server test', () => {
     it('should run server properly', async function () {
         const port = 5000
         const host = 'localhost'
-        const submissionProject = new SubmissionProject('./test/student-project/sample-project', host, port, 'start')
+        const submissionProject = new SubmissionProject(new ProjectPath('test/student-project/sample-project'), host, port, 'start')
 
         const server = new Server()
         await expect(server.run(submissionProject)).resolves.not.toThrow()
