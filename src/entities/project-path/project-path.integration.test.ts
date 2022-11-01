@@ -26,4 +26,9 @@ describe('project discovery test', () => {
     it('should return error when submission path is not found', function () {
         expect(() => new ProjectPath('./test/student-project/xxxx')).toThrow(new InvariantException('Submission path is not found'))
     });
+
+    it('project path should not contain node-modules ', function () {
+        const projectPath = new ProjectPath('test/student-project/folder-with-node-modules')
+        expect(projectPath.toString()).toStrictEqual('test/student-project/folder-with-node-modules')
+    });
 })
