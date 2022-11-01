@@ -1,4 +1,4 @@
-import SubmissionProject from "../../../domain/sever/object/submissionProject";
+import SubmissionProject from "../../../domain/sever/object/submission-project";
 import * as fs from "fs";
 import ProjectPreparation from "../project-preparation";
 import ProjectPath from "../../../domain/sever/object/project-path";

@@ -1,4 +1,4 @@
-import SubmissionProject from "../../domain/sever/object/submissionProject";
+import SubmissionProject from "../../domain/sever/object/submission-project";
 import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import InvariantException from "../../exception/invariant-exception";

@@ -1,4 +1,4 @@
-import SubmissionProject from "../../domain/sever/object/submissionProject";
+import SubmissionProject from "../../domain/sever/object/submission-project";
 import {execSync} from "child_process";
 
 class ProjectPreparation{

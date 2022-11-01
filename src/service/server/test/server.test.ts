@@ -1,5 +1,5 @@
 import Server from "../server";
-import SubmissionProject from "../../../domain/sever/object/submissionProject";
+import SubmissionProject from "../../../domain/sever/object/submission-project";
 import InvariantException from "../../../exception/invariant-exception";
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';

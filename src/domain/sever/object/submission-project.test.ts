@@ -1,4 +1,4 @@
-import SubmissionProject from "./submissionProject";
+import SubmissionProject from "./submission-project";
 import InvariantException from "../../../exception/invariant-exception";
 import * as fs from "fs";
 import ProjectPath from "./project-path";
