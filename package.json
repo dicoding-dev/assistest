@@ -6,9 +6,9 @@
   "repository": "git@github.com:agissept/assistest.git",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "jest",
+    "test": "jest -i",
     "unit-test": "jest --testPathPattern=unit.test",
-    "integration-test": "jest --testPathPattern=integration.test"
+    "integration-test": "jest --testPathPattern=integration.test -i"
   },
   "author": "agissept",
   "license": "MIT",
