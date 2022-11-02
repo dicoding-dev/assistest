@@ -10,7 +10,6 @@ describe('postman runner test', () => {
     let activeServer
 
     afterEach(async () => {
-        console.log('stopping server')
         await activeServer.stop()
     })
 
