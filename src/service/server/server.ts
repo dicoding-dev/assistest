@@ -37,16 +37,23 @@ class Server {
 
     private listenRunningServer(runningServer: ChildProcess) {
         runningServer.stdout.on('data', async (data) => {
-            console.log(`stdout ${data}`);
+            if (process.env.DEBUG_MODE) {
+                console.log(`stdout ${data}`);
+            }
         });
 
         runningServer.stderr.on('data', (data) => {
             this._errorLog.push(data)
+            if (process.env.DEBUG_MODE) {
+                console.log(`stdout ${data}`);
+            }
         });
 
-        runningServer.on('close', () => {
-            console.log('server killed')
-        })
+        if (process.env.DEBUG_MODE) {
+            runningServer.on('close', () => {
+                console.log('server killed')
+            })
+        }
     }
 
     async stop() {
