@@ -1,4 +1,5 @@
 import * as newman from 'newman';
+import ResultTestFailure from "./failure-test";
 
 class PostmanRunner {
     private readonly collection: string;
@@ -9,7 +10,7 @@ class PostmanRunner {
         this.environment = environment;
     }
 
-    async run() {
+    async run(): Promise<Array<ResultTestFailure>> {
         const runningNewman = newman.run({
             collection: this.collection,
             environment: this.environment,
@@ -23,7 +24,7 @@ class PostmanRunner {
         return this.groupResult(failureTest)
     }
 
-    private async groupResult(summaryTest) {
+    private async groupResult(summaryTest): Promise<Array<ResultTestFailure>> {
         return summaryTest.reduce((previousValue, currentValue) => {
             const requestName = currentValue.source.name
             const parentGroup = previousValue.find(value => value.name == requestName)
