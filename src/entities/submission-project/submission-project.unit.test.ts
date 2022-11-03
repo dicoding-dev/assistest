@@ -42,7 +42,7 @@ describe('create submission project test', () => {
     });
 
     const createSubmissionProject = (
-        submissionPath: string = '', host: string = '', port: number = 0, runnerCommand: string = ''
+        submissionPath = '', host = '', port = 0, runnerCommand = ''
     ) => {
         const mockProjectPath = <ProjectPath>{}
         mockProjectPath.toString = jest.fn(()=>submissionPath)

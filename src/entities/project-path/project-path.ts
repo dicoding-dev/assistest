@@ -46,7 +46,7 @@ class ProjectPath {
         }
 
         return files
-    };
+    }
 }
 
 export default ProjectPath
