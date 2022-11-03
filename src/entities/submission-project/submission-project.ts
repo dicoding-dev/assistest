@@ -8,6 +8,7 @@ export default class SubmissionProject {
     private readonly _host: string;
     private readonly _port: number;
     private readonly _runnerCommand: string;
+    private _packageJSONContent: any
 
     constructor(projectPath: ProjectPath, host: string, port: number, packageJSONScript: string) {
         this.validate(projectPath, host, port, packageJSONScript)
@@ -24,7 +25,9 @@ export default class SubmissionProject {
             throw new InvariantException('Path not contain package.json')
         }
 
-        const {scripts} = this.getPackageJSONContent(packageJSONPath)
+        this.validatePackageJSONContent(packageJSONPath)
+
+        const {scripts} = this._packageJSONContent
         if (!scripts) {
             throw new InvariantException('package.json not contain "scripts" property')
         }
@@ -34,14 +37,20 @@ export default class SubmissionProject {
         }
     }
 
-    private getPackageJSONContent(packageJSONPath: string) {
+    private validatePackageJSONContent(packageJSONPath: string) {
         try {
-            return JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
+            const content = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'))
+            this._packageJSONContent = content
+            return content
         } catch (e) {
             if (e.message.includes("Unexpected token")) {
                 throw new InvariantException('Cannot parse package.json')
             }
         }
+    }
+
+    get packageJSONContent(): any {
+        return this._packageJSONContent;
     }
 
     get runnerCommand(): string {
