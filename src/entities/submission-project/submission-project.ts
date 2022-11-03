@@ -2,13 +2,14 @@ import * as fs from "fs";
 import * as path from 'path';
 import ProjectPath from "../project-path/project-path";
 import InvariantException from "../../exception/invariant-exception";
+import PackageJson from "./package-json";
 
 export default class SubmissionProject {
     private readonly _projectPath: string;
     private readonly _host: string;
     private readonly _port: number;
     private readonly _runnerCommand: string;
-    private _packageJSONContent: any
+    private _packageJSONContent: PackageJson
 
     constructor(projectPath: ProjectPath, host: string, port: number, packageJSONScript: string) {
         this.validate(projectPath, host, port, packageJSONScript)
@@ -49,7 +50,7 @@ export default class SubmissionProject {
         }
     }
 
-    get packageJSONContent(): any {
+    get packageJSONContent(): PackageJson {
         return this._packageJSONContent;
     }
 
