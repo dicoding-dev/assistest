@@ -12,9 +12,13 @@ class SubmissionRatingGenerator {
             this._rating++
         }
 
-        if (failurePostmanTest.filter(resultTestFailure => resultTestFailure.name.includes('[Optional]')).length === 0) {
+        if (this.isAllOptionalTestFullFilled(failurePostmanTest)) {
             this._rating++
         }
+    }
+
+    private isAllOptionalTestFullFilled(failurePostmanTest: Array<ResultTestFailure>): boolean {
+        return failurePostmanTest.filter(resultTestFailure => resultTestFailure.name.includes('[Optional]')).length === 0
     }
 
     get rating() {
