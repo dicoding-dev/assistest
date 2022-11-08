@@ -126,4 +126,55 @@ describe('mandatory criteria test', () => {
             }
         ])
     })
+
+    it('should return approval false and all criteria is not passed when project error', function () {
+        const failurePostmanTest: Array<ResultTestFailure> = []
+
+        const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest, true)
+        expect(mandatoryCriteriaChecker.approvalStatus).toBeFalsy()
+        expect(mandatoryCriteriaChecker.allCriteria).toStrictEqual([
+            {
+                "name": "API dapat menyimpan buku",
+                "pass": false,
+                "requirement": [
+                    "[Mandatory] Add Book With Complete Data",
+                    "[Mandatory] Add Book Without Name",
+                    "[Mandatory] Add Book with Page Read More Than Page Count"
+                ]
+            },
+            {
+                "name": "API dapat menampilkan seluruh buku",
+                "pass": false,
+                "requirement": [
+                    "[Mandatory] Get All Books"
+                ]
+            },
+            {
+                "name": "API dapat menampilkan detail buku",
+                "pass": false,
+                "requirement": [
+                    "[Mandatory] Get Detail Books With Correct Id",
+                    "[Mandatory] Get Detail Books With Invalid Id"
+                ]
+            },
+            {
+                "name": "API dapat mengubah data buku",
+                "pass": false,
+                "requirement": [
+                    "[Mandatory] Update Book With Complete Data",
+                    "[Mandatory] Update Book Without Name",
+                    "[Mandatory] Update Book With Page Read More Than Page Count",
+                    "[Mandatory] Update Book with Invalid Id"
+                ]
+            },
+            {
+                "name": " API dapat menghapus buku",
+                "pass": false,
+                "requirement": [
+                    "[Mandatory] Delete Book with Correct Id",
+                    "[Mandatory] Delete Book with Invalid Id"
+                ]
+            }
+        ])
+    });
 })

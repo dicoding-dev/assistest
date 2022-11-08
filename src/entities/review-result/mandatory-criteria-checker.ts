@@ -45,16 +45,26 @@ class MandatoryCriteriaChecker {
         }
     ]
 
-    constructor(failurePostmanTest: Array<ResultTestFailure>) {
-        this._allCriteria = this.criteria.map(criteria => {
-            const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-            return <SubmissionCriteria>{
-                name: criteria.name,
-                reason: unfulfilledRequirement.length < 1 ? undefined : unfulfilledRequirement,
-                pass: unfulfilledRequirement.length < 1,
-                requirement: criteria.requirements
-            }
-        })
+    constructor(failurePostmanTest: Array<ResultTestFailure>, isProjectError = false) {
+        if (isProjectError) {
+            this._allCriteria = this.criteria.map(criteria => {
+                return <SubmissionCriteria>{
+                    name: criteria.name,
+                    pass: false,
+                    requirement: criteria.requirements
+                }
+            })
+        } else {
+            this._allCriteria = this.criteria.map(criteria => {
+                const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
+                return <SubmissionCriteria>{
+                    name: criteria.name,
+                    reason: unfulfilledRequirement.length < 1 ? undefined : unfulfilledRequirement,
+                    pass: unfulfilledRequirement.length < 1,
+                    requirement: criteria.requirements
+                }
+            })
+        }
 
         this._unfulfilledCriteria = this._allCriteria.filter(criteria => criteria.pass === false);
     }
