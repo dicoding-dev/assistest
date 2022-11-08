@@ -50,7 +50,7 @@ class MandatoryCriteriaChecker {
             const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
             return <SubmissionCriteria>{
                 name: criteria.name,
-                unfulfilledRequirement,
+                reason: unfulfilledRequirement.length < 1 ? undefined : unfulfilledRequirement,
                 pass: unfulfilledRequirement.length < 1,
                 requirement: criteria.requirements
             }
