@@ -29,6 +29,10 @@ class Review {
         if (rejectionType === RejectionType.ProjectError){
             this.composeRejectionMessageFromProjectErrorMessage(error)
         }
+
+        if (rejectionType === RejectionType.ServerError){
+            this.composeRejectionMessageFromServerErrorMessage(error)
+        }
     }
 
     private composeRejectionMessageFromCriteria(failedPostmanTest: Array<FailureTest>) {
@@ -47,6 +51,12 @@ class Review {
 
     private composeRejectionMessageFromProjectErrorMessage(error: InvariantException) {
         this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${error.message}`
+    }
+
+
+
+    private composeRejectionMessageFromServerErrorMessage(error: InvariantException) {
+        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${error.message}`
     }
 }
 
