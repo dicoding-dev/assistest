@@ -61,13 +61,12 @@ const runServerAndTest = async (submissionProject: SubmissionProject) => {
     }
 }
 
-const getMandatoryCriteria = (failurePostmanTest: Array<ResultTestFailure>) => {
+const validateMandatoryCriteria = (failurePostmanTest: Array<ResultTestFailure>) => {
     const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest)
     if (!mandatoryCriteriaChecker.approvalStatus) {
 
         throw new RejectionReason('test error', mandatoryCriteriaChecker.unfulfilledCriteria)
     }
-    return mandatoryCriteriaChecker
 }
 
 const checkEslint = (submissionProject: SubmissionProject) => {
@@ -86,7 +85,7 @@ const main = async () => {
 
             const postmanResult = await runServerAndTest(submissionProject)
 
-            const mandatoryCriteria = getMandatoryCriteria(postmanResult)
+            validateMandatoryCriteria(postmanResult)
             const submissionRatingGenerator = new SubmissionRatingGenerator(postmanResult, checkEslint(submissionProject))
 
             console.log(`is approved: true`)
