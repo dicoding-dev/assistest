@@ -95,7 +95,7 @@ const main = async () => {
                 console.log(`is approved: false`)
                 console.log(`rating: 0`)
                 console.log(`reason: ${e.reason}`)
-                console.log(`unfulfilled criteria: ${e.criteria.map(e => `\n${e.name}`)}`)
+                console.log(`unfulfilled criteria: ${e.criteria.map(e => e.name).join('\n')}`)
             }else {
                 console.log(e)
             }
