@@ -26,7 +26,7 @@ class Server {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
-            throw new Error(`Server cannot started
+            throw new InvariantException(`Server cannot started
             message: ${e.message}
             command: ${command}
             path: ${projectPath}
