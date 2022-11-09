@@ -2,6 +2,7 @@ import ReviewType from "./review-type";
 import SubmissionCriteria from "./submission-criteria";
 import FailureTest from "../../service/postman-runner/failure-test";
 import RejectionType from "./rejection-type";
+import InvariantException from "../../exception/invariant-exception";
 
 class Review {
     get messages(): string {
@@ -17,12 +18,16 @@ class Review {
     private reason: string;
     failedPostmanTest: FailureTest[];
 
-    constructor(rejectionType: RejectionType, reason: string, unfulfilledCriteria: Array<SubmissionCriteria>, failedPostmanTest: Array<FailureTest>) {
+    constructor(rejectionType: RejectionType, reason: string, unfulfilledCriteria: Array<SubmissionCriteria>, failedPostmanTest: Array<FailureTest>, error?: InvariantException) {
         this.reason = reason;
         this.failedPostmanTest = failedPostmanTest;
 
         if (rejectionType === RejectionType.TestError) {
             this.composeRejectionMessageFromCriteria(failedPostmanTest)
+        }
+
+        if (rejectionType === RejectionType.ProjectError){
+            this.composeRejectionMessageFromProjectErrorMessage(error)
         }
     }
 
@@ -38,6 +43,10 @@ class Review {
             container += `${list}</ul></li>`
         })
         this._messages = `${greeting}<ul>${container}</ul>${closing}`
+    }
+
+    private composeRejectionMessageFromProjectErrorMessage(error: InvariantException) {
+        this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${error.message}`
     }
 }
 

@@ -2,6 +2,7 @@ import Review from "./reject";
 import SubmissionCriteria from "./submission-criteria";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import RejectionType from "./rejection-type";
+import InvariantException from "../../exception/invariant-exception";
 
 const minifyHtmlRegex = /<!--(.*?)-->|\s\B/gm
 describe('reject test', () => {
@@ -24,7 +25,7 @@ describe('reject test', () => {
                 }]
             }
         ]
-        const review = new Review(RejectionType.TestError, '', [<SubmissionCriteria>{}], failurePostmanTest)
+        const review = new Review(RejectionType.TestError, '', [], failurePostmanTest)
 
 
         expect(review.messages).toStrictEqual(`
@@ -43,5 +44,10 @@ describe('reject test', () => {
                         </li>
                     </ul>Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.`
             .replace(minifyHtmlRegex, '').trim())
+    });
+
+    it('should get message properly when rejection type is project error', function () {
+        const review = new Review(RejectionType.ProjectError, '', [], [], new InvariantException('Submission path is not found'))
+        expect(review.messages).toStrictEqual('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena Submission path is not found')
     });
 })
