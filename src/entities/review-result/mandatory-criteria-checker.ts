@@ -37,7 +37,7 @@ class MandatoryCriteriaChecker {
             ]
         },
         {
-            name: ' API dapat menghapus buku',
+            name: 'API dapat menghapus buku',
             requirements: [
                 '[Mandatory] Delete Book with Correct Id',
                 '[Mandatory] Delete Book with Invalid Id'

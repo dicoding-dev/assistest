@@ -116,7 +116,7 @@ describe('mandatory criteria test', () => {
                 "reason": undefined
             },
             {
-                "name": " API dapat menghapus buku",
+                "name": "API dapat menghapus buku",
                 "pass": true,
                 "requirement": [
                     "[Mandatory] Delete Book with Correct Id",
@@ -168,7 +168,7 @@ describe('mandatory criteria test', () => {
                 ]
             },
             {
-                "name": " API dapat menghapus buku",
+                "name": "API dapat menghapus buku",
                 "pass": false,
                 "requirement": [
                     "[Mandatory] Delete Book with Correct Id",
