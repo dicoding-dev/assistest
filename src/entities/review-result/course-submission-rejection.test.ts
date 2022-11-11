@@ -1,8 +1,8 @@
-import Review from "./reject";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import RejectionType from "./rejection-type";
 import InvariantException from "../../exception/invariant-exception";
 import RejectException from "../../exception/reject-exception";
+import CourseSubmissionRejection from "./course-submission-rejection";
 
 const minifyHtmlRegex = /<!--(.*?)-->|\s\B/gm
 describe('reject test', () => {
@@ -26,7 +26,7 @@ describe('reject test', () => {
             }
         ]
 
-        const mandatoryCriteriaChecker = new Review(new RejectException(RejectionType.TestError, failurePostmanTest))
+        const mandatoryCriteriaChecker = new CourseSubmissionRejection(new RejectException(RejectionType.TestError, failurePostmanTest))
         expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([
             {
                 name: "API dapat menyimpan buku",
@@ -77,7 +77,7 @@ describe('reject test', () => {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
         const rejectException = new RejectException(RejectionType.TestError, failurePostmanTest)
-        const review = new Review(rejectException)
+        const review = new CourseSubmissionRejection(rejectException)
         expect(review.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
@@ -132,7 +132,7 @@ describe('reject test', () => {
     it('should return approval false and all criteria is not passed when project error', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const review = new Review(new RejectException(RejectionType.TestError,failurePostmanTest, new InvariantException('Project error')))
+        const review = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,failurePostmanTest, new InvariantException('Project error')))
         expect(review.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
@@ -202,7 +202,7 @@ describe('reject test', () => {
                 }]
             }
         ]
-        const review = new Review(new RejectException(RejectionType.TestError,  failurePostmanTest))
+        const review = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,  failurePostmanTest))
 
 
         expect(review.messages).toStrictEqual(`
@@ -224,12 +224,12 @@ describe('reject test', () => {
     });
 
     it('should get message properly when rejection type is project error', function () {
-        const review = new Review( new RejectException(RejectionType.ProjectError, [], new InvariantException('Submission path is not found')))
+        const review = new CourseSubmissionRejection( new RejectException(RejectionType.ProjectError, [], new InvariantException('Submission path is not found')))
         expect(review.messages).toStrictEqual('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena Submission path is not found')
     });
 
     it('should get message properly when rejection type is server error', function () {
-        const review = new Review(new RejectException(RejectionType.ServerError,  [], new InvariantException('Port not 5000')))
+        const review = new CourseSubmissionRejection(new RejectException(RejectionType.ServerError,  [], new InvariantException('Port not 5000')))
         expect(review.messages).toStrictEqual('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena Port not 5000')
     });
 })

@@ -6,11 +6,10 @@ import InvariantException from "../../exception/invariant-exception";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import RejectException from "../../exception/reject-exception";
 
-class Review {
+class CourseSubmissionRejection {
     get allCriteria(): SubmissionCriteria[] {
         return this._allCriteria;
     }
-
 
     criteria = [
         {
@@ -91,6 +90,8 @@ class Review {
         this._unfulfilledCriteria = this._allCriteria.filter(criteria => criteria.pass === false);
     }
 
+
+
     private composeRejectionMessageFromCriteria(failurePostmanTest: Array<FailureTest>) {
         const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
@@ -122,4 +123,4 @@ class Review {
     }
 }
 
-export default Review
+export default CourseSubmissionRejection
