@@ -3,53 +3,13 @@ import SubmissionCriteria from "./submission-criteria";
 import FailureTest from "../../service/postman-runner/failure-test";
 import RejectionType from "./rejection-type";
 import InvariantException from "../../exception/invariant-exception";
-import ResultTestFailure from "../../service/postman-runner/failure-test";
 import RejectException from "../../exception/reject-exception";
+import SubmissionChecklist from "../../conifg/submission-checklist";
 
 class CourseSubmissionRejection {
     get allCriteria(): SubmissionCriteria[] {
         return this._allCriteria;
     }
-
-    criteria = [
-        {
-            name: 'API dapat menyimpan buku',
-            requirements: [
-                '[Mandatory] Add Book With Complete Data',
-                '[Mandatory] Add Book Without Name',
-                '[Mandatory] Add Book with Page Read More Than Page Count'
-            ]
-        },
-        {
-            name: 'API dapat menampilkan seluruh buku',
-            requirements: [
-                '[Mandatory] Get All Books',
-            ]
-        },
-        {
-            name: 'API dapat menampilkan detail buku',
-            requirements: [
-                '[Mandatory] Get Detail Books With Correct Id',
-                '[Mandatory] Get Detail Books With Invalid Id'
-            ]
-        },
-        {
-            name: 'API dapat mengubah data buku',
-            requirements: [
-                '[Mandatory] Update Book With Complete Data',
-                '[Mandatory] Update Book Without Name',
-                '[Mandatory] Update Book With Page Read More Than Page Count',
-                '[Mandatory] Update Book with Invalid Id'
-            ]
-        },
-        {
-            name: 'API dapat menghapus buku',
-            requirements: [
-                '[Mandatory] Delete Book with Correct Id',
-                '[Mandatory] Delete Book with Invalid Id'
-            ]
-        }
-    ]
 
     private submissionId = 1
     private reviewType = ReviewType.Reject
@@ -62,7 +22,7 @@ class CourseSubmissionRejection {
     private _allCriteria: SubmissionCriteria[];
     private _unfulfilledCriteria: SubmissionCriteria[];
 
-    constructor({rejectionType, failurePostmanTest, error}: RejectException) {
+    constructor({rejectionType, failurePostmanTest, error}: RejectException, submissionCriteria: SubmissionChecklist[]) {
         this.failurePostmanTest = failurePostmanTest;
 
         if (rejectionType === RejectionType.TestError) {
@@ -77,7 +37,7 @@ class CourseSubmissionRejection {
             this.composeRejectionMessageFromServerErrorMessage(error)
         }
 
-        this._allCriteria = this.criteria.map(criteria => {
+        this._allCriteria = submissionCriteria.map(criteria => {
             const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
             return <SubmissionCriteria>{
                 name: criteria.name,
