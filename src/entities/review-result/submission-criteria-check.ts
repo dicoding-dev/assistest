@@ -1,7 +1,7 @@
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import ReviewChecklistResult from "./review-checklist-result";
 
-class MandatoryCriteriaChecker {
+class SubmissionCriteriaCheck {
     private readonly _unfulfilledCriteria: Array<ReviewChecklistResult>
     private readonly _allCriteria: Array<ReviewChecklistResult>
 
@@ -82,4 +82,4 @@ class MandatoryCriteriaChecker {
     }
 }
 
-export default MandatoryCriteriaChecker
+export default SubmissionCriteriaCheck

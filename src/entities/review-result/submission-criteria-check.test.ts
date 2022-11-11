@@ -1,5 +1,5 @@
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import MandatoryCriteriaChecker from "./mandatory-criteria-checker";
+import SubmissionCriteriaCheck from "./submission-criteria-check";
 
 describe('mandatory criteria test', () => {
     it('should grouping failed test by criteria and return approval false', function () {
@@ -22,7 +22,7 @@ describe('mandatory criteria test', () => {
             }
         ]
 
-        const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest)
+        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest)
         expect(mandatoryCriteriaChecker.approvalStatus).toBeFalsy()
         expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([
             {
@@ -73,7 +73,7 @@ describe('mandatory criteria test', () => {
     it('should return approval true', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest)
+        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest)
         expect(mandatoryCriteriaChecker.approvalStatus).toBeTruthy()
         expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([])
         expect(mandatoryCriteriaChecker.allCriteria).toStrictEqual([
@@ -130,7 +130,7 @@ describe('mandatory criteria test', () => {
     it('should return approval false and all criteria is not passed when project error', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest, true)
+        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest, true)
         expect(mandatoryCriteriaChecker.approvalStatus).toBeFalsy()
         expect(mandatoryCriteriaChecker.allCriteria).toStrictEqual([
             {
