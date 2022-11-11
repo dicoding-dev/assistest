@@ -9,10 +9,12 @@ import * as collection from '../../experiment-storage/postman/collection.json'
 import * as env from '../../experiment-storage/postman/environment.json'
 import EslintChecker from "./service/eslint-checker/eslint-checker";
 import InvariantException from "./exception/invariant-exception";
-import MandatoryCriteriaChecker from "./entities/review-result/mandatory-criteria-checker";
 import ResultTestFailure from "./service/postman-runner/failure-test";
 import SubmissionRatingGenerator from "./entities/review-result/submission-rating-generator";
-import RejectionReason from "./entities/rejection-reason/rejection-reason";
+import Reject from "./entities/review-result/reject";
+import RejectionType from "./entities/review-result/rejection-type";
+import RejectException from "./exception/reject-exception";
+import rejectException from "./exception/reject-exception";
 
 const createSubmissionProject = (submission) => {
     try {
@@ -21,7 +23,7 @@ const createSubmissionProject = (submission) => {
         return new SubmissionProject(projectPath, 'localhost', 5000, 'start')
     } catch (e) {
         if (e instanceof InvariantException) {
-            throw new RejectionReason('Project error', new MandatoryCriteriaChecker([], true).unfulfilledCriteria)
+            throw new RejectException(RejectionType.ProjectError, [], e)
         }
         throw e
     }
@@ -53,8 +55,7 @@ const runServerAndTest = async (submissionProject: SubmissionProject) => {
         return postmanResult
     } catch (e) {
         if (e instanceof InvariantException) {
-            const mandatoryCriteriaChecker = new MandatoryCriteriaChecker([], true)
-            throw new RejectionReason(e.message, mandatoryCriteriaChecker.allCriteria)
+            throw new RejectException(RejectionType.ServerError, [], e)
         }
 
         throw e
@@ -62,11 +63,10 @@ const runServerAndTest = async (submissionProject: SubmissionProject) => {
 }
 
 const validateMandatoryCriteria = (failurePostmanTest: Array<ResultTestFailure>) => {
-    const mandatoryCriteriaChecker = new MandatoryCriteriaChecker(failurePostmanTest)
-    if (!mandatoryCriteriaChecker.approvalStatus) {
-
-        throw new RejectionReason('test error', mandatoryCriteriaChecker.unfulfilledCriteria)
-    }
+    const rejection = new RejectException(RejectionType.TestError, failurePostmanTest)
+    // if (rejection.unfulfilledCriteria.length > 0){
+        // throw rejection
+    // }
 }
 
 const checkEslint = (submissionProject: SubmissionProject) => {
@@ -91,12 +91,13 @@ const main = async () => {
             console.log(`is approved: true`)
             console.log(`rating: ${submissionRatingGenerator.rating}`)
         } catch (e) {
-            if (e instanceof RejectionReason) {
+            if (e instanceof RejectException) {
+                const reject = new Reject(e)
                 console.log(`is approved: false`)
                 console.log(`rating: 0`)
-                console.log(`reason: ${e.reason}`)
-                console.log(`unfulfilled criteria: ${e.criteria.map(e => e.name).join('\n')}`)
-            }else {
+                console.log(`reason: ${reject.messages}`)
+                console.log(`unfulfilled criteria: ${reject.criteria.map(e => e.name).join('\n')}`)
+            } else {
                 console.log(e)
             }
         }
