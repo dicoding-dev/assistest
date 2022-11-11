@@ -46,25 +46,16 @@ class SubmissionCriteriaCheck {
     ]
 
     constructor(failurePostmanTest: Array<ResultTestFailure>, isProjectError = false) {
-        if (isProjectError) {
-            this._allCriteria = this.criteria.map(criteria => {
-                return <ReviewChecklistResult>{
-                    name: criteria.name,
-                    pass: false,
-                    requirement: criteria.requirements
-                }
-            })
-        } else {
-            this._allCriteria = this.criteria.map(criteria => {
-                const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-                return <ReviewChecklistResult>{
-                    name: criteria.name,
-                    reason: unfulfilledRequirement.length < 1 ? undefined : unfulfilledRequirement,
-                    pass: unfulfilledRequirement.length < 1,
-                    requirement: criteria.requirements
-                }
-            })
-        }
+        this._allCriteria = this.criteria.map(criteria => {
+            const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
+            const checklistPass = isProjectError ? false : unfulfilledRequirement.length < 1
+            return <ReviewChecklistResult>{
+                name: criteria.name,
+                reason: unfulfilledRequirement,
+                pass: checklistPass,
+                requirement: criteria.requirements
+            }
+        })
 
         this._unfulfilledCriteria = this._allCriteria.filter(criteria => criteria.pass === false);
     }

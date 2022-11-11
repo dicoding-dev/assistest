@@ -85,7 +85,7 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Add Book Without Name",
                     "[Mandatory] Add Book with Page Read More Than Page Count"
                 ],
-                "reason": undefined
+                "reason": []
             },
             {
                 "name": "API dapat menampilkan seluruh buku",
@@ -93,7 +93,7 @@ describe('mandatory criteria test', () => {
                 "requirement": [
                     "[Mandatory] Get All Books"
                 ],
-                "reason": undefined
+                "reason": []
             },
             {
                 "name": "API dapat menampilkan detail buku",
@@ -102,7 +102,7 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Get Detail Books With Correct Id",
                     "[Mandatory] Get Detail Books With Invalid Id"
                 ],
-                "reason": undefined
+                "reason": []
             },
             {
                 "name": "API dapat mengubah data buku",
@@ -113,7 +113,7 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Update Book With Page Read More Than Page Count",
                     "[Mandatory] Update Book with Invalid Id"
                 ],
-                "reason": undefined
+                "reason": []
             },
             {
                 "name": "API dapat menghapus buku",
@@ -122,7 +122,7 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Delete Book with Correct Id",
                     "[Mandatory] Delete Book with Invalid Id"
                 ],
-                "reason": undefined
+                "reason": []
             }
         ])
     })
@@ -140,14 +140,16 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Add Book With Complete Data",
                     "[Mandatory] Add Book Without Name",
                     "[Mandatory] Add Book with Page Read More Than Page Count"
-                ]
+                ],
+                reason: []
             },
             {
                 "name": "API dapat menampilkan seluruh buku",
                 "pass": false,
                 "requirement": [
                     "[Mandatory] Get All Books"
-                ]
+                ],
+                reason: []
             },
             {
                 "name": "API dapat menampilkan detail buku",
@@ -155,7 +157,8 @@ describe('mandatory criteria test', () => {
                 "requirement": [
                     "[Mandatory] Get Detail Books With Correct Id",
                     "[Mandatory] Get Detail Books With Invalid Id"
-                ]
+                ],
+                reason: []
             },
             {
                 "name": "API dapat mengubah data buku",
@@ -165,7 +168,8 @@ describe('mandatory criteria test', () => {
                     "[Mandatory] Update Book Without Name",
                     "[Mandatory] Update Book With Page Read More Than Page Count",
                     "[Mandatory] Update Book with Invalid Id"
-                ]
+                ],
+                reason: []
             },
             {
                 "name": "API dapat menghapus buku",
@@ -173,7 +177,8 @@ describe('mandatory criteria test', () => {
                 "requirement": [
                     "[Mandatory] Delete Book with Correct Id",
                     "[Mandatory] Delete Book with Invalid Id"
-                ]
+                ],
+                reason: []
             }
         ])
     });
