@@ -31,15 +31,15 @@ class CourseSubmissionRejection {
 
     public reject(){
         if (this.rejectionType === RejectionType.TestError) {
-            this.composeRejectionMessageFromCriteria(this.failurePostmanTest)
+            this.composeRejectionMessageFromCriteria()
         }
 
         if (this.rejectionType === RejectionType.ProjectError) {
-            this.composeRejectionMessageFromProjectErrorMessage(this.error)
+            this.composeRejectionMessageFromProjectErrorMessage()
         }
 
         if (this.rejectionType === RejectionType.ServerError) {
-            this.composeRejectionMessageFromServerErrorMessage(this.error)
+            this.composeRejectionMessageFromServerErrorMessage()
         }
 
         this.setSubmissionChecklistResult()
@@ -62,11 +62,11 @@ class CourseSubmissionRejection {
 
 
 
-    private composeRejectionMessageFromCriteria(failurePostmanTest: Array<FailureTest>) {
+    private composeRejectionMessageFromCriteria() {
         const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
         let container = ''
-        failurePostmanTest.forEach(failedTest => {
+        this.failurePostmanTest.forEach(failedTest => {
             let list = `<li><b>${failedTest.name}</b><ul>`
             failedTest.tests.forEach(test => {
                 list += `<li>Nama test: ${test.test}<br>Pesan error: ${test.message}</li>`
@@ -76,12 +76,12 @@ class CourseSubmissionRejection {
         this._messages = `${greeting}<ul>${container}</ul>${closing}`
     }
 
-    private composeRejectionMessageFromProjectErrorMessage(error: InvariantException) {
-        this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${error.message}`
+    private composeRejectionMessageFromProjectErrorMessage() {
+        this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${this.error.message}`
     }
 
-    private composeRejectionMessageFromServerErrorMessage(error: InvariantException) {
-        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${error.message}`
+    private composeRejectionMessageFromServerErrorMessage() {
+        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${this.error.message}`
     }
 
     get messages(): string {
