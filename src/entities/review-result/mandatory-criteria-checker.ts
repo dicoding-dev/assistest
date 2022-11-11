@@ -1,9 +1,9 @@
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import SubmissionCriteria from "./submission-criteria";
+import ReviewChecklistResult from "./review-checklist-result";
 
 class MandatoryCriteriaChecker {
-    private readonly _unfulfilledCriteria: Array<SubmissionCriteria>
-    private readonly _allCriteria: Array<SubmissionCriteria>
+    private readonly _unfulfilledCriteria: Array<ReviewChecklistResult>
+    private readonly _allCriteria: Array<ReviewChecklistResult>
 
     criteria = [
         {
@@ -48,7 +48,7 @@ class MandatoryCriteriaChecker {
     constructor(failurePostmanTest: Array<ResultTestFailure>, isProjectError = false) {
         if (isProjectError) {
             this._allCriteria = this.criteria.map(criteria => {
-                return <SubmissionCriteria>{
+                return <ReviewChecklistResult>{
                     name: criteria.name,
                     pass: false,
                     requirement: criteria.requirements
@@ -57,7 +57,7 @@ class MandatoryCriteriaChecker {
         } else {
             this._allCriteria = this.criteria.map(criteria => {
                 const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-                return <SubmissionCriteria>{
+                return <ReviewChecklistResult>{
                     name: criteria.name,
                     reason: unfulfilledRequirement.length < 1 ? undefined : unfulfilledRequirement,
                     pass: unfulfilledRequirement.length < 1,
@@ -73,11 +73,11 @@ class MandatoryCriteriaChecker {
         return this._unfulfilledCriteria.length < 1
     }
 
-    get unfulfilledCriteria(): Array<SubmissionCriteria> {
+    get unfulfilledCriteria(): Array<ReviewChecklistResult> {
         return this._unfulfilledCriteria
     }
 
-    get allCriteria(): Array<SubmissionCriteria> {
+    get allCriteria(): Array<ReviewChecklistResult> {
         return this._allCriteria;
     }
 }

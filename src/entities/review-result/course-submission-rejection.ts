@@ -1,5 +1,5 @@
 import ReviewType from "./review-type";
-import SubmissionCriteria from "./submission-criteria";
+import ReviewChecklistResult from "./review-checklist-result";
 import FailureTest from "../../service/postman-runner/failure-test";
 import RejectionType from "./rejection-type";
 import InvariantException from "../../exception/invariant-exception";
@@ -18,8 +18,8 @@ class CourseSubmissionRejection {
     private _messages: string
     private reason: string;
     failurePostmanTest: FailureTest[];
-    private _allCriteria: SubmissionCriteria[];
-    private _unfulfilledCriteria: SubmissionCriteria[];
+    private _checklistsResult: ReviewChecklistResult[];
+    private _unfulfilledChecklistsResult: ReviewChecklistResult[];
     private rejectionType: RejectionType;
 
     constructor({rejectionType, failurePostmanTest, error}: RejectException, submissionChecklists: SubmissionChecklist[]) {
@@ -46,9 +46,9 @@ class CourseSubmissionRejection {
     }
 
     private setSubmissionChecklistResult(){
-        this._allCriteria = this.submissionChecklists.map(criteria => {
+        this._checklistsResult = this.submissionChecklists.map(criteria => {
             const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-            return <SubmissionCriteria>{
+            return <ReviewChecklistResult>{
                 name: criteria.name,
                 reason: unfulfilledRequirement ?? [],
                 pass: this.error ? false : unfulfilledRequirement.length < 1,
@@ -56,7 +56,7 @@ class CourseSubmissionRejection {
             }
         })
 
-        this._unfulfilledCriteria = this._allCriteria.filter(criteria => criteria.pass === false);
+        this._unfulfilledChecklistsResult = this._checklistsResult.filter(criteria => criteria.pass === false);
     }
 
 
@@ -87,12 +87,12 @@ class CourseSubmissionRejection {
         return this._messages;
     }
 
-    get unfulfilledCriteria(): SubmissionCriteria[] {
-        return this._unfulfilledCriteria;
+    get unfulfilledChecklistsResult(): ReviewChecklistResult[] {
+        return this._unfulfilledChecklistsResult;
     }
 
-    get allCriteria(): SubmissionCriteria[] {
-        return this._allCriteria;
+    get checklistsResult(): ReviewChecklistResult[] {
+        return this._checklistsResult;
     }
 }
 

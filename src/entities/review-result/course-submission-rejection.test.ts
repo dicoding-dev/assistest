@@ -31,7 +31,7 @@ describe('reject test', () => {
 
         const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.TestError, failurePostmanTest), submissionChecklist)
         courseSubmissionRejection.reject()
-        expect(courseSubmissionRejection.unfulfilledCriteria).toStrictEqual([
+        expect(courseSubmissionRejection.unfulfilledChecklistsResult).toStrictEqual([
             {
                 name: "API dapat menyimpan buku",
                 pass: false,
@@ -84,7 +84,7 @@ describe('reject test', () => {
         const courseSubmissionRejection = new CourseSubmissionRejection(rejectException, submissionChecklist)
         courseSubmissionRejection.reject()
 
-        expect(courseSubmissionRejection.allCriteria).toStrictEqual([
+        expect(courseSubmissionRejection.checklistsResult).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": true,
@@ -141,7 +141,7 @@ describe('reject test', () => {
         const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,failurePostmanTest, new InvariantException('Project error')), submissionChecklist)
         courseSubmissionRejection.reject()
 
-        expect(courseSubmissionRejection.allCriteria).toStrictEqual([
+        expect(courseSubmissionRejection.checklistsResult).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": false,
