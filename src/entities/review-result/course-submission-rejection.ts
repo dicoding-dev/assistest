@@ -7,6 +7,8 @@ import RejectException from "../../exception/reject-exception";
 import SubmissionChecklist from "../../conifg/submission-checklist";
 
 class CourseSubmissionRejection {
+    submissionChecklists: SubmissionChecklist[];
+    error: InvariantException;
     get allCriteria(): SubmissionCriteria[] {
         return this._allCriteria;
     }
@@ -21,28 +23,34 @@ class CourseSubmissionRejection {
     failurePostmanTest: FailureTest[];
     private _allCriteria: SubmissionCriteria[];
     private _unfulfilledCriteria: SubmissionCriteria[];
+    private rejectionType: RejectionType;
 
-    constructor({rejectionType, failurePostmanTest, error}: RejectException, submissionCriteria: SubmissionChecklist[]) {
+    constructor({rejectionType, failurePostmanTest, error}: RejectException, submissionChecklists: SubmissionChecklist[]) {
+        this.rejectionType = rejectionType;
         this.failurePostmanTest = failurePostmanTest;
+        this.error = error;
+        this.submissionChecklists = submissionChecklists;
+    }
 
-        if (rejectionType === RejectionType.TestError) {
-            this.composeRejectionMessageFromCriteria(failurePostmanTest)
+    public reject(){
+        if (this.rejectionType === RejectionType.TestError) {
+            this.composeRejectionMessageFromCriteria(this.failurePostmanTest)
         }
 
-        if (rejectionType === RejectionType.ProjectError) {
-            this.composeRejectionMessageFromProjectErrorMessage(error)
+        if (this.rejectionType === RejectionType.ProjectError) {
+            this.composeRejectionMessageFromProjectErrorMessage(this.error)
         }
 
-        if (rejectionType === RejectionType.ServerError) {
-            this.composeRejectionMessageFromServerErrorMessage(error)
+        if (this.rejectionType === RejectionType.ServerError) {
+            this.composeRejectionMessageFromServerErrorMessage(this.error)
         }
 
-        this._allCriteria = submissionCriteria.map(criteria => {
-            const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
+        this._allCriteria = this.submissionChecklists.map(criteria => {
+            const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
             return <SubmissionCriteria>{
                 name: criteria.name,
                 reason: unfulfilledRequirement ?? [],
-                pass: error ? false : unfulfilledRequirement.length < 1,
+                pass: this.error ? false : unfulfilledRequirement.length < 1,
                 requirement: criteria.requirements
             }
         })

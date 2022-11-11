@@ -29,8 +29,9 @@ describe('reject test', () => {
             }
         ]
 
-        const mandatoryCriteriaChecker = new CourseSubmissionRejection(new RejectException(RejectionType.TestError, failurePostmanTest), submissionChecklist)
-        expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([
+        const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.TestError, failurePostmanTest), submissionChecklist)
+        courseSubmissionRejection.reject()
+        expect(courseSubmissionRejection.unfulfilledCriteria).toStrictEqual([
             {
                 name: "API dapat menyimpan buku",
                 pass: false,
@@ -80,8 +81,10 @@ describe('reject test', () => {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
         const rejectException = new RejectException(RejectionType.TestError, failurePostmanTest)
-        const review = new CourseSubmissionRejection(rejectException, submissionChecklist)
-        expect(review.allCriteria).toStrictEqual([
+        const courseSubmissionRejection = new CourseSubmissionRejection(rejectException, submissionChecklist)
+        courseSubmissionRejection.reject()
+
+        expect(courseSubmissionRejection.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": true,
@@ -135,8 +138,10 @@ describe('reject test', () => {
     it('should return approval false and all criteria is not passed when project error', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const review = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,failurePostmanTest, new InvariantException('Project error')), submissionChecklist)
-        expect(review.allCriteria).toStrictEqual([
+        const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,failurePostmanTest, new InvariantException('Project error')), submissionChecklist)
+        courseSubmissionRejection.reject()
+
+        expect(courseSubmissionRejection.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": false,
@@ -205,10 +210,11 @@ describe('reject test', () => {
                 }]
             }
         ]
-        const review = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,  failurePostmanTest), submissionChecklist)
+        const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.TestError,  failurePostmanTest), submissionChecklist)
+        courseSubmissionRejection.reject()
 
 
-        expect(review.messages).toStrictEqual(`
+        expect(courseSubmissionRejection.messages).toStrictEqual(`
                   Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut
                     <ul>
                         <li><b>[Mandatory] Add Book With Complete Data</b>
@@ -227,12 +233,14 @@ describe('reject test', () => {
     });
 
     it('should get message properly when rejection type is project error', function () {
-        const review = new CourseSubmissionRejection( new RejectException(RejectionType.ProjectError, [], new InvariantException('Submission path is not found')), submissionChecklist)
-        expect(review.messages).toStrictEqual('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena Submission path is not found')
+        const courseSubmissionRejection = new CourseSubmissionRejection( new RejectException(RejectionType.ProjectError, [], new InvariantException('Submission path is not found')), submissionChecklist)
+        courseSubmissionRejection.reject()
+        expect(courseSubmissionRejection.messages).toStrictEqual('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena Submission path is not found')
     });
 
     it('should get message properly when rejection type is server error', function () {
-        const review = new CourseSubmissionRejection(new RejectException(RejectionType.ServerError,  [], new InvariantException('Port not 5000')), submissionChecklist)
-        expect(review.messages).toStrictEqual('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena Port not 5000')
+        const courseSubmissionRejection = new CourseSubmissionRejection(new RejectException(RejectionType.ServerError,  [], new InvariantException('Port not 5000')), submissionChecklist)
+        courseSubmissionRejection.reject()
+        expect(courseSubmissionRejection.messages).toStrictEqual('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena Port not 5000')
     });
 })
