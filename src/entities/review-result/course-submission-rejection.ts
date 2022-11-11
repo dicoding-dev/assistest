@@ -48,10 +48,11 @@ class CourseSubmissionRejection {
     private setSubmissionChecklistResult(){
         this._checklistsResult = this.submissionChecklists.map(criteria => {
             const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
+            const checklistPass = this.error ? false : unfulfilledRequirement.length < 1
             return <ReviewChecklistResult>{
                 name: criteria.name,
-                reason: unfulfilledRequirement ?? [],
-                pass: this.error ? false : unfulfilledRequirement.length < 1,
+                reason: unfulfilledRequirement,
+                pass: checklistPass,
                 requirement: criteria.requirements
             }
         })
