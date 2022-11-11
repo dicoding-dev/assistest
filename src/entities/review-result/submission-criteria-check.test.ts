@@ -22,9 +22,10 @@ describe('mandatory criteria test', () => {
             }
         ]
 
-        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest)
-        expect(mandatoryCriteriaChecker.approvalStatus).toBeFalsy()
-        expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([
+        const submissionCriteriaCheck = new SubmissionCriteriaCheck(failurePostmanTest)
+        submissionCriteriaCheck.check()
+        expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
+        expect(submissionCriteriaCheck.unfulfilledCriteria).toStrictEqual([
             {
                 name: "API dapat menyimpan buku",
                 pass: false,
@@ -73,10 +74,11 @@ describe('mandatory criteria test', () => {
     it('should return approval true', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest)
-        expect(mandatoryCriteriaChecker.approvalStatus).toBeTruthy()
-        expect(mandatoryCriteriaChecker.unfulfilledCriteria).toStrictEqual([])
-        expect(mandatoryCriteriaChecker.allCriteria).toStrictEqual([
+        const submissionCriteriaCheck = new SubmissionCriteriaCheck(failurePostmanTest)
+        submissionCriteriaCheck.check()
+        expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
+        expect(submissionCriteriaCheck.unfulfilledCriteria).toStrictEqual([])
+        expect(submissionCriteriaCheck.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": true,
@@ -130,9 +132,10 @@ describe('mandatory criteria test', () => {
     it('should return approval false and all criteria is not passed when project error', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const mandatoryCriteriaChecker = new SubmissionCriteriaCheck(failurePostmanTest, true)
-        expect(mandatoryCriteriaChecker.approvalStatus).toBeFalsy()
-        expect(mandatoryCriteriaChecker.allCriteria).toStrictEqual([
+        const submissionCriteriaCheck = new SubmissionCriteriaCheck(failurePostmanTest, true)
+        submissionCriteriaCheck.check()
+        expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
+        expect(submissionCriteriaCheck.allCriteria).toStrictEqual([
             {
                 "name": "API dapat menyimpan buku",
                 "pass": false,

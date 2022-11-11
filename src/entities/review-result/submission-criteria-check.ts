@@ -2,8 +2,11 @@ import ResultTestFailure from "../../service/postman-runner/failure-test";
 import ReviewChecklistResult from "./review-checklist-result";
 
 class SubmissionCriteriaCheck {
-    private readonly _unfulfilledCriteria: Array<ReviewChecklistResult>
-    private readonly _allCriteria: Array<ReviewChecklistResult>
+    private _unfulfilledCriteria: Array<ReviewChecklistResult>
+    private _allCriteria: Array<ReviewChecklistResult>
+    private failurePostmanTest: Array<ResultTestFailure>;
+    private isProjectError: boolean;
+
 
     criteria = [
         {
@@ -46,9 +49,14 @@ class SubmissionCriteriaCheck {
     ]
 
     constructor(failurePostmanTest: Array<ResultTestFailure>, isProjectError = false) {
+        this.failurePostmanTest = failurePostmanTest;
+        this.isProjectError = isProjectError;
+    }
+
+    public check(){
         this._allCriteria = this.criteria.map(criteria => {
-            const unfulfilledRequirement = failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-            const checklistPass = isProjectError ? false : unfulfilledRequirement.length < 1
+            const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
+            const checklistPass = this.isProjectError ? false : unfulfilledRequirement.length < 1
             return <ReviewChecklistResult>{
                 name: criteria.name,
                 reason: unfulfilledRequirement,
