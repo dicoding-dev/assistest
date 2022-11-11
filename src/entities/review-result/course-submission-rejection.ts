@@ -9,9 +9,6 @@ import SubmissionChecklist from "../../conifg/submission-checklist";
 class CourseSubmissionRejection {
     submissionChecklists: SubmissionChecklist[];
     error: InvariantException;
-    get allCriteria(): SubmissionCriteria[] {
-        return this._allCriteria;
-    }
 
     private submissionId = 1
     private reviewType = ReviewType.Reject
@@ -45,6 +42,10 @@ class CourseSubmissionRejection {
             this.composeRejectionMessageFromServerErrorMessage(this.error)
         }
 
+        this.setSubmissionChecklistResult()
+    }
+
+    private setSubmissionChecklistResult(){
         this._allCriteria = this.submissionChecklists.map(criteria => {
             const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
             return <SubmissionCriteria>{
@@ -88,6 +89,10 @@ class CourseSubmissionRejection {
 
     get unfulfilledCriteria(): SubmissionCriteria[] {
         return this._unfulfilledCriteria;
+    }
+
+    get allCriteria(): SubmissionCriteria[] {
+        return this._allCriteria;
     }
 }
 
