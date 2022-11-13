@@ -1,5 +1,4 @@
 import InvariantException from "../../../exception/invariant-exception";
-import SubmissionChecklist from "../../../conifg/submission-checklist";
 import ReviewType from "../review-type";
 import FailureTest from "../../../service/postman-runner/failure-test";
 import ReviewChecklistResult from "../review-checklist-result";
@@ -8,7 +7,6 @@ import RejectException from "../../../exception/reject-exception";
 
 
 class CourseSubmissionRejection {
-    submissionChecklists: SubmissionChecklist[];
     error: InvariantException;
 
     private submissionId = 1
@@ -22,10 +20,10 @@ class CourseSubmissionRejection {
     private _unfulfilledChecklistsResult: ReviewChecklistResult[];
     private rejectionType: RejectionType;
 
-    constructor({rejectionType, failurePostmanTest, error}: RejectException, reviewChecklistResults: ReviewChecklistResult[]) {
-        this.rejectionType = rejectionType;
-        this.failurePostmanTest = failurePostmanTest;
-        this.error = error;
+    constructor(rejectException: RejectException, reviewChecklistResults: ReviewChecklistResult[]) {
+        this.rejectionType = rejectException.rejectionType;
+        this.failurePostmanTest = rejectException.failurePostmanTest;
+        this.error = rejectException.error;
         this._reviewChecklistResults = reviewChecklistResults;
     }
 
