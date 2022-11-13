@@ -1,8 +1,8 @@
-import ResultTestFailure from "../../service/postman-runner/failure-test";
-import RejectionType from "./rejection-type";
-import InvariantException from "../../exception/invariant-exception";
-import RejectException from "../../exception/reject-exception";
 import CourseSubmissionRejection from "./course-submission-rejection";
+import ResultTestFailure from "../../../service/postman-runner/failure-test";
+import RejectException from "../../../exception/reject-exception";
+import RejectionType from "../rejection-type";
+import InvariantException from "../../../exception/invariant-exception";
 
 const minifyHtmlRegex = /<!--(.*?)-->|\s\B/gm
 const reviewChecklistResults = []

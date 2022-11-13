@@ -1,10 +1,11 @@
-import ReviewType from "./review-type";
-import ReviewChecklistResult from "./review-checklist-result";
-import FailureTest from "../../service/postman-runner/failure-test";
-import RejectionType from "./rejection-type";
-import InvariantException from "../../exception/invariant-exception";
-import RejectException from "../../exception/reject-exception";
-import SubmissionChecklist from "../../conifg/submission-checklist";
+import InvariantException from "../../../exception/invariant-exception";
+import SubmissionChecklist from "../../../conifg/submission-checklist";
+import ReviewType from "../review-type";
+import FailureTest from "../../../service/postman-runner/failure-test";
+import ReviewChecklistResult from "../review-checklist-result";
+import RejectionType from "../rejection-type";
+import RejectException from "../../../exception/reject-exception";
+
 
 class CourseSubmissionRejection {
     submissionChecklists: SubmissionChecklist[];
