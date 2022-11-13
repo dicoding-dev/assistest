@@ -1,6 +1,7 @@
-import ResultTestFailure from "../../service/postman-runner/failure-test";
 import SubmissionCriteriaCheck from "./submission-criteria-check";
-import backendPemulaChecklist from "../../conifg/backend-pemula-checklist"
+import ResultTestFailure from "../../../service/postman-runner/failure-test";
+import backendPemulaChecklist from "../../../conifg/backend-pemula-checklist";
+
 
 describe('mandatory criteria test', () => {
     it('should grouping failed test by criteria and return approval false', function () {

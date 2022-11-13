@@ -1,9 +1,8 @@
-import ResultTestFailure from "../../service/postman-runner/failure-test";
-import ReviewChecklistResult from "./review-checklist-result";
-import SubmissionChecklist from "../../conifg/submission-checklist";
+import ReviewChecklistResult from "../review-checklist-result";
+import ResultTestFailure from "../../../service/postman-runner/failure-test";
+import SubmissionChecklist from "../../../conifg/submission-checklist";
 
 class SubmissionCriteriaCheck {
-    private _unfulfilledCriteria: Array<ReviewChecklistResult>
     private _reviewChecklistResult: Array<ReviewChecklistResult>
     private failurePostmanTest: Array<ResultTestFailure>;
     private submissionChecklists: SubmissionChecklist[];
@@ -26,12 +25,10 @@ class SubmissionCriteriaCheck {
                 requirement: criteria.requirements
             }
         })
-
-        this._unfulfilledCriteria = this._reviewChecklistResult.filter(criteria => criteria.pass === false);
     }
 
     get approvalStatus(): boolean {
-        return this._unfulfilledCriteria.length < 1
+        return this._reviewChecklistResult.filter(criteria => criteria.pass === false).length < 1
     }
 
     get reviewChecklistResult(): Array<ReviewChecklistResult> {
