@@ -16,17 +16,16 @@ class CourseSubmissionRejection {
     private reviewerId = 123
     private rating = 0
     private _messages: string
-    private reason: string;
     failurePostmanTest: FailureTest[];
-    private _checklistsResult: ReviewChecklistResult[];
+    private _reviewChecklistResults: ReviewChecklistResult[];
     private _unfulfilledChecklistsResult: ReviewChecklistResult[];
     private rejectionType: RejectionType;
 
-    constructor({rejectionType, failurePostmanTest, error}: RejectException, submissionChecklists: SubmissionChecklist[]) {
+    constructor({rejectionType, failurePostmanTest, error}: RejectException, reviewChecklistResults: ReviewChecklistResult[]) {
         this.rejectionType = rejectionType;
         this.failurePostmanTest = failurePostmanTest;
         this.error = error;
-        this.submissionChecklists = submissionChecklists;
+        this._reviewChecklistResults = reviewChecklistResults;
     }
 
     public reject(){
@@ -41,26 +40,7 @@ class CourseSubmissionRejection {
         if (this.rejectionType === RejectionType.ServerError) {
             this.composeRejectionMessageFromServerErrorMessage()
         }
-
-        this.setSubmissionChecklistResult()
     }
-
-    private setSubmissionChecklistResult(){
-        this._checklistsResult = this.submissionChecklists.map(criteria => {
-            const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-            const checklistPass = this.error ? false : unfulfilledRequirement.length < 1
-            return <ReviewChecklistResult>{
-                name: criteria.name,
-                reason: unfulfilledRequirement,
-                pass: checklistPass,
-                requirement: criteria.requirements
-            }
-        })
-
-        this._unfulfilledChecklistsResult = this._checklistsResult.filter(criteria => criteria.pass === false);
-    }
-
-
 
     private composeRejectionMessageFromCriteria() {
         const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
@@ -92,8 +72,8 @@ class CourseSubmissionRejection {
         return this._unfulfilledChecklistsResult;
     }
 
-    get checklistsResult(): ReviewChecklistResult[] {
-        return this._checklistsResult;
+    get reviewChecklistResults(): ReviewChecklistResult[] {
+        return this._reviewChecklistResults;
     }
 }
 
