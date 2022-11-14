@@ -16,7 +16,7 @@ class ProjectPath {
 
     private validate(submissionPath) {
         if (!fs.existsSync(submissionPath)) {
-            throw new InvariantException('Submission path is not found')
+            throw new InvariantException('SUBMISSION_PATH_IS_NOT_FOUND')
         }
     }
 
@@ -24,7 +24,7 @@ class ProjectPath {
         const files = this.getFilesRecursively(submissionPath)
         const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
         if (!packageJsonPath) {
-            throw new InvariantException('package.json not found')
+            throw new InvariantException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
         return path.dirname(packageJsonPath)
     }
