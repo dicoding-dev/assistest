@@ -1,4 +1,4 @@
-import {readdirSync} from "fs";
+import {readdirSync, writeFileSync} from "fs";
 import * as path from "path";
 import SubmissionProject from "./entities/submission-project/submission-project";
 import ProjectPath from "./entities/project-path/project-path";
@@ -50,7 +50,7 @@ class Main {
             this.showReviewResult(reviewResult, submission)
         }
         html += `</table>`
-        console.log(html)
+        writeFileSync('./report/index.html', html)
     }
 
     private showReviewResult(reviewResult: ReviewResult, submission: string) {
