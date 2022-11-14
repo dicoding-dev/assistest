@@ -4,6 +4,7 @@ import FailureTest from "../../../service/postman-runner/failure-test";
 import ReviewChecklistResult from "../review-checklist-result";
 import RejectionType from "../rejection-type";
 import RejectException from "../../../exception/reject-exception";
+import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 
 
 class CourseSubmissionRejection {
@@ -56,11 +57,13 @@ class CourseSubmissionRejection {
     }
 
     private composeRejectionMessageFromProjectErrorMessage() {
-        this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${this.error.message}`
+        const translatedException = exceptionToReviewMessage[this.error.message]
+        this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${translatedException}`
     }
 
     private composeRejectionMessageFromServerErrorMessage() {
-        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${this.error.message}`
+        const translatedException = exceptionToReviewMessage[this.error.message]
+        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
     }
 
     get messages(): string {
