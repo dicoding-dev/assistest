@@ -1,4 +1,4 @@
-import {readdirSync} from "fs";
+import {readdirSync, writeFileSync} from "fs";
 import * as path from "path";
 import SubmissionProject from "./entities/submission-project/submission-project";
 import ProjectPath from "./entities/project-path/project-path";
@@ -18,6 +18,7 @@ import backendPemulaChecklist from "./conifg/backend-pemula-checklist";
 import CourseSubmissionRejection
     from "./entities/review-result/course-submission-rejection/course-submission-rejection";
 import ReviewResult, {ReviewResultStatus} from "./entities/review-result/review-result";
+import exceptionToReviewMessage from "./exception/exception-to-review-message";
 let html = `<table border="1">
     <tr>
          <td>Submission</td>
@@ -38,7 +39,12 @@ class Main {
 
                 const postmanResult = await this.runServerAndTest(submissionProject)
                 const submissionCriteriaCheck = this.submissionCriteriaCheck(postmanResult)
-                reviewResult = this.generateApproval(submissionProject, postmanResult, submissionCriteriaCheck)
+                if (submissionCriteriaCheck.approvalStatus === false) {
+                    const e = new RejectException(RejectionType.TestError, postmanResult)
+                    reviewResult = this.generateRejection(e, submissionCriteriaCheck)
+                }else {
+                    reviewResult = this.generateApproval(submissionProject, postmanResult, submissionCriteriaCheck)
+                }
             } catch (e) {
                 if (e instanceof RejectException) {
                     reviewResult = this.generateRejection(e)
@@ -50,14 +56,14 @@ class Main {
             this.showReviewResult(reviewResult, submission)
         }
         html += `</table>`
-        console.log(html)
+        writeFileSync('./report/index.html', html)
     }
 
     private showReviewResult(reviewResult: ReviewResult, submission: string) {
         console.log("status :", reviewResult.status.toString())
         console.log("rating :",reviewResult.rating)
         console.log("message :",reviewResult.message)
-        console.log("unfulfilled checklist :",reviewResult.checklist.filter(checklist=> checklist.pass == false).map(checklist => checklist.name))
+        console.log("unfulfilled checklist :",reviewResult.checklist)
 
         html += `<tr>
                     <td>${submission}</td>
@@ -69,19 +75,29 @@ class Main {
     }
 
     private generateApproval(submissionProject: SubmissionProject, postmanResult: Array<ResultTestFailure>, submissionCriteriaCheck: SubmissionCriteriaCheck): ReviewResult{
-        const submissionRatingGenerator = new SubmissionRatingGenerator(postmanResult, this.checkEslint(submissionProject))
+        const eslintCheck = this.checkEslint(submissionProject)
+        const submissionRatingGenerator = new SubmissionRatingGenerator(postmanResult, eslintCheck)
+        let message = 'Congrats'
+        if (!this.checkEslint(submissionProject).isSuccess){
+            message = exceptionToReviewMessage[eslintCheck.code]
+            if (eslintCheck.code === 'ESLINT_ERROR'){
+                message += eslintCheck.reason
+            }
+        }
 
         return <ReviewResult>{
             rating: submissionRatingGenerator.rating,
-            message: 'Congrats',
+            message,
             status: ReviewResultStatus.Approve,
             checklist: submissionCriteriaCheck.reviewChecklistResult
         }
     }
 
-    private generateRejection(rejectException: RejectException): ReviewResult {
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
-        submissionCriteriaCheck.check()
+    private generateRejection(rejectException: RejectException, submissionCriteriaCheck?: SubmissionCriteriaCheck): ReviewResult {
+        if(!submissionCriteriaCheck){
+            submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
+            submissionCriteriaCheck.check()
+        }
 
         const courseSubmissionRejection = new CourseSubmissionRejection(rejectException, submissionCriteriaCheck.reviewChecklistResult)
         courseSubmissionRejection.reject()
@@ -144,10 +160,6 @@ class Main {
     private submissionCriteriaCheck = (failurePostmanTest: Array<ResultTestFailure>) => {
         const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, failurePostmanTest)
         submissionCriteriaCheck.check()
-
-        if (submissionCriteriaCheck.approvalStatus === false) {
-            throw new RejectException(RejectionType.TestError, failurePostmanTest)
-        }
 
         return submissionCriteriaCheck
     }

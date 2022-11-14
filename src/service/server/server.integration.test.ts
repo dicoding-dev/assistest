@@ -23,7 +23,7 @@ describe('run server test', () => {
         fakeServer.listen(port)
 
         // test second sever in same port
-        await expect(server.run(submissionProject)).rejects.toThrow(new InvariantException(`Port ${port} is used`))
+        await expect(server.run(submissionProject)).rejects.toThrow(new InvariantException(`PORT_IS_USED`))
         fakeServer.close()
     });
 
