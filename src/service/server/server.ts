@@ -1,8 +1,8 @@
 import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
-import InvariantException from "../../exception/invariant-exception";
 import * as kill from 'tree-kill';
 import SubmissionProject from "../../entities/submission-project/submission-project";
+import ServerErrorException from "../../exception/server-error-exception";
 
 
 class Server {
@@ -21,32 +21,32 @@ class Server {
         this.serverPid = runningServer.pid
 
         this.listenRunningServer(runningServer)
-
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
-            throw new InvariantException(`Server cannot started
-            message: ${e.message}
+            throw new ServerErrorException(`SERVER_ERROR`,
+                `message: ${e.message}
             command: ${command}
             path: ${projectPath}
-            hint: Maybe the port server is not 5000`
+            hint: Maybe the port server is not 5000`,
+                this._errorLog
             )
         }
     }
 
     private listenRunningServer(runningServer: ChildProcess) {
         runningServer.stdout.on('data', async (data) => {
-            if (process.env.DEBUG_MODE) {
-                console.log(`stdout ${data}`);
-            }
+            // if (process.env.DEBUG_MODE) {
+            console.log(`stdout ${data}`);
+            // }
         });
 
         runningServer.stderr.on('data', (data) => {
             this._errorLog.push(data)
-            if (process.env.DEBUG_MODE) {
-                console.log(`stdout ${data}`);
-            }
+            // if (process.env.DEBUG_MODE) {
+            console.log(`stderr ${data}`);
+            // }
         });
 
         if (process.env.DEBUG_MODE) {
@@ -70,7 +70,7 @@ class Server {
         const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
-            throw new InvariantException(`PORT_IS_USED`, `Port ${port} is not available`)
+            throw new ServerErrorException(`PORT_IS_USED`, `Port ${port} is not available`)
         }
     }
 }
