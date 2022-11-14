@@ -18,6 +18,7 @@ import backendPemulaChecklist from "./conifg/backend-pemula-checklist";
 import CourseSubmissionRejection
     from "./entities/review-result/course-submission-rejection/course-submission-rejection";
 import ReviewResult, {ReviewResultStatus} from "./entities/review-result/review-result";
+import exceptionToReviewMessage from "./exception/exception-to-review-message";
 let html = `<table border="1">
     <tr>
          <td>Submission</td>
@@ -74,11 +75,19 @@ class Main {
     }
 
     private generateApproval(submissionProject: SubmissionProject, postmanResult: Array<ResultTestFailure>, submissionCriteriaCheck: SubmissionCriteriaCheck): ReviewResult{
-        const submissionRatingGenerator = new SubmissionRatingGenerator(postmanResult, this.checkEslint(submissionProject))
+        const eslintCheck = this.checkEslint(submissionProject)
+        const submissionRatingGenerator = new SubmissionRatingGenerator(postmanResult, eslintCheck)
+        let message = 'Congrats'
+        if (!this.checkEslint(submissionProject).isSuccess){
+            message = exceptionToReviewMessage[eslintCheck.code]
+            if (eslintCheck.code === 'ESLINT_ERROR'){
+                message += eslintCheck.reason
+            }
+        }
 
         return <ReviewResult>{
             rating: submissionRatingGenerator.rating,
-            message: 'Congrats',
+            message,
             status: ReviewResultStatus.Approve,
             checklist: submissionCriteriaCheck.reviewChecklistResult
         }
