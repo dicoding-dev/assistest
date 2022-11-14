@@ -23,18 +23,18 @@ export default class SubmissionProject {
     private validate(projectPath: ProjectPath, host: string, port: number, runnerCommand: string) {
         const packageJSONPath = path.resolve(projectPath.toString(), 'package.json')
         if (!fs.existsSync(packageJSONPath)) {
-            throw new InvariantException('Path not contain package.json')
+            throw new InvariantException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
 
         this.validatePackageJSONContent(packageJSONPath)
 
         const {scripts} = this._packageJSONContent
         if (!scripts) {
-            throw new InvariantException('package.json not contain "scripts" property')
+            throw new InvariantException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY')
         }
 
         if (!Object.keys(scripts).includes(runnerCommand)) {
-            throw new InvariantException('Runner script not found')
+            throw new InvariantException('RUNNER_SCRIPT_NOT_FOUND')
         }
     }
 
@@ -45,7 +45,7 @@ export default class SubmissionProject {
             return content
         } catch (e) {
             if (e.message.includes("Unexpected token")) {
-                throw new InvariantException('Cannot parse package.json')
+                throw new InvariantException('CANNOT_PARSE_PACKAGE_JSON')
             }
         }
     }
