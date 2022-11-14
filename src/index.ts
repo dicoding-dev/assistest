@@ -18,7 +18,14 @@ import backendPemulaChecklist from "./conifg/backend-pemula-checklist";
 import CourseSubmissionRejection
     from "./entities/review-result/course-submission-rejection/course-submission-rejection";
 import ReviewResult, {ReviewResultStatus} from "./entities/review-result/review-result";
-
+let html = `<table border="1">
+    <tr>
+         <td>Submission</td>
+        <td>Status</td>
+        <td>Rating</td>
+        <td>Message</td>
+        <td>Checklist</td>
+    </tr>`
 class Main {
     async main() {
         const allSubmission = readdirSync('../experiment-storage/project')
@@ -40,17 +47,25 @@ class Main {
                 }
             }
 
-            this.showReviewResult(reviewResult)
+            this.showReviewResult(reviewResult, submission)
         }
+        html += `</table>`
+        console.log(html)
     }
 
-    private showReviewResult(reviewResult: ReviewResult) {
+    private showReviewResult(reviewResult: ReviewResult, submission: string) {
         console.log("status :", reviewResult.status.toString())
         console.log("rating :",reviewResult.rating)
         console.log("message :",reviewResult.message)
-        console.log("checklist :",reviewResult.checklist)
+        console.log("unfulfilled checklist :",reviewResult.checklist.filter(checklist=> checklist.pass == false).map(checklist => checklist.name))
 
-        console.log()
+        html += `<tr>
+                    <td>${submission}</td>
+                    <td>${reviewResult.status.toString()}</td>
+                    <td>${reviewResult.rating}</td>
+                    <td>${reviewResult.message}</td>
+                    <td>${reviewResult.checklist.filter(checklist=> checklist.pass == false).map(checklist => checklist.name).join('<br>')}</td>
+                </tr>`
     }
 
     private generateApproval(submissionProject: SubmissionProject, postmanResult: Array<ResultTestFailure>, submissionCriteriaCheck: SubmissionCriteriaCheck): ReviewResult{
