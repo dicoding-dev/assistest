@@ -38,7 +38,12 @@ class Main {
 
                 const postmanResult = await this.runServerAndTest(submissionProject)
                 const submissionCriteriaCheck = this.submissionCriteriaCheck(postmanResult)
-                reviewResult = this.generateApproval(submissionProject, postmanResult, submissionCriteriaCheck)
+                if (submissionCriteriaCheck.approvalStatus === false) {
+                    const e = new RejectException(RejectionType.TestError, postmanResult)
+                    reviewResult = this.generateRejection(e, submissionCriteriaCheck)
+                }else {
+                    reviewResult = this.generateApproval(submissionProject, postmanResult, submissionCriteriaCheck)
+                }
             } catch (e) {
                 if (e instanceof RejectException) {
                     reviewResult = this.generateRejection(e)
@@ -57,7 +62,7 @@ class Main {
         console.log("status :", reviewResult.status.toString())
         console.log("rating :",reviewResult.rating)
         console.log("message :",reviewResult.message)
-        console.log("unfulfilled checklist :",reviewResult.checklist.filter(checklist=> checklist.pass == false).map(checklist => checklist.name))
+        console.log("unfulfilled checklist :",reviewResult.checklist)
 
         html += `<tr>
                     <td>${submission}</td>
@@ -79,9 +84,11 @@ class Main {
         }
     }
 
-    private generateRejection(rejectException: RejectException): ReviewResult {
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
-        submissionCriteriaCheck.check()
+    private generateRejection(rejectException: RejectException, submissionCriteriaCheck?: SubmissionCriteriaCheck): ReviewResult {
+        if(!submissionCriteriaCheck){
+            submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
+            submissionCriteriaCheck.check()
+        }
 
         const courseSubmissionRejection = new CourseSubmissionRejection(rejectException, submissionCriteriaCheck.reviewChecklistResult)
         courseSubmissionRejection.reject()
@@ -144,10 +151,6 @@ class Main {
     private submissionCriteriaCheck = (failurePostmanTest: Array<ResultTestFailure>) => {
         const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, failurePostmanTest)
         submissionCriteriaCheck.check()
-
-        if (submissionCriteriaCheck.approvalStatus === false) {
-            throw new RejectException(RejectionType.TestError, failurePostmanTest)
-        }
 
         return submissionCriteriaCheck
     }
