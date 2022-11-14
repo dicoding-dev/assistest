@@ -47,6 +47,8 @@ class CourseSubmissionRejection {
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
         let container = ''
         this.failurePostmanTest.forEach(failedTest => {
+            if (failedTest.name.includes('[Optional]')) return
+
             let list = `<li><b>${failedTest.name}</b><ul>`
             failedTest.tests.forEach(test => {
                 list += `<li>Nama test: ${test.test}<br>Pesan error: ${test.message}</li>`
