@@ -70,7 +70,7 @@ class Server {
         const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
-            throw new InvariantException(`Port ${port} is used`)
+            throw new InvariantException(`PORT_IS_USED`, `Port ${port} is not available`)
         }
     }
 }

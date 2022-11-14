@@ -1,7 +1,7 @@
 export default class InvariantException extends Error{
-    constructor(message) {
-        super(message);
-        this.message = message
+    constructor(code: string, payload?) {
+        super(code);
+        this.message = code
     }
 
 }
