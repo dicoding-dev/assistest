@@ -13,19 +13,19 @@ class EslintChecker {
     check(): EslintCheckResult {
         const packageJSONContent = this.submissionProject.packageJSONContent
         if (!packageJSONContent.dependencies?.eslint && !packageJSONContent.devDependencies?.eslint) {
-            return new EslintCheckResult(false, 'Eslint not installed')
+            return new EslintCheckResult(false, 'ESLINT_NOT_INSTALLED')
         }
 
         try {
-            const result = execSync('npx eslint .', {cwd: this.submissionProject.projectPath, stdio: "pipe"})
-            return new EslintCheckResult(true, result.toString())
+            const result = execSync('npx eslint ./ --rule \'linebreak-style:off\'', {cwd: this.submissionProject.projectPath, stdio: "pipe"})
+            return new EslintCheckResult(true, 'NO_ERROR_FROM_ESLINT', result.toString())
         } catch (e) {
             if (e.stderr.toString()){
-                return new EslintCheckResult(false, e.stderr.toString())
+                return new EslintCheckResult(false, 'ESLINT_ERROR', e.stderr.toString())
             }
 
             if (e.stdout.toString()){
-                return new EslintCheckResult(false, e.stdout.toString())
+                return new EslintCheckResult(false, 'ESLINT_ERROR', e.stdout.toString())
             }
 
             throw new Error('Error when check eslint' + e.message)
