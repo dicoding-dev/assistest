@@ -63,7 +63,12 @@ class CourseSubmissionRejection {
 
     private composeRejectionMessageFromServerErrorMessage() {
         const translatedException = exceptionToReviewMessage[this.submissionErrorException.code]
-        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
+        if (this.submissionErrorException instanceof ServerErrorException){
+            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}. Berikut merupakan log error yang muncul ketika aplikasi dijalankan: ${this.submissionErrorException.serverErrorLog}`
+        }else {
+            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
+        }
+
     }
 
     get messages(): string {
