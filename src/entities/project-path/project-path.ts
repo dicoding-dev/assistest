@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import InvariantException from "../../exception/invariant-exception";
+import ProjectErrorException from "../../exception/project-error-exception";
 
 class ProjectPath {
     private readonly value: string;
@@ -16,7 +16,7 @@ class ProjectPath {
 
     private validate(submissionPath) {
         if (!fs.existsSync(submissionPath)) {
-            throw new InvariantException('SUBMISSION_PATH_IS_NOT_FOUND')
+            throw new ProjectErrorException('SUBMISSION_PATH_IS_NOT_FOUND')
         }
     }
 
@@ -24,7 +24,7 @@ class ProjectPath {
         const files = this.getFilesRecursively(submissionPath)
         const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
         if (!packageJsonPath) {
-            throw new InvariantException('PATH_NOT_CONTAIN_PACKAGE_JSON')
+            throw new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
         return path.dirname(packageJsonPath)
     }

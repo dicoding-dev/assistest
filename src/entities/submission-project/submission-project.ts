@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from 'path';
 import ProjectPath from "../project-path/project-path";
-import InvariantException from "../../exception/invariant-exception";
 import PackageJson from "./package-json";
+import ProjectErrorException from "../../exception/project-error-exception";
 
 export default class SubmissionProject {
     private readonly _projectPath: string;
@@ -23,18 +23,18 @@ export default class SubmissionProject {
     private validate(projectPath: ProjectPath, host: string, port: number, runnerCommand: string) {
         const packageJSONPath = path.resolve(projectPath.toString(), 'package.json')
         if (!fs.existsSync(packageJSONPath)) {
-            throw new InvariantException('PATH_NOT_CONTAIN_PACKAGE_JSON')
+            throw new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
 
         this.validatePackageJSONContent(packageJSONPath)
 
         const {scripts} = this._packageJSONContent
         if (!scripts) {
-            throw new InvariantException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY')
+            throw new ProjectErrorException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY')
         }
 
         if (!Object.keys(scripts).includes(runnerCommand)) {
-            throw new InvariantException('RUNNER_SCRIPT_NOT_FOUND')
+            throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
         }
     }
 
@@ -45,7 +45,7 @@ export default class SubmissionProject {
             return content
         } catch (e) {
             if (e.message.includes("Unexpected token")) {
-                throw new InvariantException('CANNOT_PARSE_PACKAGE_JSON')
+                throw new ProjectErrorException('CANNOT_PARSE_PACKAGE_JSON')
             }
         }
     }

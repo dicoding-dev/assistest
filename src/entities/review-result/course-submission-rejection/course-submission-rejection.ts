@@ -1,14 +1,14 @@
-import InvariantException from "../../../exception/invariant-exception";
 import ReviewType from "../review-type";
 import FailureTest from "../../../service/postman-runner/failure-test";
 import ReviewChecklistResult from "../review-checklist-result";
-import RejectionType from "../rejection-type";
-import RejectException from "../../../exception/reject-exception";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
+import SubmissionErrorException from "../../../exception/submission-error-excepion";
+import PostmanTestFailedException from "../../../exception/postman-test-failed-exception";
+import ProjectErrorException from "../../../exception/project-error-exception";
+import ServerErrorException from "../../../exception/server-error-exception";
 
 
 class CourseSubmissionRejection {
-    error: InvariantException;
 
     private submissionId = 1
     private reviewType = ReviewType.Reject
@@ -17,27 +17,25 @@ class CourseSubmissionRejection {
     private rating = 0
     private _messages: string
     failurePostmanTest: FailureTest[];
+    private submissionErrorException: SubmissionErrorException;
     private _reviewChecklistResults: ReviewChecklistResult[];
     private _unfulfilledChecklistsResult: ReviewChecklistResult[];
-    private rejectionType: RejectionType;
 
-    constructor(rejectException: RejectException, reviewChecklistResults: ReviewChecklistResult[]) {
-        this.rejectionType = rejectException.rejectionType;
-        this.failurePostmanTest = rejectException.failurePostmanTest;
-        this.error = rejectException.error;
+    constructor(submissionErrorException: SubmissionErrorException, reviewChecklistResults: ReviewChecklistResult[]) {
+        this.submissionErrorException = submissionErrorException;
         this._reviewChecklistResults = reviewChecklistResults;
     }
 
     public reject(){
-        if (this.rejectionType === RejectionType.TestError) {
+        if (this.submissionErrorException instanceof PostmanTestFailedException) {
             this.composeRejectionMessageFromCriteria()
         }
 
-        if (this.rejectionType === RejectionType.ProjectError) {
+        if (this.submissionErrorException instanceof ProjectErrorException) {
             this.composeRejectionMessageFromProjectErrorMessage()
         }
 
-        if (this.rejectionType === RejectionType.ServerError) {
+        if (this.submissionErrorException instanceof ServerErrorException) {
             this.composeRejectionMessageFromServerErrorMessage()
         }
     }
@@ -46,7 +44,7 @@ class CourseSubmissionRejection {
         const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
         let container = ''
-        this.failurePostmanTest.forEach(failedTest => {
+        this.submissionErrorException.failurePostmanTest.forEach(failedTest => {
             if (failedTest.name.includes('[Optional]')) return
 
             let list = `<li><b>${failedTest.name}</b><ul>`
@@ -59,13 +57,18 @@ class CourseSubmissionRejection {
     }
 
     private composeRejectionMessageFromProjectErrorMessage() {
-        const translatedException = exceptionToReviewMessage[this.error.message]
+        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message]
         this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${translatedException}`
     }
 
     private composeRejectionMessageFromServerErrorMessage() {
-        const translatedException = exceptionToReviewMessage[this.error.message]
-        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
+        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message]
+        if (this.submissionErrorException instanceof ServerErrorException){
+            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${this.submissionErrorException.serverErrorLog}<pre>`
+        }else {
+            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
+        }
+
     }
 
     get messages(): string {
