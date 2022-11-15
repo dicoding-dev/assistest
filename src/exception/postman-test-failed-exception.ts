@@ -2,10 +2,10 @@ import ResultTestFailure from "../service/postman-runner/failure-test";
 import SubmissionErrorException from "./submission-error-excepion";
 
 class PostmanTestFailedException extends SubmissionErrorException{
-    constructor(code: string, failurePostmanTest: ResultTestFailure[], message?: string, serverErrorLog?: string[]) {
-        super();
-        this.code = code;
+    constructor(message: string, failurePostmanTest: ResultTestFailure[], additionalMessage?: string, serverErrorLog?: string[]) {
+        super(message);
         this.message = message;
+        this.additionalMessage = additionalMessage;
         this.serverErrorLog = serverErrorLog;
         this.failurePostmanTest = failurePostmanTest
     }
