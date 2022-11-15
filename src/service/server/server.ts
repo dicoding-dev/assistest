@@ -3,8 +3,7 @@ import * as tcpPortUsed from 'tcp-port-used';
 import * as kill from 'tree-kill';
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import ServerErrorException from "../../exception/server-error-exception";
-import {getCommandFromLogError, getPortFromLogError} from "./server-error-utils";
-import ProjectErrorException from "../../exception/project-error-exception";
+import ServerErrorHandling from "./server-error-handling";
 
 
 class Server {
@@ -27,28 +26,8 @@ class Server {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
-            const errorLog = this._errorLog.join(', ')
-            const portFromLogError = getPortFromLogError(errorLog)
-            if (portFromLogError && portFromLogError !== port) {
-                throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
-            }
-            const commandFromLogError = getCommandFromLogError(errorLog)
-            if (commandFromLogError) {
-                throw new ServerErrorException('COMMAND_NOT_FOUND', null, this._errorLog)
-            }
-
-            if (errorLog.includes('Error: Cannot find module')) {
-                throw new ServerErrorException('MODULE_NOT_FOUND', null, this._errorLog)
-            }
-
-
-            throw new ServerErrorException(`SERVER_ERROR`,
-                `message: ${e.message}
-            command: ${command}
-            path: ${projectPath}
-            hint: Maybe the port server is not 5000`,
-                this._errorLog
-            )
+            const serverErrorHandling = new ServerErrorHandling(this._errorLog, submissionProject)
+            serverErrorHandling.throwError()
         }
     }
 
