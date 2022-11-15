@@ -8,17 +8,16 @@ import PostmanRunner from "./service/postman-runner/postman-runner"
 import * as collection from '../../experiment-storage/postman/collection.json'
 import * as env from '../../experiment-storage/postman/environment.json'
 import EslintChecker from "./service/eslint-checker/eslint-checker";
-import InvariantException from "./exception/invariant-exception";
 import ResultTestFailure from "./service/postman-runner/failure-test";
 import SubmissionRatingGenerator from "./entities/review-result/submission-rating-generator";
-import RejectionType from "./entities/review-result/rejection-type";
-import RejectException from "./exception/reject-exception";
 import SubmissionCriteriaCheck from "./entities/review-result/submission-criteria-check/submission-criteria-check";
 import backendPemulaChecklist from "./conifg/backend-pemula-checklist";
 import CourseSubmissionRejection
     from "./entities/review-result/course-submission-rejection/course-submission-rejection";
 import ReviewResult, {ReviewResultStatus} from "./entities/review-result/review-result";
 import exceptionToReviewMessage from "./exception/exception-to-review-message";
+import SubmissionErrorException from "./exception/submission-error-excepion";
+import PostmanTestFailedException from "./exception/postman-test-failed-exception";
 let html = `<table border="1">
     <tr>
          <td>Submission</td>
@@ -40,13 +39,13 @@ class Main {
                 const postmanResult = await this.runServerAndTest(submissionProject)
                 const submissionCriteriaCheck = this.submissionCriteriaCheck(postmanResult)
                 if (submissionCriteriaCheck.approvalStatus === false) {
-                    const e = new RejectException(RejectionType.TestError, postmanResult)
+                    const e = new PostmanTestFailedException('', postmanResult)
                     reviewResult = this.generateRejection(e, submissionCriteriaCheck)
                 }else {
                     reviewResult = this.generateApproval(submissionProject, postmanResult, submissionCriteriaCheck)
                 }
             } catch (e) {
-                if (e instanceof RejectException) {
+                if (e instanceof SubmissionErrorException) {
                     reviewResult = this.generateRejection(e)
                 } else {
                     console.log(e)
@@ -81,7 +80,7 @@ class Main {
         if (!this.checkEslint(submissionProject).isSuccess){
             message = exceptionToReviewMessage[eslintCheck.code]
             if (eslintCheck.code === 'ESLINT_ERROR'){
-                message += eslintCheck.reason
+                message += `<pre>${eslintCheck.reason}</pre>`
             }
         }
 
@@ -93,13 +92,13 @@ class Main {
         }
     }
 
-    private generateRejection(rejectException: RejectException, submissionCriteriaCheck?: SubmissionCriteriaCheck): ReviewResult {
+    private generateRejection(submissionErrorException: SubmissionErrorException, submissionCriteriaCheck?: SubmissionCriteriaCheck): ReviewResult {
         if(!submissionCriteriaCheck){
             submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
             submissionCriteriaCheck.check()
         }
 
-        const courseSubmissionRejection = new CourseSubmissionRejection(rejectException, submissionCriteriaCheck.reviewChecklistResult)
+        const courseSubmissionRejection = new CourseSubmissionRejection(submissionErrorException, submissionCriteriaCheck.reviewChecklistResult)
         courseSubmissionRejection.reject()
 
 
@@ -112,16 +111,9 @@ class Main {
     }
 
     private createSubmissionProject = (submission) => {
-        try {
             const submissionPath = path.resolve('../experiment-storage/project', submission)
             const projectPath = new ProjectPath(submissionPath)
             return new SubmissionProject(projectPath, 'localhost', 5000, 'start')
-        } catch (e) {
-            if (e instanceof InvariantException) {
-                throw new RejectException(RejectionType.ProjectError, [], e)
-            }
-            throw e
-        }
     }
 
     private prepareSubmissionProject = (submissionProject: SubmissionProject) => {
@@ -141,20 +133,12 @@ class Main {
     }
 
     private runServerAndTest = async (submissionProject: SubmissionProject) => {
-        try {
             await this.prepareSubmissionProject(submissionProject)
             const server = await this.startServer(submissionProject)
             const postmanResult = await this.runPostmanTest()
             await server.stop()
 
             return postmanResult
-        } catch (e) {
-            if (e instanceof InvariantException) {
-                throw new RejectException(RejectionType.ServerError, [], e)
-            }
-
-            throw e
-        }
     }
 
     private submissionCriteriaCheck = (failurePostmanTest: Array<ResultTestFailure>) => {
@@ -168,7 +152,6 @@ class Main {
         const eslintChecker = new EslintChecker(submissionProject)
         return eslintChecker.check()
     }
-
 }
 
 new Main().main()
