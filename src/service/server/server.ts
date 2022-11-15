@@ -33,8 +33,12 @@ class Server {
                 throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
             }
             const commandFromLogError = getCommandFromLogError(errorLog)
-            if (commandFromLogError){
-                throw new ProjectErrorException('COMMAND_NOT_FOUND')
+            if (commandFromLogError) {
+                throw new ServerErrorException('COMMAND_NOT_FOUND', null, this._errorLog)
+            }
+
+            if (errorLog.includes('Error: Cannot find module')) {
+                throw new ServerErrorException('MODULE_NOT_FOUND', null, this._errorLog)
             }
 
 
