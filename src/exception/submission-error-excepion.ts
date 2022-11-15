@@ -1,13 +1,13 @@
 import ResultTestFailure from "../service/postman-runner/failure-test";
 
 abstract class SubmissionErrorException extends Error{
-    code: string
+    message: string
     additionalMessage: string
     serverErrorLog: string[]
     failurePostmanTest: ResultTestFailure[]
 
-    protected constructor(code: string) {
-        super(code);
+    protected constructor(message: string) {
+        super(message);
     }
 }
 

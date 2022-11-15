@@ -57,12 +57,12 @@ class CourseSubmissionRejection {
     }
 
     private composeRejectionMessageFromProjectErrorMessage() {
-        const translatedException = exceptionToReviewMessage[this.submissionErrorException.code]
+        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message]
         this._messages = `Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena ${translatedException}`
     }
 
     private composeRejectionMessageFromServerErrorMessage() {
-        const translatedException = exceptionToReviewMessage[this.submissionErrorException.code]
+        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message]
         if (this.submissionErrorException instanceof ServerErrorException){
             this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: ${this.submissionErrorException.serverErrorLog}`
         }else {
