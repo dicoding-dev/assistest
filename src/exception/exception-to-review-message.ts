@@ -6,6 +6,7 @@ const exceptionToReviewMessage = {
     'ESLINT_NOT_INSTALLED': 'Aplikasi yang kamu buat sudah berjalan dengan baik. Tetapi kode yang dituliskan masih ada yang bisa ditingkatkan. Sebaiknya gunakan salah satu style guide yang ada pada eslint agar kode yang kamu buat bisa semakin konsisten. Tingkatkan aplikasinya untuk latihan yaa. Semagatt!!',
     'ESLINT_ERROR' : 'Masih terdapat error ketika eslint dijalankan dengan perintah npx eslint ./src. Sebaiknya diperbaiki yaa, pastikan tidak ada warning atau error pada kode yang kamu buat.',
     'SEVER_FAILED_TO_START': '',
+    'PORT_NOT_MEET_REQUIREMENT': 'port yang kamu gunakan untuk menjalankan aplikasi masih belum sesuai dengan kriteria submission, silakan dicek kembali kriterianya yaa.'
 
 }
 
