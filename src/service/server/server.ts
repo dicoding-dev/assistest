@@ -3,6 +3,8 @@ import * as tcpPortUsed from 'tcp-port-used';
 import * as kill from 'tree-kill';
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import ServerErrorException from "../../exception/server-error-exception";
+import getPortFromLogError from "./server-error-utils";
+import ProjectErrorException from "../../exception/project-error-exception";
 
 
 class Server {
@@ -25,6 +27,10 @@ class Server {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
+            const portFromLogError = getPortFromLogError(this._errorLog.join(', '))
+            if (portFromLogError && portFromLogError !== port) {
+                throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
+            }
             throw new ServerErrorException(`SERVER_ERROR`,
                 `message: ${e.message}
             command: ${command}
