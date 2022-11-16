@@ -1,6 +1,6 @@
-import SubmissionProject from "../../entities/submission-project/submission-project";
 import EslintChecker from "./eslint-checker";
-import ProjectPath from "../../entities/project-path/project-path";
+import SubmissionProjectFactory from "../../entities/submission-project/submission-project-factory";
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 describe('eslint checker', () => {
     it('should return Not Installed when eslint not exist in package.json', function () {
@@ -36,8 +36,8 @@ describe('eslint checker', () => {
         expect(checkResult.isSuccess).toStrictEqual(true)
     });
 
-    function createProject(submissionPath: string) {
-        const projectPath = new ProjectPath(submissionPath)
-        return new SubmissionProject(projectPath, '', 0, 'test')
+    function createProject(submissionPath: string): SubmissionProject {
+        const submissionProjectFactory = new SubmissionProjectFactory(submissionPath)
+        return submissionProjectFactory.create()
     }
 })
