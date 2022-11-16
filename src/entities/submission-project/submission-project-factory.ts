@@ -2,8 +2,8 @@ import * as fs from "fs";
 import * as path from 'path';
 import PackageJson from "./package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
-import backendPemulaProjectRequirement from "../../conifg/backend-pemula-project-requirement";
 import SubmissionProject from "./submission-project";
+import {runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 
 
 export default class SubmissionProjectFactory {
@@ -37,7 +37,7 @@ export default class SubmissionProjectFactory {
             throw new ProjectErrorException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY')
         }
 
-        if (!Object.keys(scripts).includes(backendPemulaProjectRequirement.runnerCommand)) {
+        if (!Object.keys(scripts).includes(runnerCommand)) {
             throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
         }
     }
