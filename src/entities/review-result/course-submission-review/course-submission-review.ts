@@ -6,7 +6,7 @@ import SubmissionRatingGenerator from "../submission-rating-generator";
 import CourseSubmissionAcception from "../course-submission-acception/course-submission-acception";
 import SubmissionErrorException from "../../../exception/submission-error-excepion";
 import CourseSubmissionRejection from "../course-submission-rejection/course-submission-rejection";
-import EslintCheckResult from "../../eslint-check/eslint-check-result";
+import EslintCheckResult from "../../../service/eslint-checker/eslint-check-result";
 
 class CourseSubmissionReview {
     private readonly submissionCriteriaCheck: SubmissionCriteriaCheck;
