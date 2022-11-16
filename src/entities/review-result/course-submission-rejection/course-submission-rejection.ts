@@ -19,7 +19,6 @@ class CourseSubmissionRejection {
     failurePostmanTest: FailureTest[];
     private submissionErrorException: SubmissionErrorException;
     private _reviewChecklistResults: ReviewChecklistResult[];
-    private _unfulfilledChecklistsResult: ReviewChecklistResult[];
 
     constructor(submissionErrorException: SubmissionErrorException, reviewChecklistResults: ReviewChecklistResult[]) {
         this.submissionErrorException = submissionErrorException;
@@ -73,10 +72,6 @@ class CourseSubmissionRejection {
 
     get messages(): string {
         return this._messages;
-    }
-
-    get unfulfilledChecklistsResult(): ReviewChecklistResult[] {
-        return this._unfulfilledChecklistsResult;
     }
 
     get reviewChecklistResults(): ReviewChecklistResult[] {
