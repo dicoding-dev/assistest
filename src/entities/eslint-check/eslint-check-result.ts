@@ -1,9 +1,9 @@
 class EslintCheckResult {
     private readonly _isSuccess: boolean;
     private readonly _reason?: string;
-    private readonly _code: string;
+    private readonly _code?: string;
 
-    constructor(isSuccess: boolean, code: string, reason?: string) {
+    constructor(isSuccess: boolean, code?: string, reason?: string) {
         this._isSuccess = isSuccess;
         this._code = code;
         this._reason = reason;
