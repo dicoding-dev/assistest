@@ -19,7 +19,6 @@ class CourseSubmissionRejection {
     failurePostmanTest: FailureTest[];
     private submissionErrorException: SubmissionErrorException;
     private _reviewChecklistResults: ReviewChecklistResult[];
-    private _unfulfilledChecklistsResult: ReviewChecklistResult[];
 
     constructor(submissionErrorException: SubmissionErrorException, reviewChecklistResults: ReviewChecklistResult[]) {
         this.submissionErrorException = submissionErrorException;
@@ -63,20 +62,11 @@ class CourseSubmissionRejection {
 
     private composeRejectionMessageFromServerErrorMessage() {
         const translatedException = exceptionToReviewMessage[this.submissionErrorException.message]
-        if (this.submissionErrorException instanceof ServerErrorException){
-            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${this.submissionErrorException.serverErrorLog}<pre>`
-        }else {
-            this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException}`
-        }
-
+        this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${this.submissionErrorException.serverErrorLog}<pre>`
     }
 
     get messages(): string {
         return this._messages;
-    }
-
-    get unfulfilledChecklistsResult(): ReviewChecklistResult[] {
-        return this._unfulfilledChecklistsResult;
     }
 
     get reviewChecklistResults(): ReviewChecklistResult[] {

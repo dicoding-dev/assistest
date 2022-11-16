@@ -3,7 +3,6 @@ import * as tcpPortUsed from 'tcp-port-used';
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import ProjectPath from "../../entities/project-path/project-path";
 import Server from "./server";
-import InvariantException from "../../exception/invariant-exception";
 
 describe('run server test', () => {
     afterEach(() => {
@@ -23,7 +22,7 @@ describe('run server test', () => {
         fakeServer.listen(port)
 
         // test second sever in same port
-        await expect(server.run(submissionProject)).rejects.toThrow(new InvariantException(`PORT_IS_USED`))
+        await expect(server.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
         fakeServer.close()
     });
 

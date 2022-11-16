@@ -1,5 +1,4 @@
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import EslintCheckResult from "../../entities/eslint-check/eslint-check-result";
 import EslintChecker from "./eslint-checker";
 import ProjectPath from "../../entities/project-path/project-path";
 
@@ -8,7 +7,7 @@ describe('eslint checker', () => {
         const project = createProject('./test/student-project/sample-project')
 
         const eslintChecker = new EslintChecker(project)
-        expect(eslintChecker.check()).toStrictEqual(new EslintCheckResult(false, 'Eslint not installed'))
+        expect(eslintChecker.check()).toStrictEqual({isSuccess:false, code:'ESLINT_NOT_INSTALLED'})
     });
 
     it('should return config error if eslint not configure properly', function () {
@@ -27,6 +26,14 @@ describe('eslint checker', () => {
         const checkResult = eslintChecker.check()
         expect(checkResult.isSuccess).toStrictEqual(false)
         expect(checkResult.reason).toContain('problems')
+    });
+
+    it('should return success if no error happen', function () {
+        const project = createProject('./test/student-project/passed-project')
+
+        const eslintChecker = new EslintChecker(project)
+        const checkResult = eslintChecker.check()
+        expect(checkResult.isSuccess).toStrictEqual(true)
     });
 
     function createProject(submissionPath: string) {

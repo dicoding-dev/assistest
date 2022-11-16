@@ -1,5 +1,5 @@
 import ProjectPath from "./project-path";
-import InvariantException from "../../exception/invariant-exception";
+import ProjectErrorException from "../../exception/project-error-exception";
 
 describe('project discovery test', () => {
     it('should found package.json when path is in root folder', function () {
@@ -24,7 +24,7 @@ describe('project discovery test', () => {
     });
 
     it('should return error when submission path is not found', function () {
-        expect(() => new ProjectPath('./test/student-project/xxxx')).toThrow(new InvariantException('SUBMISSION_PATH_IS_NOT_FOUND'))
+        expect(() => new ProjectPath('./test/student-project/xxxx')).toThrow(new ProjectErrorException('SUBMISSION_PATH_IS_NOT_FOUND'))
     });
 
     it('project path should not contain node-modules ', function () {
