@@ -2,7 +2,6 @@ import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import * as kill from 'tree-kill';
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import ServerErrorException from "../../exception/server-error-exception";
 import ServerErrorHandling from "./server-error-handling";
 
 
@@ -66,7 +65,7 @@ class Server {
         const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
-            throw new ServerErrorException(`PORT_IS_USED`, `Port ${port} is not available`)
+            throw new Error(`Port ${port} is not available`)
         }
     }
 }
