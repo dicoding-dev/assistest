@@ -1,6 +1,6 @@
 import {execSync} from "child_process";
-import SubmissionProject from "../../entities/submission-project/submission-project";
 import EslintCheckResult from "./eslint-check-result";
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 
 class EslintChecker {
@@ -11,14 +11,14 @@ class EslintChecker {
     }
 
     check(): EslintCheckResult {
-        const packageJSONContent = this.submissionProject.packageJSONContent
+        const packageJSONContent = this.submissionProject.packageJsonContent
         if (!packageJSONContent.dependencies?.eslint && !packageJSONContent.devDependencies?.eslint) {
             return {isSuccess: false, code: 'ESLINT_NOT_INSTALLED'}
         }
 
         try {
             const result = execSync('npx eslint ./ --rule \'linebreak-style:off\'', {
-                cwd: this.submissionProject.projectPath,
+                cwd: this.submissionProject.packageJsonPath,
                 stdio: "pipe"
             })
             return {isSuccess: true, code: 'NO_ERROR_FROM_ESLINT', reason: result.toString()}
