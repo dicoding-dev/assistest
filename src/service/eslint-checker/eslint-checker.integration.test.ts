@@ -28,6 +28,14 @@ describe('eslint checker', () => {
         expect(checkResult.reason).toContain('problems')
     });
 
+    it('should return success if no error happen', function () {
+        const project = createProject('./test/student-project/passed-project')
+
+        const eslintChecker = new EslintChecker(project)
+        const checkResult = eslintChecker.check()
+        expect(checkResult.isSuccess).toStrictEqual(true)
+    });
+
     function createProject(submissionPath: string) {
         const projectPath = new ProjectPath(submissionPath)
         return new SubmissionProject(projectPath, '', 0, 'test')
