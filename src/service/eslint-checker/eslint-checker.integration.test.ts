@@ -8,7 +8,7 @@ describe('eslint checker', () => {
         const project = createProject('./test/student-project/sample-project')
 
         const eslintChecker = new EslintChecker(project)
-        expect(eslintChecker.check()).toStrictEqual(new EslintCheckResult(false, 'Eslint not installed'))
+        expect(eslintChecker.check()).toStrictEqual(new EslintCheckResult(false, 'ESLINT_NOT_INSTALLED'))
     });
 
     it('should return config error if eslint not configure properly', function () {
