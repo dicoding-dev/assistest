@@ -1,7 +1,4 @@
-const backendPemulaProjectRequirement = {
-    host: 'localhost',
-    port: 5000,
-    runnerCommand: 'start'
-}
-
-export default backendPemulaProjectRequirement
+const host = 'localhost'
+const port = 5000
+const runnerCommand = 'start'
+export {host, port, runnerCommand}
