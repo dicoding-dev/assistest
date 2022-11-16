@@ -1,38 +1,30 @@
 import * as fs from "fs";
 import * as path from "path";
-import ProjectErrorException from "../../exception/project-error-exception";
 
-class ProjectPath {
-    private readonly value: string;
+class PackageJsonFinderService {
+    private readonly submissionPath: string;
 
     constructor(submissionPath: string) {
-        this.validate(submissionPath)
-        this.value = this.getPackageJsonDirectory(submissionPath)
+        this.submissionPath = submissionPath;
     }
 
-    toString() {
-        return this.value
-    }
-
-    private validate(submissionPath) {
-        if (!fs.existsSync(submissionPath)) {
-            throw new ProjectErrorException('SUBMISSION_PATH_IS_NOT_FOUND')
+    getPackageJsonDirectory(): string | null {
+        if (!fs.existsSync(this.submissionPath)) {
+            return null
         }
-    }
 
-    private getPackageJsonDirectory(submissionPath): string {
-        const files = this.getFilesRecursively(submissionPath)
+        const files = this.getFilesRecursively()
         const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
         if (!packageJsonPath) {
-            throw new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
+            return null
         }
         return path.dirname(packageJsonPath)
     }
 
 
-    private getFilesRecursively(submissionPath) {
+    private getFilesRecursively() {
         const files = []
-        getFiles(submissionPath)
+        getFiles(this.submissionPath)
 
         function getFiles(directory) {
             fs.readdirSync(directory).forEach(file => {
@@ -49,4 +41,4 @@ class ProjectPath {
     }
 }
 
-export default ProjectPath
+export default PackageJsonFinderService
