@@ -5,7 +5,6 @@ import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {host, port, runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 
-
 class ServerService {
     private _errorLog = [];
     private serverPort: number;
@@ -25,24 +24,23 @@ class ServerService {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
-            //handler
-            const serverErrorHandling = new ServerErrorHandler(this._errorLog, submissionProject)
-            serverErrorHandling.throwError()
+            const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
+            serverErrorHandler.throwError()
         }
     }
 
     private listenRunningServer(runningServer: ChildProcess) {
         runningServer.stdout.on('data', async (data) => {
-            // if (process.env.DEBUG_MODE) {
-            // console.log(`stdout ${data}`);
-            // }
+            if (process.env.DEBUG_MODE) {
+                console.log(`stdout ${data}`);
+            }
         });
 
         runningServer.stderr.on('data', (data) => {
             this._errorLog.push(data)
-            // if (process.env.DEBUG_MODE) {
-            console.log(`stderr ${data}`);
-            // }
+            if (process.env.DEBUG_MODE) {
+                console.log(`stderr ${data}`);
+            }
         });
 
         if (process.env.DEBUG_MODE) {
@@ -59,7 +57,6 @@ class ServerService {
         } catch (e) {
             throw new Error(`Failed to kill port ${this.serverPort}, error: ${e}`)
         }
-
     }
 
     private async validateBeforeStart() {
