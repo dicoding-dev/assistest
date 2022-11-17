@@ -1,5 +1,5 @@
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import EslintCheckResult from "../eslint-check/eslint-check-result";
+import EslintCheckResult from "../../service/eslint-checker/eslint-check-result";
 
 class SubmissionRatingGenerator {
 
