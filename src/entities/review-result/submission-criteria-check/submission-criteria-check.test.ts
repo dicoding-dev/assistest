@@ -4,6 +4,8 @@ import backendPemulaChecklist from "../../../conifg/backend-pemula-checklist";
 
 
 describe('mandatory criteria test', () => {
+    const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist)
+
     it('should grouping failed test by criteria and return approval false', function () {
         const failurePostmanTest: Array<ResultTestFailure> = [
             {
@@ -24,8 +26,7 @@ describe('mandatory criteria test', () => {
             }
         ]
 
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, failurePostmanTest)
-        submissionCriteriaCheck.check()
+        submissionCriteriaCheck.check(failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
             {
@@ -105,8 +106,7 @@ describe('mandatory criteria test', () => {
     it('should return approval true', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist,failurePostmanTest)
-        submissionCriteriaCheck.check()
+        submissionCriteriaCheck.check(failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
             {
@@ -160,7 +160,6 @@ describe('mandatory criteria test', () => {
     })
 
     it('should return approval false and all criteria is not passed when failed postman test not exist', function () {
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist)
         submissionCriteriaCheck.check()
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([

@@ -4,17 +4,16 @@ import SubmissionChecklist from "../../../conifg/submission-checklist";
 
 class SubmissionCriteriaCheck {
     private _reviewChecklistResult: Array<ReviewChecklistResult>
-    private readonly _failurePostmanTest: Array<ResultTestFailure>;
+    private _failurePostmanTest: Array<ResultTestFailure>;
     private submissionChecklists: SubmissionChecklist[];
 
-    constructor(submissionChecklists: SubmissionChecklist[], failurePostmanTest: Array<ResultTestFailure> = null) {
+    constructor(submissionChecklists: SubmissionChecklist[]) {
         this.submissionChecklists = submissionChecklists;
-        this._failurePostmanTest = failurePostmanTest;
     }
 
-    public check(){
+    public check(failurePostmanTest: Array<ResultTestFailure> = null){
         this._reviewChecklistResult = this.submissionChecklists.map(criteria => {
-            const unfulfilledRequirement = this._failurePostmanTest?.filter(testResult => criteria.requirements.includes(testResult.name))
+            const unfulfilledRequirement = failurePostmanTest?.filter(testResult => criteria.requirements.includes(testResult.name))
             const checklistPass = unfulfilledRequirement?.length < 1
             return <ReviewChecklistResult>{
                 name: criteria.name,
@@ -23,6 +22,8 @@ class SubmissionCriteriaCheck {
                 requirement: criteria.requirements
             }
         })
+
+        this._failurePostmanTest = failurePostmanTest
     }
 
     get approvalStatus(): boolean {
