@@ -1,7 +1,8 @@
 import SubmissionChecklist from "../../conifg/submission-checklist";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import SubmissionCriteriaCheck from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
-import ReviewChecklistResult from "../../entities/review-result/review-checklist-result";
+import SubmissionCriteriaCheck, {
+    ReviewChecklistResult
+} from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
 
 class SubmissionCriteriaCheckFactory {
     private submissionChecklists: SubmissionChecklist[];

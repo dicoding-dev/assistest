@@ -1,12 +1,14 @@
 import {readdirSync, writeFileSync} from "fs";
 import * as path from "path";
-import ReviewResult from "./entities/review-result/review-result";
 import { main } from "./service-provider";
+import ReviewResult from "./entities/review-result/course-submission-review/review-result";
 
 
 async function run() {
     const allSubmission = readdirSync('../experiment-storage/project')
+
     for (const submission of allSubmission) {
+        console.log(`checking ${submission}`)
         const submissionPath = path.resolve('../experiment-storage/project', submission)
         const reviewResult = await main.reviewSubmission(submissionPath)
         generateReport(reviewResult, submission)

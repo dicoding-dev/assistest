@@ -1,11 +1,10 @@
 import ReviewType from "../review-type";
-import ReviewChecklistResult from "../review-checklist-result";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionErrorException from "../../../exception/submission-error-excepion";
 import PostmanTestFailedException from "../../../exception/postman-test-failed-exception";
 import ProjectErrorException from "../../../exception/project-error-exception";
 import ServerErrorException from "../../../exception/server-error-exception";
-import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
+import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
 
 
 class CourseSubmissionRejection {
