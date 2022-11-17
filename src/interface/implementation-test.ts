@@ -1,7 +1,7 @@
 import {readdirSync, writeFileSync} from "fs";
 import * as path from "path";
-import { main } from "./service-provider";
-import ReviewResult from "./entities/review-result/course-submission-review/review-result";
+import {main} from "../service-provider";
+import ReviewResult from "../entities/review-result/course-submission-review/review-result";
 
 
 async function run() {
