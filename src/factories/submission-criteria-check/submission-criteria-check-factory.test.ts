@@ -1,6 +1,7 @@
 import SubmissionCriteriaCheckFactory from "./submission-criteria-check-factory";
-import ResultTestFailure from "../../../service/postman-runner/failure-test";
-import backendPemulaChecklist from "../../../conifg/backend-pemula-checklist";
+import ResultTestFailure from "../../service/postman-runner/failure-test";
+import backendPemulaChecklist from "../../conifg/backend-pemula-checklist";
+
 
 
 describe('mandatory criteria test', () => {
