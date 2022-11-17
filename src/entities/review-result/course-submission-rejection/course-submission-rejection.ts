@@ -1,11 +1,10 @@
 import ReviewType from "../review-type";
-import FailureTest from "../../../service/postman-runner/failure-test";
-import ReviewChecklistResult from "../review-checklist-result";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionErrorException from "../../../exception/submission-error-excepion";
 import PostmanTestFailedException from "../../../exception/postman-test-failed-exception";
 import ProjectErrorException from "../../../exception/project-error-exception";
 import ServerErrorException from "../../../exception/server-error-exception";
+import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
 
 
 class CourseSubmissionRejection {
@@ -16,13 +15,13 @@ class CourseSubmissionRejection {
     private reviewerId = 123
     private rating = 0
     private _messages: string
-    failurePostmanTest: FailureTest[];
+    private submissionCriteriaCheck: SubmissionCriteriaCheck;
     private submissionErrorException: SubmissionErrorException;
     private _reviewChecklistResults: ReviewChecklistResult[];
 
-    constructor(submissionErrorException: SubmissionErrorException, reviewChecklistResults: ReviewChecklistResult[]) {
+    constructor(submissionErrorException: SubmissionErrorException, submissionCriteriaCheck: SubmissionCriteriaCheck) {
+        this.submissionCriteriaCheck = submissionCriteriaCheck;
         this.submissionErrorException = submissionErrorException;
-        this._reviewChecklistResults = reviewChecklistResults;
     }
 
     public reject(){
@@ -43,7 +42,7 @@ class CourseSubmissionRejection {
         const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
         let container = ''
-        this.submissionErrorException.failurePostmanTest.forEach(failedTest => {
+        this.submissionCriteriaCheck.failurePostmanTest.forEach(failedTest => {
             if (failedTest.name.includes('[Optional]')) return
 
             let list = `<li><b>${failedTest.name}</b><ul>`

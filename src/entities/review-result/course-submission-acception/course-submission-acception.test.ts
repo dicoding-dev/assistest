@@ -1,11 +1,11 @@
 import CourseSubmissionAcception from "./course-submission-acception";
-import SubmissionRatingGenerator from "../submission-rating-generator";
 import EslintCheckResult from "../../../service/eslint-checker/eslint-check-result";
+import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
 
 describe('course submission acception test', () => {
     it('should accept submission properly', function () {
         const reviewCheckResult = []
-        const submissionRatingGenerator = <SubmissionRatingGenerator>{
+        const submissionRatingGenerator = <SubmissionRatingFactory>{
             get rating(): number {
                 return 3
             },
@@ -31,7 +31,7 @@ describe('course submission acception test', () => {
 
     it('should accept submission properly when eslint success', function () {
         const reviewCheckResult = []
-        const submissionRatingGenerator = <SubmissionRatingGenerator>{
+        const submissionRatingGenerator = <SubmissionRatingFactory>{
             get rating(): number {
                 return 3
             },
@@ -53,7 +53,7 @@ describe('course submission acception test', () => {
 
     it('should format eslint message when eslint have error log', function () {
         const reviewCheckResult = []
-        const submissionRatingGenerator = <SubmissionRatingGenerator>{
+        const submissionRatingGenerator = <SubmissionRatingFactory>{
             get rating(): number {
                 return 3
             },

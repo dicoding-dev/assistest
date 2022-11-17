@@ -1,4 +1,4 @@
-import ReviewChecklistResult from "./review-checklist-result";
+import {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
 
 interface ReviewResult {
     rating: number,

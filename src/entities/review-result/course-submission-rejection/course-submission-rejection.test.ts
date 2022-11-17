@@ -3,9 +3,9 @@ import ResultTestFailure from "../../../service/postman-runner/failure-test";
 import PostmanTestFailedException from "../../../exception/postman-test-failed-exception";
 import ProjectErrorException from "../../../exception/project-error-exception";
 import ServerErrorException from "../../../exception/server-error-exception";
+import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
 
 const minifyHtmlRegex = /<!--(.*?)-->|\s\B/gm
-const reviewChecklistResults = []
 
 describe('reject test', () => {
     it('should get message properly when rejection type is test error', function () {
@@ -27,8 +27,9 @@ describe('reject test', () => {
                 }]
             }
         ]
-        const postmanTestFailedException = new PostmanTestFailedException('', failurePostmanTest)
-        const courseSubmissionRejection = new CourseSubmissionRejection(postmanTestFailedException, reviewChecklistResults)
+        const submissionCriteriaCheck = <SubmissionCriteriaCheck>{failurePostmanTest}
+        const postmanTestFailedException = new PostmanTestFailedException('')
+        const courseSubmissionRejection = new CourseSubmissionRejection(postmanTestFailedException, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
 
         expect(courseSubmissionRejection.messages).toStrictEqual(`
@@ -50,15 +51,17 @@ describe('reject test', () => {
     });
 
     it('should get message properly when rejection type is project error', function () {
+        const submissionCriteriaCheck = <SubmissionCriteriaCheck>{failurePostmanTest: []}
         const exception = new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
-        const courseSubmissionRejection = new CourseSubmissionRejection(exception, reviewChecklistResults)
+        const courseSubmissionRejection = new CourseSubmissionRejection(exception, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
         expect(courseSubmissionRejection.messages).toContain('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena')
     });
 
     it('should get message properly when rejection type is server error', function () {
+        const submissionCriteriaCheck = <SubmissionCriteriaCheck>{failurePostmanTest: []}
         const exception = new ServerErrorException('PORT_IS_USED')
-        const courseSubmissionRejection = new CourseSubmissionRejection(exception, reviewChecklistResults)
+        const courseSubmissionRejection = new CourseSubmissionRejection(exception, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
         expect(courseSubmissionRejection.messages).toContain('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi')
     });

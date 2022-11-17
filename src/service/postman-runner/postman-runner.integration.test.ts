@@ -1,9 +1,8 @@
 import PostmanRunner from "./postman-runner";
-import SubmissionProject from "../../entities/submission-project/submission-project";
-import ProjectPath from "../../entities/project-path/project-path";
-import Server from "../server/server";
+import ServerService from "../server/server-service";
 import * as collection from '../../../test/postman/postman_collection.json'
 import * as environment from '../../../test/postman/postman_environment.json'
+import SubmissionProjectFactory from "../../entities/submission-project/submission-project-factory";
 
 describe('postman runner test', () => {
 
@@ -56,10 +55,9 @@ describe('postman runner test', () => {
     });
 
     async function runServer(submissionPath: string) {
-        const projectPath = new ProjectPath(submissionPath)
-        const submissionProject = new SubmissionProject(projectPath, 'localhost', 5000, 'start')
-        const server = new Server()
-        await server.run(submissionProject)
+        const submissionProjectFactory = new SubmissionProjectFactory(submissionPath)
+        const server = new ServerService()
+        await server.run(submissionProjectFactory.create())
         activeServer = server
     }
 })

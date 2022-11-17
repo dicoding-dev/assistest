@@ -1,7 +1,7 @@
 import FailureTest from "../../../service/postman-runner/failure-test";
-import ReviewChecklistResult from "../review-checklist-result";
-import SubmissionRatingGenerator from "../submission-rating-generator";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
+import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
+import {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
 
 
 
@@ -12,10 +12,10 @@ class CourseSubmissionAcception {
     private _rating = 0
     private _messages: string
     private failurePostmanTest: FailureTest[];
-    private submissionRatingGenerator: SubmissionRatingGenerator;
+    private submissionRatingGenerator: SubmissionRatingFactory;
     private _reviewChecklistResults: ReviewChecklistResult[];
 
-    constructor(reviewChecklistResults: ReviewChecklistResult[], submissionRatingGenerator: SubmissionRatingGenerator) {
+    constructor(reviewChecklistResults: ReviewChecklistResult[], submissionRatingGenerator: SubmissionRatingFactory) {
         this.submissionRatingGenerator = submissionRatingGenerator;
         this._reviewChecklistResults = reviewChecklistResults;
     }

@@ -1,23 +1,22 @@
 import {ChildProcess, exec} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import * as kill from 'tree-kill';
+import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import ServerErrorHandling from "./server-error-handling";
+import {host, port, runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 
-
-class Server {
+class ServerService {
     private _errorLog = [];
     private serverPort: number;
     private serverPid: number
 
     async run(submissionProject: SubmissionProject) {
-        await this.validateBeforeStart(submissionProject)
-        const {runnerCommand, projectPath, port} = submissionProject
+        await this.validateBeforeStart()
 
         this.serverPort = port
 
         const command = `npm ${runnerCommand}`
-        const runningServer = exec(command, {cwd: projectPath});
+        const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
         this.serverPid = runningServer.pid
 
         this.listenRunningServer(runningServer)
@@ -25,23 +24,23 @@ class Server {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
         } catch (e) {
             await this.stop()
-            const serverErrorHandling = new ServerErrorHandling(this._errorLog, submissionProject)
-            serverErrorHandling.throwError()
+            const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
+            serverErrorHandler.throwError()
         }
     }
 
     private listenRunningServer(runningServer: ChildProcess) {
         runningServer.stdout.on('data', async (data) => {
-            // if (process.env.DEBUG_MODE) {
-            console.log(`stdout ${data}`);
-            // }
+            if (process.env.DEBUG_MODE) {
+                console.log(`stdout ${data}`);
+            }
         });
 
         runningServer.stderr.on('data', (data) => {
             this._errorLog.push(data)
-            // if (process.env.DEBUG_MODE) {
-            console.log(`stderr ${data}`);
-            // }
+            if (process.env.DEBUG_MODE) {
+                console.log(`stderr ${data}`);
+            }
         });
 
         if (process.env.DEBUG_MODE) {
@@ -58,10 +57,9 @@ class Server {
         } catch (e) {
             throw new Error(`Failed to kill port ${this.serverPort}, error: ${e}`)
         }
-
     }
 
-    private async validateBeforeStart({port, host}) {
+    private async validateBeforeStart() {
         const isUsed = await tcpPortUsed.check(port, host)
 
         if (isUsed) {
@@ -70,4 +68,4 @@ class Server {
     }
 }
 
-export default Server
+export default ServerService
