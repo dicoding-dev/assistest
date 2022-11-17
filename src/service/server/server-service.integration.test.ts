@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
-import Server from "./server";
+import ServerService from "./server-service";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {exec, execSync} from "child_process";
 import * as kill from "tree-kill";
@@ -33,7 +33,7 @@ describe('run server test', () => {
         }
 
 
-        const server = new Server()
+        const server = new ServerService()
 
         //fake server for first server
         await startFakeServer(port)
@@ -48,7 +48,7 @@ describe('run server test', () => {
             packageJsonContent: <PackageJson>{}
         }
 
-        const server = new Server()
+        const server = new ServerService()
 
         const spy = jest.spyOn(server, 'stop');
 
@@ -68,7 +68,7 @@ describe('run server test', () => {
             packageJsonContent: <PackageJson>{}
         }
 
-        const server = new Server()
+        const server = new ServerService()
         await server.run(submissionProject)
 
         const response = await axios.get(`http://${host}:${port}`)
@@ -87,7 +87,7 @@ describe('run server test', () => {
             packageJsonContent: <PackageJson>{}
         }
 
-        const server = new Server()
+        const server = new ServerService()
         await expect(server.run(submissionProject)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)
