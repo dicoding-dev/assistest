@@ -1,9 +1,9 @@
 import * as fs from "fs";
-import PackageJson from "./package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
-import SubmissionProject from "./submission-project";
 import {runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 import * as path from "path";
+import PackageJson from "../../entities/submission-project/package-json";
+import SubmissionProject from "../../entities/submission-project/submission-project";
 
 
 export default class SubmissionProjectFactory {
