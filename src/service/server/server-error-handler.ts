@@ -1,8 +1,9 @@
 import ProjectErrorException from "../../exception/project-error-exception";
 import ServerErrorException from "../../exception/server-error-exception";
 import SubmissionProject from "../../entities/submission-project/submission-project";
+import {port, runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 
-class ServerErrorHandling {
+class ServerErrorHandler {
     private readonly allErrorLog: string;
     private readonly submissionProject: SubmissionProject;
     private readonly logErrors: string[];
@@ -19,8 +20,8 @@ class ServerErrorHandling {
         this.validateModule()
 
         throw new ServerErrorException(`SERVER_ERROR`,
-            `command: ${this.submissionProject.runnerCommand}
-            path: ${this.submissionProject.projectPath.toString()}
+            `command: ${runnerCommand}
+            path: ${this.submissionProject.packageJsonPath.toString()}
             hint: Maybe the port server is not 5000`,
             this.logErrors
         )
@@ -28,7 +29,7 @@ class ServerErrorHandling {
 
     private validatePort() {
         const portFromLogError = this.getPortFromLogError()
-        if (portFromLogError && portFromLogError != this.submissionProject.port) {
+        if (portFromLogError && portFromLogError != port) {
             throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
         }
     }
@@ -65,4 +66,4 @@ class ServerErrorHandling {
     }
 }
 
-export default ServerErrorHandling
+export default ServerErrorHandler
