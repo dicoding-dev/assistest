@@ -1,16 +1,15 @@
-import PackageJsonFinderService from "./entities/project-path/package-json-finder-service";
 import ProjectPreparationService from "./service/project-preparation/project-preparation-service";
 import ServerService from "./service/server/server-service";
 import PostmanRunner from "./service/postman-runner/postman-runner"
-import EslintChecker from "./service/eslint-checker/eslint-checker";
-import SubmissionCriteriaCheckFactory
-    from "./entities/review-result/submission-criteria-check/submission-criteria-check-factory";
-import ReviewResult from "./entities/review-result/review-result";
 import SubmissionErrorException from "./exception/submission-error-excepion";
 import CourseSubmissionReview from "./entities/review-result/course-submission-review/course-submission-review";
 import PostmanTestFailedException from "./exception/postman-test-failed-exception";
-import SubmissionProjectFactory from "./entities/submission-project/submission-project-factory";
 import SubmissionProject from "./entities/submission-project/submission-project";
+import EslintChecker from "./service/eslint-checker/eslint-checker";
+import PackageJsonFinderService from "./service/project-path-finder/package-json-finder-service";
+import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-check/submission-criteria-check-factory";
+import ReviewResult from "./entities/review-result/course-submission-review/review-result";
+import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 
 class Main {
     private postmanRunner: PostmanRunner;
