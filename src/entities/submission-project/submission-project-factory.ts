@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import * as path from 'path';
 import PackageJson from "./package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
 import SubmissionProject from "./submission-project";
@@ -7,30 +6,22 @@ import {runnerCommand} from "../../conifg/backend-pemula-project-requirement";
 
 
 export default class SubmissionProjectFactory {
-    private readonly projectPath?: string;
     private packageJsonContent: PackageJson
 
-    constructor(projectPath?: string) {
-        this.projectPath = projectPath;
-        this.validate()
-    }
-
-    public create(): SubmissionProject {
+    public create(projectPath?: string): SubmissionProject {
+        this.validate(projectPath)
         return {
             packageJsonContent: this.packageJsonContent,
-            packageJsonPath: this.projectPath
+            packageJsonPath: projectPath
         }
     }
 
-    private validate() {
-        if (!this.projectPath) {
+    private validate(projectPath: string) {
+        if (projectPath === null) {
             throw new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
 
-        const packageJSONPath = path.resolve(this.projectPath, 'package.json')
-
-
-        this.validatePackageJSONContent(packageJSONPath)
+        this.validatePackageJSONContent(projectPath)
 
         const {scripts} = this.packageJsonContent
         if (!scripts) {
