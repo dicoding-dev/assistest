@@ -1,10 +1,10 @@
-import SubmissionCriteriaCheck from "./submission-criteria-check";
+import SubmissionCriteriaCheckFactory from "./submission-criteria-check-factory";
 import ResultTestFailure from "../../../service/postman-runner/failure-test";
 import backendPemulaChecklist from "../../../conifg/backend-pemula-checklist";
 
 
 describe('mandatory criteria test', () => {
-    const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist)
+    const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(backendPemulaChecklist)
 
     it('should grouping failed test by criteria and return approval false', function () {
         const failurePostmanTest: Array<ResultTestFailure> = [
@@ -26,7 +26,7 @@ describe('mandatory criteria test', () => {
             }
         ]
 
-        submissionCriteriaCheck.check(failurePostmanTest)
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
             {
@@ -106,7 +106,7 @@ describe('mandatory criteria test', () => {
     it('should return approval true', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        submissionCriteriaCheck.check(failurePostmanTest)
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
             {
@@ -160,7 +160,7 @@ describe('mandatory criteria test', () => {
     })
 
     it('should return approval false and all criteria is not passed when failed postman test not exist', function () {
-        submissionCriteriaCheck.check()
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check()
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
             {
