@@ -159,8 +159,8 @@ describe('mandatory criteria test', () => {
         ])
     })
 
-    it('should return approval false and all criteria is not passed when project error', function () {
-        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist, [], true)
+    it('should return approval false and all criteria is not passed when failed postman test not exist', function () {
+        const submissionCriteriaCheck = new SubmissionCriteriaCheck(backendPemulaChecklist)
         submissionCriteriaCheck.check()
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
@@ -212,5 +212,6 @@ describe('mandatory criteria test', () => {
                 reason: []
             }
         ])
+        expect(submissionCriteriaCheck.failurePostmanTest).toBeNull()
     });
 })
