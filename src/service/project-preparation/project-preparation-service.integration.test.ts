@@ -23,8 +23,8 @@ describe('project preparation test', () => {
             }
 
         }
-        const projectPreparation = new ProjectPreparationService(submissionProject)
-        projectPreparation.install()
+        const projectPreparation = new ProjectPreparationService()
+        projectPreparation.install(submissionProject)
 
         const isNodeModulesExist = fs.existsSync(`${submissionProject.packageJsonPath}/node_modules`)
         expect(isNodeModulesExist).toBeTruthy()
