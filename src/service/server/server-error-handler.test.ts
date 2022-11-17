@@ -1,7 +1,8 @@
-import ServerErrorHandling from "./server-error-handling";
-import SubmissionProject from "../../entities/submission-project/submission-project";
+import ServerErrorHandler from "./server-error-handler";
 import ProjectErrorException from "../../exception/project-error-exception";
 import ServerErrorException from "../../exception/server-error-exception";
+import SubmissionProject from "../../entities/submission-project/submission-project";
+import PackageJson from "../../entities/submission-project/package-json";
 
 
 describe('test server utils', () => {
@@ -35,14 +36,10 @@ describe('test server utils', () => {
 
 
     const createServerErrorHandling = (logErrors: string[]) => {
-        const submissionProject = <SubmissionProject>{
-            get port(): number {
-                return 5000
-            },
-            get projectPath(): string {
-                return 'a path'
-            }
+        const submissionProject :SubmissionProject = {
+            packageJsonPath: '',
+            packageJsonContent: <PackageJson>{}
         }
-       return  new ServerErrorHandling(logErrors, submissionProject)
+       return  new ServerErrorHandler(logErrors, submissionProject)
     }
 })
