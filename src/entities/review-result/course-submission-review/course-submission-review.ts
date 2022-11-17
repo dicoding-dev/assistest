@@ -1,5 +1,5 @@
 import ReviewResult, {ReviewResultStatus} from "../review-result";
-import SubmissionRatingGenerator from "../submission-rating-generator";
+import SubmissionRatingFactory from "../submission-rating-generator";
 import CourseSubmissionAcception from "../course-submission-acception/course-submission-acception";
 import SubmissionErrorException from "../../../exception/submission-error-excepion";
 import CourseSubmissionRejection from "../course-submission-rejection/course-submission-rejection";
@@ -31,7 +31,7 @@ class CourseSubmissionReview {
 
 
     private generateApproval(): ReviewResult {
-        const submissionRatingGenerator = new SubmissionRatingGenerator(this.submissionCriteriaCheck.failurePostmanTest, this.eslintCheckResult)
+        const submissionRatingGenerator = new SubmissionRatingFactory(this.submissionCriteriaCheck.failurePostmanTest, this.eslintCheckResult)
         const courseSubmissionAcception = new CourseSubmissionAcception(this.submissionCriteriaCheck.reviewChecklistResult, submissionRatingGenerator)
         courseSubmissionAcception.accept()
 

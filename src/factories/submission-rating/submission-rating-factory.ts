@@ -1,7 +1,7 @@
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import EslintCheckResult from "../../service/eslint-checker/eslint-check-result";
 
-class SubmissionRatingGenerator {
+class SubmissionRatingFactory {
 
     private readonly _rating: number;
     private readonly _eslintCheckResult: EslintCheckResult;
@@ -32,4 +32,4 @@ class SubmissionRatingGenerator {
     }
 }
 
-export default SubmissionRatingGenerator
+export default SubmissionRatingFactory
