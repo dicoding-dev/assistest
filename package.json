@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:agissept/assistest.git",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/implementation-test.ts",
     "test": "jest -i",
     "unit-test": "jest --testPathPattern=unit.test",
     "integration-test": "jest --testPathPattern=integration.test -i"
