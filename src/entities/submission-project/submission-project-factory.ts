@@ -3,6 +3,7 @@ import PackageJson from "./package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
 import SubmissionProject from "./submission-project";
 import {runnerCommand} from "../../conifg/backend-pemula-project-requirement";
+import * as path from "path";
 
 
 export default class SubmissionProjectFactory {
@@ -21,7 +22,7 @@ export default class SubmissionProjectFactory {
             throw new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
         }
 
-        this.validatePackageJSONContent(projectPath)
+        this.validatePackageJSONContent(path.resolve(projectPath, 'package.json'))
 
         const {scripts} = this.packageJsonContent
         if (!scripts) {
