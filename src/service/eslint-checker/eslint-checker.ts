@@ -4,21 +4,15 @@ import SubmissionProject from "../../entities/submission-project/submission-proj
 
 
 class EslintChecker {
-    private submissionProject: SubmissionProject;
-
-    constructor(submissionProject: SubmissionProject) {
-        this.submissionProject = submissionProject;
-    }
-
-    check(): EslintCheckResult {
-        const packageJSONContent = this.submissionProject.packageJsonContent
+    check(submissionProject: SubmissionProject): EslintCheckResult {
+        const packageJSONContent = submissionProject.packageJsonContent
         if (!packageJSONContent.dependencies?.eslint && !packageJSONContent.devDependencies?.eslint) {
             return {isSuccess: false, code: 'ESLINT_NOT_INSTALLED'}
         }
 
         try {
             const result = execSync('npx eslint ./ --rule \'linebreak-style:off\'', {
-                cwd: this.submissionProject.packageJsonPath,
+                cwd: submissionProject.packageJsonPath,
                 stdio: "pipe"
             })
             return {isSuccess: true, code: 'NO_ERROR_FROM_ESLINT', reason: result.toString()}
