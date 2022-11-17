@@ -2,18 +2,12 @@ import * as fs from "fs";
 import * as path from "path";
 
 class PackageJsonFinderService {
-    private readonly submissionPath: string;
-
-    constructor(submissionPath: string) {
-        this.submissionPath = submissionPath;
-    }
-
-    getPackageJsonDirectory(): string | null {
-        if (!fs.existsSync(this.submissionPath)) {
+    getPackageJsonDirectory(submissionPath: string): string | null {
+        if (!fs.existsSync(submissionPath)) {
             return null
         }
 
-        const files = this.getFilesRecursively()
+        const files = this.getFilesRecursively(submissionPath)
         const packageJsonPath = files.find((file) => path.basename(file) === 'package.json')
         if (!packageJsonPath) {
             return null
@@ -22,9 +16,9 @@ class PackageJsonFinderService {
     }
 
 
-    private getFilesRecursively() {
+    private getFilesRecursively(submissionPath: string) {
         const files = []
-        getFiles(this.submissionPath)
+        getFiles(submissionPath)
 
         function getFiles(directory) {
             fs.readdirSync(directory).forEach(file => {
