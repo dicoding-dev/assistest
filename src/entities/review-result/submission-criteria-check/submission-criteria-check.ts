@@ -4,23 +4,21 @@ import SubmissionChecklist from "../../../conifg/submission-checklist";
 
 class SubmissionCriteriaCheck {
     private _reviewChecklistResult: Array<ReviewChecklistResult>
-    private failurePostmanTest: Array<ResultTestFailure>;
+    private readonly _failurePostmanTest: Array<ResultTestFailure>;
     private submissionChecklists: SubmissionChecklist[];
-    private isProjectError: boolean;
 
-    constructor(submissionChecklists: SubmissionChecklist[], failurePostmanTest: Array<ResultTestFailure>, isProjectError = false) {
+    constructor(submissionChecklists: SubmissionChecklist[], failurePostmanTest: Array<ResultTestFailure> = null) {
         this.submissionChecklists = submissionChecklists;
-        this.failurePostmanTest = failurePostmanTest;
-        this.isProjectError = isProjectError;
+        this._failurePostmanTest = failurePostmanTest;
     }
 
     public check(){
         this._reviewChecklistResult = this.submissionChecklists.map(criteria => {
-            const unfulfilledRequirement = this.failurePostmanTest.filter(testResult => criteria.requirements.includes(testResult.name))
-            const checklistPass = !this.isProjectError && unfulfilledRequirement.length < 1
+            const unfulfilledRequirement = this._failurePostmanTest?.filter(testResult => criteria.requirements.includes(testResult.name))
+            const checklistPass = unfulfilledRequirement?.length < 1
             return <ReviewChecklistResult>{
                 name: criteria.name,
-                reason: unfulfilledRequirement,
+                reason: unfulfilledRequirement ?? [],
                 pass: checklistPass,
                 requirement: criteria.requirements
             }
@@ -33,6 +31,10 @@ class SubmissionCriteriaCheck {
 
     get reviewChecklistResult(): Array<ReviewChecklistResult> {
         return this._reviewChecklistResult;
+    }
+
+    get failurePostmanTest(): Array<ResultTestFailure> | null {
+        return this._failurePostmanTest;
     }
 }
 
