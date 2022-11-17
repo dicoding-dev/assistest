@@ -1,7 +1,7 @@
 import FailureTest from "../../../service/postman-runner/failure-test";
-import ReviewChecklistResult from "../review-checklist-result";
-import SubmissionRatingFactory from "../submission-rating-generator";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
+import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
+import {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
 
 
 

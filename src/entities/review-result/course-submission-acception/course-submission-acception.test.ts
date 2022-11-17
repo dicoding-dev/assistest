@@ -1,6 +1,6 @@
 import CourseSubmissionAcception from "./course-submission-acception";
-import SubmissionRatingFactory from "../submission-rating-generator";
 import EslintCheckResult from "../../../service/eslint-checker/eslint-check-result";
+import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
 
 describe('course submission acception test', () => {
     it('should accept submission properly', function () {
