@@ -29,7 +29,7 @@ describe('create submission project test', () => {
 
 
     it('should throw error when runner script not found', function () {
-        mockFS.readFileSync.mockReturnValue('{ "scripts": { "start-dev": "node src/index.js" }}')
+        mockFS.readFileSync.mockReturnValue('{ "scripts": { "start--dev": "node src/index.js" }}')
 
         expect(() => submissionProjectFactory.create('.'))
             .toThrow(new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND'))
