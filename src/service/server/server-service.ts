@@ -7,13 +7,10 @@ import {host, port} from "../../conifg/backend-pemula-project-requirement";
 
 class ServerService {
     private _errorLog = [];
-    private serverPort: number;
     private serverPid: number
 
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
-
-        this.serverPort = port
 
         const command = `npm ${submissionProject.runnerCommand}`
         const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
@@ -53,18 +50,16 @@ class ServerService {
     async stop() {
         try {
             kill(this.serverPid)
-            await tcpPortUsed.waitUntilFree(this.serverPort, 500, 4000)
+            await tcpPortUsed.waitUntilFree(port, 500, 4000)
         } catch (e) {
-            throw new Error(`Failed to kill port ${this.serverPort}, error: ${e}`)
+            throw new Error(`Failed to kill port ${port}, error: ${e}`)
         }
     }
 
     private async validateBeforeStart() {
         const isUsed = await tcpPortUsed.check(port, host)
 
-
         if (isUsed) {
-            await this.stop()
             const isUsed = await tcpPortUsed.check(port, host)
             if (isUsed) throw new Error(`Port ${port} is not available`)
         }
