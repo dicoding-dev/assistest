@@ -3,7 +3,7 @@ import * as tcpPortUsed from 'tcp-port-used';
 import * as kill from 'tree-kill';
 import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import {host, port, runnerCommand} from "../../conifg/backend-pemula-project-requirement";
+import {host, port} from "../../conifg/backend-pemula-project-requirement";
 
 class ServerService {
     private _errorLog = [];
@@ -15,7 +15,7 @@ class ServerService {
 
         this.serverPort = port
 
-        const command = `npm ${runnerCommand}`
+        const command = `npm ${submissionProject.runnerCommand}`
         const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
         this.serverPid = runningServer.pid
 
@@ -62,8 +62,11 @@ class ServerService {
     private async validateBeforeStart() {
         const isUsed = await tcpPortUsed.check(port, host)
 
+
         if (isUsed) {
-            throw new Error(`Port ${port} is not available`)
+            await this.stop()
+            const isUsed = await tcpPortUsed.check(port, host)
+            if (isUsed) throw new Error(`Port ${port} is not available`)
         }
     }
 }

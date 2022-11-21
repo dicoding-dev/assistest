@@ -29,7 +29,8 @@ describe('run server test', () => {
         const port = 5000
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
-            packageJsonContent: <PackageJson>{}
+            packageJsonContent: <PackageJson>{},
+            runnerCommand: 'start'
         }
 
 
@@ -45,7 +46,8 @@ describe('run server test', () => {
     it('should throw error and stop server when port is not used after project running', async function () {
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/project-with-bad-port',
-            packageJsonContent: <PackageJson>{}
+            packageJsonContent: <PackageJson>{},
+            runnerCommand: 'start'
         }
 
         const server = new ServerService()
@@ -65,7 +67,8 @@ describe('run server test', () => {
         const host = 'localhost'
         const submissionProject:SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
-            packageJsonContent: <PackageJson>{}
+            packageJsonContent: <PackageJson>{},
+            runnerCommand: 'start'
         }
 
         const server = new ServerService()
@@ -84,7 +87,8 @@ describe('run server test', () => {
         const host = 'localhost'
         const submissionProject:SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
-            packageJsonContent: <PackageJson>{}
+            packageJsonContent: <PackageJson>{},
+            runnerCommand: 'start'
         }
 
         const server = new ServerService()
