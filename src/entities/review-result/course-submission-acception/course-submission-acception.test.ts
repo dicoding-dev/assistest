@@ -21,7 +21,9 @@ describe('course submission acception test', () => {
             }
         }
 
-        const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{}, submissionRatingGenerator);
+        const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{
+            reviewChecklistResult: []
+        }, submissionRatingGenerator);
         courseSubmissionAcception.accept()
 
         expect(courseSubmissionAcception.rating).toStrictEqual(3)
@@ -32,7 +34,7 @@ describe('course submission acception test', () => {
     it('should accept submission properly when eslint success', function () {
         const submissionRatingGenerator = <SubmissionRatingFactory>{
             get rating(): number {
-                return 3
+                return 5
             },
             get eslintCheckResult(): EslintCheckResult {
                 return <EslintCheckResult>{
@@ -46,7 +48,7 @@ describe('course submission acception test', () => {
         const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{}, submissionRatingGenerator);
         courseSubmissionAcception.accept()
 
-        expect(courseSubmissionAcception.rating).toStrictEqual(3)
+        expect(courseSubmissionAcception.rating).toStrictEqual(5)
         expect(courseSubmissionAcception.messages).toStrictEqual('Congrats. ')
     });
 

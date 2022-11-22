@@ -38,7 +38,8 @@ describe('test server utils', () => {
     const createServerErrorHandling = (logErrors: string[]) => {
         const submissionProject :SubmissionProject = {
             packageJsonPath: '',
-            packageJsonContent: <PackageJson>{}
+            packageJsonContent: <PackageJson>{},
+            runnerCommand: ''
         }
        return  new ServerErrorHandler(logErrors, submissionProject)
     }
