@@ -12,7 +12,7 @@ class ServerService {
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
 
-        const command = `npm ${submissionProject.runnerCommand}`
+        const command = `npm run ${submissionProject.runnerCommand}`
         const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
         this.serverPid = runningServer.pid
 
@@ -49,8 +49,11 @@ class ServerService {
 
     async stop() {
         try {
+            this._errorLog = []
             kill(this.serverPid)
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
+            await tcpPortUsed.waitUntilFree(port, 500, 4000)
+            console.log('success to kill port')
         } catch (e) {
             throw new Error(`Failed to kill port ${port}, error: ${e}`)
         }
