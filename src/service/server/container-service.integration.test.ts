@@ -44,7 +44,7 @@ describe('container service test', () => {
         await killPort(5000)
     });
 
-    it('should throw error and stop server when port is not used after project running', async function () {
+    it('should throw error and stop container when app port is not 5000', async function () {
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/project-with-bad-port',
             packageJsonContent: <PackageJson>{},
@@ -57,9 +57,6 @@ describe('container service test', () => {
 
         await expect(server.run(submissionProject)).rejects.toThrow(Error)
         await expect(spy).toBeCalled()
-
-        //wait real port to close
-        await tcpPortUsed.waitUntilFree(5000, null, 2000)
     });
 
 
