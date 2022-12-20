@@ -32,7 +32,7 @@ class CourseSubmissionReview {
 
     private generateApproval(): ReviewResult {
         const submissionRatingGenerator = new SubmissionRatingFactory(this.submissionCriteriaCheck.failurePostmanTest, this.eslintCheckResult)
-        const courseSubmissionAcception = new CourseSubmissionAcception(this.submissionCriteriaCheck.reviewChecklistResult, submissionRatingGenerator)
+        const courseSubmissionAcception = new CourseSubmissionAcception(this.submissionCriteriaCheck, submissionRatingGenerator)
         courseSubmissionAcception.accept()
 
         return <ReviewResult>{

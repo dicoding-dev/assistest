@@ -11,9 +11,11 @@ export default class SubmissionProjectFactory {
 
     public create(projectPath?: string): SubmissionProject {
         this.validate(projectPath)
+
         return {
             packageJsonContent: this.packageJsonContent,
-            packageJsonPath: projectPath
+            packageJsonPath: projectPath,
+            runnerCommand: this.getRunnerCommand()
         }
     }
 
@@ -28,8 +30,20 @@ export default class SubmissionProjectFactory {
         if (!scripts) {
             throw new ProjectErrorException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY')
         }
+    }
 
-        if (!Object.keys(scripts).includes(runnerCommand)) {
+    private getRunnerCommand() {
+        const scripts = this.packageJsonContent.scripts
+
+        if ('start' in scripts) {
+            return 'start'
+        } else if ('dev' in scripts) {
+            return 'dev'
+        } else if ('start-dev' in scripts) {
+            return 'start-dev'
+        } else if ('start:dev' in scripts) {
+            return 'start:ev'
+        } else {
             throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
         }
     }

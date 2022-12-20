@@ -20,8 +20,8 @@ describe('project preparation test', () => {
                 "dependencies": {
                     "nanoid": "^4.0.0"
                 }
-            }
-
+            },
+            runnerCommand: 'start'
         }
         const projectPreparation = new ProjectPreparationService()
         projectPreparation.install(submissionProject)

@@ -1,6 +1,6 @@
 import EslintChecker from "./eslint-checker";
-import SubmissionProjectFactory from "../../entities/submission-project/submission-project-factory";
 import SubmissionProject from "../../entities/submission-project/submission-project";
+import SubmissionProjectFactory from "../../factories/submission-project/submission-project-factory";
 
 describe('eslint checker', () => {
     const eslintChecker = new EslintChecker()
@@ -35,7 +35,7 @@ describe('eslint checker', () => {
     });
 
     function createProject(submissionPath: string): SubmissionProject {
-        const submissionProjectFactory = new SubmissionProjectFactory(submissionPath)
-        return submissionProjectFactory.create()
+        const submissionProjectFactory = new SubmissionProjectFactory()
+        return submissionProjectFactory.create(submissionPath)
     }
 })
