@@ -84,7 +84,7 @@ class ContainerService {
         }
     }
     private checkRunningPortInsideDocker() {
-        const result = execSync('docker exec assistest netstat -an | grep LISTEN | awk \'{print $4}\' | cut -f2 -d ":"')
+        const result = execSync('docker exec assistest  netstat -an | grep LISTEN | awk \'{print $4}\' | rev | cut -d: -f1 | rev')
         const runningPort = result.toString()
         if (parseInt(runningPort) !== port) {
             throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
