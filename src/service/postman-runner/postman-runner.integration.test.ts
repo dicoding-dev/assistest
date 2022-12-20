@@ -1,5 +1,5 @@
 import PostmanRunner from "./postman-runner";
-import ServerService from "../server/server-service";
+import ContainerService from "../server/container-service";
 import * as collection from '../../../test/postman/postman_collection.json'
 import * as environment from '../../../test/postman/postman_environment.json'
 import SubmissionProjectFactory from "../../factories/submission-project/submission-project-factory";
@@ -56,7 +56,7 @@ describe('postman runner test', () => {
 
     async function runServer(submissionPath: string) {
         const submissionProjectFactory = new SubmissionProjectFactory()
-        const server = new ServerService()
+        const server = new ContainerService()
         await server.run(submissionProjectFactory.create(submissionPath))
         activeServer = server
     }
