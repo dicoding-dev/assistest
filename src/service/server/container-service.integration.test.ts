@@ -1,15 +1,15 @@
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
-import ServerService from "./server-service";
+import ContainerService from "./container-service";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {exec, execSync} from "child_process";
 import * as kill from "tree-kill";
 import PackageJson from "../../entities/submission-project/package-json";
 
-describe('run server test', () => {
+describe('container service test', () => {
     afterEach(async () => {
         if (await isPortUsed(5000)){
-            await killPort(5000)
+            await execSync(' docker stop assistest')
         }
     });
 
@@ -33,14 +33,15 @@ describe('run server test', () => {
             runnerCommand: 'start'
         }
 
-
-        const server = new ServerService()
+        const server = new ContainerService()
 
         //fake server for first server
         await startFakeServer(port)
 
         // test second sever in same port
         await expect(server.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
+
+        await killPort(5000)
     });
 
     it('should throw error and stop server when port is not used after project running', async function () {
@@ -50,7 +51,7 @@ describe('run server test', () => {
             runnerCommand: 'start'
         }
 
-        const server = new ServerService()
+        const server = new ContainerService()
 
         const spy = jest.spyOn(server, 'stop');
 
@@ -71,7 +72,7 @@ describe('run server test', () => {
             runnerCommand: 'start'
         }
 
-        const server = new ServerService()
+        const server = new ContainerService()
         await server.run(submissionProject)
 
         const response = await axios.get(`http://${host}:${port}`)
@@ -91,7 +92,7 @@ describe('run server test', () => {
             runnerCommand: 'start'
         }
 
-        const server = new ServerService()
+        const server = new ContainerService()
         await expect(server.run(submissionProject)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)

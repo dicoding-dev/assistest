@@ -1,27 +1,27 @@
 import {ChildProcess, exec, execSync, spawnSync} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
-import * as kill from 'tree-kill';
 import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {host, port} from "../../conifg/backend-pemula-project-requirement";
 import ProjectErrorException from "../../exception/project-error-exception";
 
-class ServerService {
+class ContainerService {
     private _errorLog = [];
-    private serverPid: number
 
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
 
-        const command = `npm run ${submissionProject.runnerCommand} -- --path=$(pwd)`
+        const command = `docker run --rm -p 5000:5000 -v $(pwd):$(pwd) -w $(pwd) --name assistest assistest-runner npm run ${submissionProject.runnerCommand}`
         const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
-        this.serverPid = runningServer.pid
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
         this.listenRunningServer(runningServer)
         try {
+            this.checkRunningPortInsideDocker()
             await tcpPortUsed.waitUntilUsed(port, null, 3000)
         } catch (e) {
-            await this.checkPortMeetRequirementOrNot(submissionProject.packageJsonPath)
+            // await this.checkPortMeetRequirementOrNot(submissionProject.packageJsonPath)
             await this.stop()
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             serverErrorHandler.throwError()
@@ -64,9 +64,9 @@ class ServerService {
     }
 
     async stop() {
+        this.stopContainer()
         try {
             this._errorLog = []
-            kill(this.serverPid)
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
             console.log('success to kill port')
@@ -83,6 +83,17 @@ class ServerService {
             if (isUsed) throw new Error(`Port ${port} is not available`)
         }
     }
+    private checkRunningPortInsideDocker() {
+        const result = execSync('docker exec assistest netstat -an | grep LISTEN | awk \'{print $4}\' | cut -f2 -d ":"')
+        const runningPort = result.toString()
+        if (parseInt(runningPort) !== port) {
+            throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
+        }
+
+    }
+    private stopContainer(){
+         execSync('docker stop assistest')
+    }
 }
 
-export default ServerService
+export default ContainerService
