@@ -8,8 +8,8 @@ import PackageJson from "../../entities/submission-project/package-json";
 
 describe('container service test', () => {
     afterEach(async () => {
-        if (await isPortUsed(5000)){
-            await execSync(' docker stop assistest')
+        if (await isPortUsed(5000)) {
+            execSync('docker stop assistest')
         }
     });
 
@@ -33,13 +33,13 @@ describe('container service test', () => {
             runnerCommand: 'start'
         }
 
-        const server = new ContainerService()
+        const container = new ContainerService()
 
-        //fake server for first server
+        //fake container for first server
         await startFakeServer(port)
 
         // test second sever in same port
-        await expect(server.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
+        await expect(container.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
 
         await killPort(5000)
     });
@@ -51,46 +51,46 @@ describe('container service test', () => {
             runnerCommand: 'start'
         }
 
-        const server = new ContainerService()
+        const container = new ContainerService()
 
-        const spy = jest.spyOn(server, 'stop');
+        const spy = jest.spyOn(container, 'stop');
 
-        await expect(server.run(submissionProject)).rejects.toThrow(Error)
+        await expect(container.run(submissionProject)).rejects.toThrow(Error)
         await expect(spy).toBeCalled()
     });
 
 
-    it('should stop server properly', async function () {
+    it('should stop container properly', async function () {
         const port = 5000
         const host = 'localhost'
-        const submissionProject:SubmissionProject = {
+        const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
             packageJsonContent: <PackageJson>{},
             runnerCommand: 'start'
         }
 
-        const server = new ContainerService()
-        await server.run(submissionProject)
+        const container = new ContainerService()
+        await container.run(submissionProject)
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
 
         //kill server
-        await server.stop()
+        await container.stop()
         expect(await isPortUsed(5000)).toBeFalsy()
     });
     //
-    it('should run server properly', async function () {
+    it('should run container properly', async function () {
         const port = 5000
         const host = 'localhost'
-        const submissionProject:SubmissionProject = {
+        const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
             packageJsonContent: <PackageJson>{},
             runnerCommand: 'start'
         }
 
-        const server = new ContainerService()
-        await expect(server.run(submissionProject)).resolves.not.toThrow()
+        const container = new ContainerService()
+        await expect(container.run(submissionProject)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
