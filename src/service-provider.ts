@@ -1,6 +1,6 @@
 import PostmanRunner from "./service/postman-runner/postman-runner";
 import backendPemulaChecklist from "./conifg/backend-pemula-checklist";
-import ServerService from "./service/server/server-service";
+import ContainerService from "./service/server/container-service";
 import ProjectPreparationService from "./service/project-preparation/project-preparation-service";
 import EslintChecker from "./service/eslint-checker/eslint-checker";
 import * as collection from '../../experiment-storage/postman/collection.json'
@@ -13,7 +13,7 @@ import PackageJsonFinderService from "./service/project-path-finder/package-json
 const postmanRunner = new PostmanRunner(collection, env)
 const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(backendPemulaChecklist)
 const submissionProjectFactory = new SubmissionProjectFactory()
-const serverService = new ServerService()
+const serverService = new ContainerService()
 const projectPreparationService = new ProjectPreparationService()
 const eslintChecker = new EslintChecker()
 const packageJsonFinderService = new PackageJsonFinderService()

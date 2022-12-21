@@ -1,4 +1,4 @@
-import {readdirSync, writeFileSync} from "fs";
+import {readdirSync} from "fs";
 import * as path from "path";
 import {main} from "../service-provider";
 import ReportGenerator from "../service/report-generator/report-generator";

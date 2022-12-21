@@ -1,5 +1,5 @@
 import ProjectPreparationService from "./service/project-preparation/project-preparation-service";
-import ServerService from "./service/server/server-service";
+import ContainerService from "./service/server/container-service";
 import PostmanRunner from "./service/postman-runner/postman-runner"
 import SubmissionErrorException from "./exception/submission-error-excepion";
 import CourseSubmissionReview from "./entities/review-result/course-submission-review/course-submission-review";
@@ -15,13 +15,13 @@ class Main {
     private postmanRunner: PostmanRunner;
     private eslintChecker: EslintChecker;
     private projectPreparationService: ProjectPreparationService;
-    private serverService: ServerService;
+    private serverService: ContainerService;
     private packageJsonFinderService: PackageJsonFinderService;
     private submissionCriteriaCheckFactory: SubmissionCriteriaCheckFactory
 
     constructor(
         postmanRunner: PostmanRunner,
-        serverService: ServerService,
+        serverService: ContainerService,
         projectPreparationService: ProjectPreparationService,
         eslintChecker: EslintChecker,
         packageJsonFinderService: PackageJsonFinderService,

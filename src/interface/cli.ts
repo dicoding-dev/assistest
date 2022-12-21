@@ -22,6 +22,7 @@ async function run() {
             const submissionPath = path.resolve(folderPath, submission)
             const reviewResult = await main.reviewSubmission(submissionPath)
             reportGenerator.generate(reviewResult, submission)
+            console.log()
         }
     } else {
         const submissionPath = path.resolve(folderPath)
