@@ -23,5 +23,8 @@ Aplikasi untuk menjalankan automation review untuk kelas backend pemula
   ```
   npm run cli path=~/downloaded-submissions/
   ```
+  
+## Melihat hasil review
+Silakan buka `~/report/report.hml` menggunakan web server seperti live server atau http-server
 
 
