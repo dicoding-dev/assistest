@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+a:visited {
+    color: red;
+}
+
+th, td {
+    max-width: 500px;
+    word-wrap: break-word;
+}
+
+.w-200 {
+    max-width: 50px;
+    word-wrap: break-word;
+}
+
+.w-max {
+    min-width: 1000px;
+    word-wrap: break-word;
+}
+
+
+.error-image {
+    font-family: 'Fira Code', monospace;
+    color: #D95852;
+    background: #1C2431;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+}
+
+p, pre{
+    margin: 0;
+}
