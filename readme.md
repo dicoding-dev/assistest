@@ -21,7 +21,7 @@ Aplikasi untuk menjalankan automation review untuk kelas backend pemula
   
 - Gunakan perintah `npm run cli path=<path kumpulan submission> mode=multi` jika ingin menjalankan aplikasi untuk lebih dari 1 submission.
   ```
-  npm run cli path=~/downloaded-submissions/
+  npm run cli path=~/downloaded-submissions/ mode=multi
   ```
   
 ## Melihat hasil review
