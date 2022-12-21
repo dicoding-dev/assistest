@@ -22,7 +22,6 @@ class ContainerService {
             this.checkRunningPortInsideDocker()
             await tcpPortUsed.waitUntilUsed(port, null, 3000)
         } catch (e) {
-            // await this.checkPortMeetRequirementOrNot(submissionProject.packageJsonPath)
             await this.stop()
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             serverErrorHandler.throwError()
@@ -57,20 +56,6 @@ class ContainerService {
         }
     }
 
-    private async checkPortMeetRequirementOrNot(packageJsonPath) {
-        const pid = execSync(`ps aux | grep "${packageJsonPath}" | grep "node " | grep -v node_modules | awk '{print $2}'`, {encoding: "utf-8"}).trim()
-        const appPort = execSync(`ss -l -p -n | grep pid=${pid} | awk '{print $5}' | cut -f2 -d ":"`, {encoding: "utf-8"}).trim()
-        if (parseInt(appPort) !== port) {
-            await this.killProcess(packageJsonPath, port)
-            throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
-        }
-    }
-
-    private async killProcess(key: string, appPort: number) {
-        spawnSync(`pkill`, ["-f", key])
-        await tcpPortUsed.waitUntilFree(appPort, 500, 4000)
-    }
-
     async stop() {
         this.stopContainer()
         try {
@@ -99,7 +84,6 @@ class ContainerService {
         if (!runningPorts.includes('5000')) {
             throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
         }
-
     }
 
     private stopContainer() {
