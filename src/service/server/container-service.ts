@@ -11,7 +11,8 @@ class ContainerService {
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
 
-        const command = `docker run --rm -p 5000:5000 -v $(pwd):$(pwd) -w $(pwd) --name assistest assistest-runner npm run ${submissionProject.runnerCommand}`
+        this.prepareContainer(submissionProject.packageJsonPath)
+        const command = `docker exec assistest npm run ${submissionProject.runnerCommand}`
         const runningServer = exec(command, {cwd: submissionProject.packageJsonPath});
 
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -26,6 +27,13 @@ class ContainerService {
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             serverErrorHandler.throwError()
         }
+    }
+
+    private prepareContainer(projectPath: string) {
+        execSync('docker run --rm -dp 5000:80 -v $(pwd):$(pwd) -w $(pwd) --name assistest assistest-runner',
+            {
+                cwd: projectPath
+            });
     }
 
     private listenRunningServer(runningServer: ChildProcess) {
@@ -83,16 +91,19 @@ class ContainerService {
             if (isUsed) throw new Error(`Port ${port} is not available`)
         }
     }
+
     private checkRunningPortInsideDocker() {
         const result = execSync('docker exec assistest  netstat -an | grep LISTEN | awk \'{print $4}\' | rev | cut -d: -f1 | rev')
-        const runningPort = result.toString()
-        if (parseInt(runningPort) !== port) {
+        const runningPorts = result.toString().trim().split('\n')
+
+        if (!runningPorts.includes('5000')) {
             throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
         }
 
     }
-    private stopContainer(){
-         execSync('docker stop assistest')
+
+    private stopContainer() {
+        execSync('docker kill assistest')
     }
 }
 
