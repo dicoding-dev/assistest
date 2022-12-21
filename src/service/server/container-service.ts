@@ -1,4 +1,4 @@
-import {ChildProcess, exec, execSync, spawnSync} from "child_process";
+import {ChildProcess, exec, execSync} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
