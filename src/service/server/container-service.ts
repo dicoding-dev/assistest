@@ -61,8 +61,7 @@ class ContainerService {
         try {
             this._errorLog = []
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
-            await tcpPortUsed.waitUntilFree(port, 500, 4000)
-            console.log('success to kill port')
+            console.log('success to kill container')
         } catch (e) {
             throw new Error(`Failed to kill port ${port}, error: ${e}`)
         }
