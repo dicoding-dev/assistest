@@ -33,6 +33,7 @@ class ContainerService {
             {
                 cwd: projectPath
             });
+        console.log('start container')
     }
 
     private listenRunningServer(runningServer: ChildProcess) {
