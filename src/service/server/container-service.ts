@@ -30,7 +30,7 @@ class ContainerService {
     }
 
     private prepareContainer(projectPath: string) {
-        execSync('docker run --rm -dp 5000:80 -v $(pwd):$(pwd) -w $(pwd) --name assistest assistest-runner',
+        execSync('docker run --rm -dp 5000:80 -v "$(pwd):$(pwd)" -w "$(pwd)" --name assistest assistest-runner',
             {
                 cwd: projectPath
             });
