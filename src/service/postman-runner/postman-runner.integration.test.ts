@@ -6,15 +6,15 @@ import SubmissionProjectFactory from "../../factories/submission-project/submiss
 
 describe('postman runner test', () => {
 
-    let activeServer
+    let containerService: ContainerService
 
     afterEach(async () => {
-        await activeServer.stop()
+        await containerService.stop()
     })
 
 
     it('should return [] when no error found', async function () {
-        await runServer('./test/student-project/passed-project')
+        await runContainer('./test/student-project/passed-project')
 
         const postmanRunner = new PostmanRunner(collection, environment)
         const failResult = await postmanRunner.run()
@@ -23,7 +23,7 @@ describe('postman runner test', () => {
 
     });
     it('should return array object when test have error', async function () {
-        await runServer('./test/student-project/error-project')
+        await runContainer('./test/student-project/error-project')
 
         const postmanRunner = new PostmanRunner(collection, environment)
         const failResult = await postmanRunner.run()
@@ -54,10 +54,9 @@ describe('postman runner test', () => {
         )
     });
 
-    async function runServer(submissionPath: string) {
+    async function runContainer(submissionPath: string) {
         const submissionProjectFactory = new SubmissionProjectFactory()
-        const server = new ContainerService()
-        await server.run(submissionProjectFactory.create(submissionPath))
-        activeServer = server
+        containerService = new ContainerService()
+        await containerService.run(submissionProjectFactory.create(submissionPath))
     }
 })
