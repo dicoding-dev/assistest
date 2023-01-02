@@ -1,8 +1,14 @@
 import ReviewResult, {ReviewResultStatus} from "../../entities/review-result/course-submission-review/review-result";
 import {writeFileSync} from "fs";
+import * as fs from "fs";
 
 
 class ReportGenerator {
+    private readonly reportPath: string;
+
+    constructor(reportPath: string) {
+        this.reportPath = reportPath;
+    }
     result = []
      generate(reviewResult: ReviewResult, submission: string) {
 
@@ -24,7 +30,9 @@ class ReportGenerator {
 
 
         this.result.push(summary);
-        writeFileSync(`./report/report.json`, JSON.stringify(this.result))
+         fs.mkdirSync(this.reportPath, { recursive: true });
+
+         writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result))
     }
 }
 
