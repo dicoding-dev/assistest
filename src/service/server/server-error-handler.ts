@@ -1,7 +1,7 @@
 import ProjectErrorException from "../../exception/project-error-exception";
 import ServerErrorException from "../../exception/server-error-exception";
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import {port, runnerCommand} from "../../conifg/backend-pemula-project-requirement";
+import {port, runnerCommand} from "../../config/backend-pemula-project-requirement";
 
 class ServerErrorHandler {
     private readonly allErrorLog: string;

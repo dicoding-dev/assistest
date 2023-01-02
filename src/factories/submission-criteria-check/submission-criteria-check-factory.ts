@@ -1,4 +1,4 @@
-import SubmissionChecklist from "../../conifg/submission-checklist";
+import SubmissionChecklist from "../../config/submission-checklist";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import SubmissionCriteriaCheck, {
     ReviewChecklistResult

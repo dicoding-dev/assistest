@@ -2,7 +2,7 @@ import {ChildProcess, exec, execSync} from "child_process";
 import * as tcpPortUsed from 'tcp-port-used';
 import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import {host, port} from "../../conifg/backend-pemula-project-requirement";
+import {host, port} from "../../config/backend-pemula-project-requirement";
 import ProjectErrorException from "../../exception/project-error-exception";
 
 class ContainerService {
