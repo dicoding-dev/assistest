@@ -8,12 +8,6 @@ import PackageJson from "../../entities/submission-project/package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
 
 describe('server service test', () => {
-    afterEach(async () => {
-        if (await isPortUsed(5000)) {
-        }
-    });
-
-
     it.skip('should start & stop server', async function () {
         for (let i = 0; i < 10; i++) {
             const port = 5000
