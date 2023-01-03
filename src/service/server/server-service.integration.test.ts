@@ -1,19 +1,13 @@
 import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
-import ContainerService from "./container-service";
+import ServerService from "./server-service";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {exec, execSync} from "child_process";
 import * as kill from "tree-kill";
 import PackageJson from "../../entities/submission-project/package-json";
+import ProjectErrorException from "../../exception/project-error-exception";
 
-describe('container service test', () => {
-    afterEach(async () => {
-        if (await isPortUsed(5000)) {
-            execSync('docker stop assistest')
-        }
-    });
-
-
+describe('server service test', () => {
     it.skip('should start & stop server', async function () {
         for (let i = 0; i < 10; i++) {
             const port = 5000
@@ -33,29 +27,28 @@ describe('container service test', () => {
             runnerCommand: 'start'
         }
 
-        const container = new ContainerService()
+        const server = new ServerService()
 
         //fake container for first server
         await startFakeServer(port)
 
         // test second sever in same port
-        await expect(container.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
+        await expect(server.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
 
         await killPort(5000)
     });
 
-    it('should throw error and stop container when app port is not 5000', async function () {
+    it('should throw error and stop server when app port is not 5000', async function () {
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/project-with-bad-port',
             packageJsonContent: <PackageJson>{},
             runnerCommand: 'start'
         }
 
-        const container = new ContainerService()
+        const container = new ServerService()
 
         const spy = jest.spyOn(container, 'stop');
-
-        await expect(container.run(submissionProject)).rejects.toThrow(Error)
+        await expect(container.run(submissionProject)).rejects.toThrow(new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT'))
         await expect(spy).toBeCalled()
     });
 
@@ -69,7 +62,7 @@ describe('container service test', () => {
             runnerCommand: 'start'
         }
 
-        const container = new ContainerService()
+        const container = new ServerService()
         await container.run(submissionProject)
 
         const response = await axios.get(`http://${host}:${port}`)
@@ -89,11 +82,13 @@ describe('container service test', () => {
             runnerCommand: 'start'
         }
 
-        const container = new ContainerService()
+        const container = new ServerService()
         await expect(container.run(submissionProject)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
+
+        await container.stop()
     });
 
     async function startFakeServer(port) {

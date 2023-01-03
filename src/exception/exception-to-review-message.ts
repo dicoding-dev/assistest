@@ -8,8 +8,8 @@ const exceptionToReviewMessage = {
     'SEVER_FAILED_TO_START': '',
     'PORT_NOT_MEET_REQUIREMENT': 'port yang kamu gunakan untuk menjalankan aplikasi masih belum sesuai dengan kriteria submission, silakan dicek kembali kriterianya yaa.',
     'COMMAND_NOT_FOUND': 'command yang kamu masukkan tidak ditemukan, pastikan kamu sudah menginstallnya atau pastikan command yang kamu masukkan sudah benar dan tidak terjadi typo.',
-    'MODULE_NOT_FOUND': 'sepertinya ada file yang tidak terimport dengan baik, pastikan path yang kamu gunakan sudah benar atau pastikan tidak ada typo pada path yang kamu masukkan.'
-
+    'MODULE_NOT_FOUND': 'sepertinya ada file yang tidak terimport dengan baik, pastikan path yang kamu gunakan sudah benar atau pastikan tidak ada typo pada path yang kamu masukkan.',
+    'FAIL_INSTALLING_PACKAGE': 'package pada aplikasi yang kamu buat belum bisa di-install dengan baik.'
 }
 
 export default exceptionToReviewMessage

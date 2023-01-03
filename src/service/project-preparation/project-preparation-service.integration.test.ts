@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import ProjectPreparationService from "./project-preparation-service";
 import SubmissionProject from "../../entities/submission-project/submission-project";
+import ServerErrorException from "../../exception/server-error-exception";
 
 describe('project preparation test', () => {
     it('should install project properly', function () {
@@ -30,6 +31,23 @@ describe('project preparation test', () => {
         expect(isNodeModulesExist).toBeTruthy()
 
         resetTestFile(submissionProject.packageJsonPath)
+    });
+
+    it('should throw error when install dependencies is failed', async function () {
+        const submissionProject = <SubmissionProject>{
+            packageJsonPath: '/home/agis/Desktop/assistest/source-code/test/student-project/project-with-bad-dependencies',
+            packageJsonContent: {
+                "devDependencies": {
+                    "@hapi/hapi": "^21.1.2"
+                }
+            },
+            runnerCommand: 'start'
+        }
+        const projectPreparation = new ProjectPreparationService()
+        expect(()=> projectPreparation.install(submissionProject)).toThrow(new ServerErrorException('FAIL_INSTALLING_PACKAGE'))
+
+        const isNodeModulesExist = fs.existsSync(`${submissionProject.packageJsonPath}/node_modules`)
+        expect(isNodeModulesExist).toBeFalsy()
     });
 
     async function resetTestFile(directory: string) {
