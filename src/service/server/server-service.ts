@@ -5,7 +5,7 @@ import SubmissionProject from "../../entities/submission-project/submission-proj
 import {host, port} from "../../config/backend-pemula-project-requirement";
 import ProjectErrorException from "../../exception/project-error-exception";
 
-class ContainerService {
+class ServerService {
     private _errorLog = [];
 
     async run(submissionProject: SubmissionProject) {
@@ -91,4 +91,4 @@ class ContainerService {
     }
 }
 
-export default ContainerService
+export default ServerService
