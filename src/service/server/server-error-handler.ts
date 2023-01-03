@@ -29,7 +29,7 @@ class ServerErrorHandler {
 
     private validatePort() {
         const portFromLogError = this.getPortFromLogError()
-        if (portFromLogError && portFromLogError != port) {
+        if ((portFromLogError && portFromLogError != port) || !this.logErrors.length) {
             throw new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT')
         }
     }
