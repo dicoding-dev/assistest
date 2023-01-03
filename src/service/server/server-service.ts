@@ -19,8 +19,9 @@ class ServerService {
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 3000)
         } catch (e) {
-            await this.stop()
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
+            await this.stop()
+
             serverErrorHandler.throwError()
         }
     }
@@ -33,7 +34,7 @@ class ServerService {
         });
 
         runningServer.stderr.on('data', (data) => {
-            this._errorLog.push(data)
+            this._errorLog.push(data.toString())
             if (process.env.DEBUG_MODE) {
                 console.log(`stderr ${data}`);
             }
