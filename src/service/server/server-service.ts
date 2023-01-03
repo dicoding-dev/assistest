@@ -11,7 +11,7 @@ class ServerService {
 
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
-        this.runningServer = spawn('npm', ['run', 'start'], {cwd: submissionProject.packageJsonPath, detached: true})
+        this.runningServer = spawn('npm', ['run', submissionProject.runnerCommand], {cwd: submissionProject.packageJsonPath, detached: true})
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
