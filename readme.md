@@ -3,7 +3,7 @@ Aplikasi untuk menjalankan automation review untuk kelas backend pemula
 
 ## Prerequisite
 1. Nodejs minimal versi 14
-2Submission backend yang sudah diextract
+2. Submission backend yang sudah diextract
 
 ## Sebelum menjalankan aplikasi lakukan langkah berikut
 1Install dependency menggunakan `npm i` atau `yarn`.
