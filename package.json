@@ -9,7 +9,7 @@
     "test": "jest -i",
     "unit-test": "jest --testPathPattern=unit.test",
     "integration-test": "jest --testPathPattern=integration.test -i",
-    "cli": "ts-node src/interface/cli.ts"
+    "assistest": "ts-node src/interface/cli.ts"
   },
   "author": "agissept",
   "license": "MIT",
