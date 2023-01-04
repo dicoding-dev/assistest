@@ -2,11 +2,12 @@ import {main} from "../service-provider";
 import {readdirSync} from "fs";
 import ReportGenerator from "../service/report-generator/report-generator";
 import * as path from "path";
+import * as minimist from 'minimist';
 
 class Cli {
-    private mode: string;
     private reportPath: string;
     private folderPath: string;
+    private multipleSubmissionStatus: boolean;
 
     constructor() {
         this.getInput()
@@ -16,7 +17,7 @@ class Cli {
     async run() {
         const reportGenerator = new ReportGenerator(this.reportPath)
 
-        if (this.mode === 'multi') {
+        if (this.multipleSubmissionStatus) {
             const allSubmission = readdirSync(this.folderPath)
             for (const submission of allSubmission) {
                 console.log(`checking ${submission}`)
@@ -37,20 +38,16 @@ class Cli {
             throw Error('reportPath must not empty')
         }
 
-        if (!this.folderPath){
+        if (!this.folderPath) {
             throw Error('Submission source is not specified yet')
         }
     }
 
     private getInput() {
-        this.folderPath = process.argv.find(arg => arg.includes('path='))?.replace('path=', '')
-        this.mode = process.argv.find(arg => arg.includes('mode=')).replace('mode=', '') ?? 'single'
-        this.reportPath = process.argv.find(arg => arg.includes('reportPath='))?.replace('reportPath=', '')
+        const argv = minimist(process.argv.slice(2));
+        this.folderPath = argv.s ?? argv.submissions
+        this.multipleSubmissionStatus = argv.m ?? argv.multiple
+        this.reportPath = argv.r ?? argv.result
     }
 }
-
-console.time('run')
-new Cli().run().then(()=> {
-    console.timeEnd('run')
-})
-
+new Cli().run()

@@ -9,7 +9,7 @@
     "test": "jest -i",
     "unit-test": "jest --testPathPattern=unit.test",
     "integration-test": "jest --testPathPattern=integration.test -i",
-    "cli": "ts-node src/interface/cli.ts"
+    "assistest": "ts-node src/interface/cli.ts"
   },
   "author": "agissept",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "@types/node": "^18.8.4",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
+    "minimist": "^1.2.7",
     "newman": "^5.3.2",
     "tcp-port-used": "^1.0.2",
     "tree-kill": "^1.2.2",
