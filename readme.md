@@ -37,6 +37,25 @@ Aplikasi untuk menjalankan automation review untuk kelas backend pemula
   ```
   npm run assistest -- -s ./downloaded-submissions/ -r ./result -m
   ```
+## Menjalankan aplikasi menggunakan Docker
+Jika menjalankan aplikasi menggunakan Docker, maka tidak perlu melakukan install dependencies, install akan dilakukan oleh Dockerfile.
+
+
+Step pertama yang harus dilakukan adalah bulild image, contoh perintah build image adalah seperti berikut
+```
+docker build -t dicoding/assistest .
+```
+Lalu gunakan perintah berikut untuk menjalankan aplikasi
+```
+docker run -it --rm  dicoding/assistest -s <path submission> -r <path review result akan disimpan>
+```
+Perlu dingat `<path submission>` dan  `<path review result akan disimpan>` perlu berada di dalam container. 
+Jika tidak ingin menggunakan path yang ada di container maka bisa gunakan volume mapping. Contoh
+``` 
+docker run -it --rm \                                                    
+-v /home/user/download/:/submission-backend \
+dicoding/assistest -s /home/user/download/submission-backend -r /home/user/download//review-result
+```
 
 ## Hasil Review
 
