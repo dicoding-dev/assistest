@@ -12,10 +12,8 @@ class ServerService {
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
         this.runningServer = spawn('npm', ['run', submissionProject.runnerCommand], {cwd: submissionProject.packageJsonPath, detached: true})
-
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
         this.listenRunningServer(this.runningServer)
+
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 3000)
         } catch (e) {
@@ -54,7 +52,9 @@ class ServerService {
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
             console.log('success to kill server')
         } catch (e) {
-            throw new Error(`Failed to kill port ${port}, error: ${e}`)
+            if (!e.message.includes('ESRCH')){
+                throw new Error(`Failed to kill port ${port}, error: ${e}`)
+            }
         }
     }
 
