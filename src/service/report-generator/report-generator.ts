@@ -10,24 +10,16 @@ class ReportGenerator {
         this.reportPath = reportPath;
     }
     result = []
-     generate(reviewResult: ReviewResult, submission: string) {
-
-        const submissionId = new RegExp(/(\d+)/g).exec(submission)[1]
-        const submissionName = new RegExp(/ +(\w*)/g).exec(submission)[1]
-        let status = false
-        if (reviewResult.status === ReviewResultStatus.Approve){
-            status = true
-        }
+     generate(reviewResult: ReviewResult, submissionPath: string) {
+        const isApproved = reviewResult.status === ReviewResultStatus.Approve
 
         const summary = {
-            id: submissionId,
-            name: submissionName,
-            is_success: status,
+            review_id: Date.now(),
+            is_approved: isApproved,
             rating: reviewResult.rating,
             failure: reviewResult.message,
-            url: `https://www.dicoding.com/academysubmissions/${submissionId}`,
+            submission_path: submissionPath
         };
-
 
         this.result.push(summary);
          fs.mkdirSync(this.reportPath, { recursive: true });
