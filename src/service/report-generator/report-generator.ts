@@ -5,12 +5,13 @@ import * as fs from "fs";
 
 class ReportGenerator {
     private readonly reportPath: string;
+    private result = []
 
     constructor(reportPath: string) {
         this.reportPath = reportPath;
     }
-    result = []
-     generate(reviewResult: ReviewResult, submissionPath: string) {
+
+    generate(reviewResult: ReviewResult, submissionPath: string) {
         const isApproved = reviewResult.status === ReviewResultStatus.Approve
 
         const summary = {
@@ -22,9 +23,9 @@ class ReportGenerator {
         };
 
         this.result.push(summary);
-         fs.mkdirSync(this.reportPath, { recursive: true });
+        fs.mkdirSync(this.reportPath, {recursive: true});
 
-         writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result))
+        writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result))
     }
 }
 
