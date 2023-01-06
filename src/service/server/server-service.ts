@@ -11,7 +11,7 @@ class ServerService {
 
     async run(submissionProject: SubmissionProject) {
         await this.validateBeforeStart()
-        this.runningServer = spawn('npm', ['run', submissionProject.runnerCommand], {cwd: submissionProject.packageJsonPath, detached: true})
+        this.runningServer = spawn('npm', ['run', '--silent', submissionProject.runnerCommand], {cwd: submissionProject.packageJsonPath, detached: true})
         this.listenRunningServer(this.runningServer)
 
         try {
