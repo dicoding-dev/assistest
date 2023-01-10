@@ -51,12 +51,27 @@ class CourseSubmissionAcception {
         if (!eslintCheckResult.isSuccess) {
             message = exceptionToReviewMessage[eslintCheckResult.code]
             if (eslintCheckResult.code === 'ESLINT_ERROR') {
-                message += `<pre>${eslintCheckResult.reason}</pre>`
+                const formattedLog = this.ellipsisEslintLogError(eslintCheckResult.reason)
+                message += `<pre>${formattedLog}</pre>`
             }
         }
 
         return message
     }
+
+    //this function will create ellipsis between 5 first line and 5 last line if total line more than 10
+    private ellipsisEslintLogError(eslintLog: string): string {
+        const totalLines = eslintLog.split("\n").length
+        if (totalLines > 10) {
+            const firstIndexOfLine = 10
+            const lastIndexOfLine = 10
+
+            const firstIndex = eslintLog.split("\n", firstIndexOfLine).join("\n").length
+            const lastIndex = eslintLog.split("\n", totalLines - lastIndexOfLine).join("\n").length
+            return eslintLog.substring(0, firstIndex) + '\n\n...\n\n' + eslintLog.substring(lastIndex + 1);
+        }
+    }
+
 
     get messages(): string {
         return this._messages;
