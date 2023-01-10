@@ -2,7 +2,6 @@ import {execSync} from "child_process";
 import EslintCheckResult from "./eslint-check-result";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 
-
 class EslintChecker {
     check(submissionProject: SubmissionProject): EslintCheckResult {
         const packageJSONContent = submissionProject.packageJsonContent
@@ -11,6 +10,10 @@ class EslintChecker {
         }
 
         try {
+            //check eslint config available or not
+            execSync('npx eslint ./', {
+                cwd: submissionProject.packageJsonPath, stdio: "pipe"
+            })
             const result = execSync('npx eslint ./ --rule \'linebreak-style:off\'', {
                 cwd: submissionProject.packageJsonPath,
                 stdio: "pipe"
