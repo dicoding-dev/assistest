@@ -1,19 +1,14 @@
-import FailureTest from "../../../service/postman-runner/failure-test";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
 import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
-import {log} from "util";
 
 
 class CourseSubmissionAcception {
-    private submissionId = 1
     private completedChecklist: Array<number>;
-    private reviewerId = 123
     private _rating = 0
     private _messages: string
-    private failurePostmanTest: FailureTest[];
     private submissionRatingGenerator: SubmissionRatingFactory;
-    private _reviewChecklistResults: ReviewChecklistResult[];
+    private readonly _reviewChecklistResults: ReviewChecklistResult[];
     private submissionCriteriaCheck: SubmissionCriteriaCheck;
 
     constructor(submissionCriteriaCheck: SubmissionCriteriaCheck, submissionRatingGenerator: SubmissionRatingFactory) {
