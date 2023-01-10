@@ -31,8 +31,16 @@ class CourseSubmissionAcception {
     }
 
     private templateApprovalMessage(): string {
-        if (this.submissionRatingGenerator.rating < 5) {
-            return `Masih terdapat beberapa error pada kriteria optional <pre>${JSON.stringify(this.submissionCriteriaCheck.failurePostmanTest)}</pre>`
+        if (this.submissionCriteriaCheck.failurePostmanTest.length > 0) {
+            let container = ''
+            this.submissionCriteriaCheck.failurePostmanTest.forEach(failedTest => {
+                let list = `<li><b>${failedTest.name}</b><ul>`
+                failedTest.tests.forEach(test => {
+                    list += `<li>Nama test: ${test.test}<br>Pesan error: ${test.message}</li>`
+                })
+                container += `${list}</ul></li>`
+            })
+            return `Masih terdapat beberapa error pada kriteria optional <ul>${container}</ul>`
         }
         return 'Congrats.'
     }
