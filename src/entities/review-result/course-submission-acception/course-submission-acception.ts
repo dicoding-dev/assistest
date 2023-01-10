@@ -2,6 +2,7 @@ import FailureTest from "../../../service/postman-runner/failure-test";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
 import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
+import {log} from "util";
 
 
 class CourseSubmissionAcception {
@@ -62,7 +63,7 @@ class CourseSubmissionAcception {
     //this function will create ellipsis between 5 first line and 5 last line if total line more than 10
     private ellipsisEslintLogError(eslintLog: string): string {
         const totalLines = eslintLog.split("\n").length
-        if (totalLines > 10) {
+        if (totalLines > 10 && eslintLog.includes('Oops! Something went wrong')) {
             const firstIndexOfLine = 10
             const lastIndexOfLine = 10
 
@@ -70,6 +71,8 @@ class CourseSubmissionAcception {
             const lastIndex = eslintLog.split("\n", totalLines - lastIndexOfLine).join("\n").length
             return eslintLog.substring(0, firstIndex) + '\n\n...\n\n' + eslintLog.substring(lastIndex + 1);
         }
+
+        return eslintLog
     }
 
 
