@@ -23,11 +23,17 @@ class CourseSubmissionAcception {
     }
 
     private getMessage() {
-        return `${this.templateApprovalMessage()} ${this.getMessageFromEslint()}`
+        const messageFromEslint = this.getMessageFromEslint()
+        const messageFromOptionalTest = this.getMessageFromOptionalTest()
+        if (messageFromEslint || messageFromOptionalTest){
+            return messageFromEslint + messageFromOptionalTest
+        }
+        return 'Congrats.'
     }
 
-    private templateApprovalMessage(): string {
-        if (this.submissionCriteriaCheck.failurePostmanTest.length > 0) {
+
+    private getMessageFromOptionalTest(): string {
+        if (this.submissionCriteriaCheck.failurePostmanTest?.length > 0) {
             let container = ''
             this.submissionCriteriaCheck.failurePostmanTest.forEach(failedTest => {
                 let list = `<li><b>${failedTest.name}</b><ul>`
@@ -38,7 +44,6 @@ class CourseSubmissionAcception {
             })
             return `Masih terdapat beberapa error pada kriteria optional <ul>${container}</ul>`
         }
-        return 'Congrats.'
     }
 
     private getMessageFromEslint(): string {
