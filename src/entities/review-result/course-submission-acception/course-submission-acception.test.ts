@@ -49,7 +49,7 @@ describe('course submission acception test', () => {
         courseSubmissionAcception.accept()
 
         expect(courseSubmissionAcception.rating).toStrictEqual(5)
-        expect(courseSubmissionAcception.messages).toStrictEqual('Congrats. ')
+        expect(courseSubmissionAcception.messages).toStrictEqual('Congrats.')
     });
 
     it('should format eslint message when eslint have error log', function () {
@@ -65,6 +65,9 @@ describe('course submission acception test', () => {
                     get code(): string {
                         return 'ESLINT_ERROR'
                     },
+                    get reason(): string{
+                        return 'Config is not found'
+                    }
                 }
             }
         }
