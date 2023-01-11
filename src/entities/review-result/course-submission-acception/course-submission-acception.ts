@@ -44,26 +44,27 @@ class CourseSubmissionAcception {
             })
             return `Masih terdapat beberapa error pada kriteria optional <ul>${container}</ul>`
         }
+        return ''
     }
 
     private getMessageFromEslint(): string {
         const eslintCheckResult = this.submissionRatingGenerator.eslintCheckResult
-        let message = ''
         if (!eslintCheckResult.isSuccess) {
-            message = exceptionToReviewMessage[eslintCheckResult.code]
+            let message = exceptionToReviewMessage[eslintCheckResult.code]
             if (eslintCheckResult.code === 'ESLINT_ERROR') {
                 const formattedLog = this.ellipsisEslintLogError(eslintCheckResult.reason)
                 message += `<pre>${formattedLog}</pre>`
             }
+            return message
         }
 
-        return message
+        return ''
     }
 
-    //this function will create ellipsis between 5 first line and 5 last line if total line more than 10
+    //this function will create ellipsis between 10 first line and 10 last line if total line more than 10
     private ellipsisEslintLogError(eslintLog: string): string {
         const totalLines = eslintLog.split("\n").length
-        if (totalLines > 10 && eslintLog.includes('Oops! Something went wrong')) {
+        if (totalLines > 20 && eslintLog.includes('Oops! Something went wrong')) {
             const firstIndexOfLine = 10
             const lastIndexOfLine = 10
 
