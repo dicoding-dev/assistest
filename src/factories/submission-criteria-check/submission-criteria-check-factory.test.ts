@@ -7,7 +7,7 @@ describe('mandatory criteria test', () => {
     const submissionRequirements = getSubmissionRequirements()
     submissionRequirements.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
     submissionRequirements.PROJECT_HAVE_CORRECT_PORT.status = true
-    const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(submissionRequirements)
+    const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory()
 
     it('should grouping failed test by criteria and return approval false', function () {
         const failurePostmanTest: Array<ResultTestFailure> = [
@@ -57,7 +57,7 @@ describe('mandatory criteria test', () => {
             }],
         }]
 
-        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(submissionRequirements, failurePostmanTest)
 
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
@@ -66,7 +66,7 @@ describe('mandatory criteria test', () => {
     it('should return approval true', function () {
         const failurePostmanTest: Array<ResultTestFailure> = []
 
-        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(submissionRequirements, failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
 
         const expectedReviewChecklistResult = getSubmissionRequirements()
@@ -82,7 +82,7 @@ describe('mandatory criteria test', () => {
     })
 
     it('should return approval false and all criteria is not passed when failed postman test not exist', function () {
-        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check()
+        const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(submissionRequirements)
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         const expectedReviewChecklistResult = getSubmissionRequirements()
         expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true

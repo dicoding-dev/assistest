@@ -4,20 +4,15 @@ import {SubmissionRequirement} from "../../config/submission-requirement"
 
 
 class SubmissionCriteriaCheckFactory {
-    private readonly submissionRequirements: SubmissionRequirement;
 
-    constructor(submissionRequirements: SubmissionRequirement) {
-        this.submissionRequirements = submissionRequirements;
-    }
-
-    public check(failurePostmanTest: Array<ResultTestFailure> = null): SubmissionCriteriaCheck{
+    public check(submissionRequirements: SubmissionRequirement, failurePostmanTest: Array<ResultTestFailure> = null): SubmissionCriteriaCheck{
 
         const postmanRequirements = [
-            this.submissionRequirements.API_CAN_INSERT_BOOK,
-            this.submissionRequirements.API_CAN_GET_ALL_BOOK,
-            this.submissionRequirements.API_CAN_GET_DETAIL_BOOK,
-            this.submissionRequirements.API_CAN_UPDATE_BOOK,
-            this.submissionRequirements.API_CAN_DELETE_BOOK
+            submissionRequirements.API_CAN_INSERT_BOOK,
+            submissionRequirements.API_CAN_GET_ALL_BOOK,
+            submissionRequirements.API_CAN_GET_DETAIL_BOOK,
+            submissionRequirements.API_CAN_UPDATE_BOOK,
+            submissionRequirements.API_CAN_DELETE_BOOK
         ]
 
         postmanRequirements.forEach(postmanRequirement => {
@@ -27,7 +22,7 @@ class SubmissionCriteriaCheckFactory {
         })
 
         return {
-            reviewChecklistResult: this.submissionRequirements,
+            reviewChecklistResult: submissionRequirements,
             failurePostmanTest,
             approvalStatus: postmanRequirements.filter(criteria => criteria.status === false).length < 1
         }

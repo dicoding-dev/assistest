@@ -10,6 +10,7 @@ import PackageJsonFinderService from "./service/project-path-finder/package-json
 import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-check/submission-criteria-check-factory";
 import ReviewResult from "./entities/review-result/course-submission-review/review-result";
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
+import getSubmissionRequirement, {SubmissionRequirement} from "./config/submission-requirement";
 
 class Main {
     private postmanRunner: PostmanRunner;
@@ -18,6 +19,7 @@ class Main {
     private serverService: ServerService;
     private packageJsonFinderService: PackageJsonFinderService;
     private submissionCriteriaCheckFactory: SubmissionCriteriaCheckFactory
+    private submissionRequirements: SubmissionRequirement;
 
     constructor(
         postmanRunner: PostmanRunner,
@@ -38,6 +40,7 @@ class Main {
     }
 
     public async reviewSubmission(submissionPath: string): Promise<ReviewResult> {
+        this.submissionRequirements = getSubmissionRequirement()
         let submissionCriteriaCheck = null
         try {
             const submissionProject = this.createSubmissionProject(submissionPath)
@@ -49,7 +52,7 @@ class Main {
             return this.generateReviewResult(submissionCriteriaCheck, eslintCheckResult)
         } catch (e) {
             if (e instanceof SubmissionErrorException) {
-                submissionCriteriaCheck = submissionCriteriaCheck ?? this.submissionCriteriaCheckFactory.check()
+                submissionCriteriaCheck = submissionCriteriaCheck ?? this.submissionCriteriaCheckFactory.check(this.submissionRequirements)
                 return this.generateReviewResult(submissionCriteriaCheck, null, e)
             } else {
                 console.log(e)
@@ -80,7 +83,7 @@ class Main {
         const postmanResult = await this.postmanRunner.run()
         await this.serverService.stop()
 
-        return this.submissionCriteriaCheckFactory.check(postmanResult)
+        return this.submissionCriteriaCheckFactory.check(this.submissionRequirements, postmanResult)
     }
 
     private submissionProjectFactory: SubmissionProjectFactory;

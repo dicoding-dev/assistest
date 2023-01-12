@@ -8,10 +8,9 @@ import Main from "./index";
 import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-check/submission-criteria-check-factory";
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 import PackageJsonFinderService from "./service/project-path-finder/package-json-finder-service";
-import getSubmissionRequirement from "./config/submission-requirement";
 
 const postmanRunner = new PostmanRunner(collection, env)
-const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(getSubmissionRequirement())
+const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory()
 const submissionProjectFactory = new SubmissionProjectFactory()
 const serverService = new ServerService()
 const projectPreparationService = new ProjectPreparationService()
