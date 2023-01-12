@@ -19,7 +19,8 @@ class ReportGenerator {
             is_approved: isApproved,
             rating: reviewResult.rating,
             failure: reviewResult.message,
-            submission_path: submissionPath
+            submission_path: submissionPath,
+            checklist: reviewResult.checklist
         };
 
         this.result.push(summary);
