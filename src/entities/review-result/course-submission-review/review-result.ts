@@ -1,10 +1,10 @@
-import {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
+import {SubmissionRequirement} from "../../../config/submission-requirement";
 
 interface ReviewResult {
     rating: number,
     message: string,
     status: ReviewResultStatus,
-    checklist: ReviewChecklistResult[]
+    checklist: SubmissionRequirement
 }
 
 export enum ReviewResultStatus {
