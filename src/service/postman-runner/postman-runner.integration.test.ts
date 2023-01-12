@@ -3,6 +3,7 @@ import ServerService from "../server/server-service";
 import * as collection from '../../../test/postman/postman_collection.json'
 import * as environment from '../../../test/postman/postman_environment.json'
 import SubmissionProjectFactory from "../../factories/submission-project/submission-project-factory";
+import getSubmissionRequirement from "../../config/submission-requirement";
 
 describe('postman runner test', () => {
 
@@ -57,6 +58,7 @@ describe('postman runner test', () => {
     async function runContainer(submissionPath: string) {
         const submissionProjectFactory = new SubmissionProjectFactory()
         containerService = new ServerService()
-        await containerService.run(submissionProjectFactory.create(submissionPath))
+        const submissionRequirement = getSubmissionRequirement()
+        await containerService.run(submissionProjectFactory.create(submissionRequirement, submissionPath), submissionRequirement)
     }
 })
