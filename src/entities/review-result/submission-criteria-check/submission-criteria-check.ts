@@ -1,7 +1,8 @@
 import ResultTestFailure from "../../../service/postman-runner/failure-test";
+import {SubmissionRequirement} from "../../../config/submission-requirement";
 
 interface SubmissionCriteriaCheck {
-    reviewChecklistResult: Array<ReviewChecklistResult>
+    reviewChecklistResult: SubmissionRequirement
     failurePostmanTest: Array<ResultTestFailure>;
     approvalStatus: boolean
 }
