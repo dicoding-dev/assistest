@@ -3,19 +3,21 @@ import * as tcpPortUsed from 'tcp-port-used';
 import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {host, port} from "../../config/backend-pemula-project-requirement";
+import {SubmissionRequirement} from "../../config/submission-requirement";
 
 class ServerService {
     private _errorLog = [];
     private runningServer: ChildProcess;
 
 
-    async run(submissionProject: SubmissionProject) {
+    async run(submissionProject: SubmissionProject, submissionRequirement: SubmissionRequirement) {
         await this.validateBeforeStart()
         this.runningServer = spawn('npm', ['run', '--silent', submissionProject.runnerCommand], {cwd: submissionProject.packageJsonPath, detached: true})
         this.listenRunningServer(this.runningServer)
 
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 3000)
+            submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
         } catch (e) {
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             await this.stop()

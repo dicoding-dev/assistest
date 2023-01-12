@@ -79,7 +79,7 @@ class Main {
     private runServerAndTest = async (submissionProject: SubmissionProject) => {
         await this.projectPreparationService.install(submissionProject)
 
-        await this.serverService.run(submissionProject)
+        await this.serverService.run(submissionProject, this.submissionRequirements)
         const postmanResult = await this.postmanRunner.run()
         await this.serverService.stop()
 

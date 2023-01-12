@@ -6,8 +6,10 @@ import {exec, execSync} from "child_process";
 import * as kill from "tree-kill";
 import PackageJson from "../../entities/submission-project/package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
+import getSubmissionRequirement from "../../config/submission-requirement";
 
 describe('server service test', () => {
+    const submissionRequirement =  getSubmissionRequirement()
     it.skip('should start & stop server', async function () {
         for (let i = 0; i < 10; i++) {
             const port = 5000
@@ -33,7 +35,8 @@ describe('server service test', () => {
         await startFakeServer(port)
 
         // test second sever in same port
-        await expect(server.run(submissionProject)).rejects.toThrow(new Error(`Port ${port} is not available`))
+        await expect(server.run(submissionProject, submissionRequirement)).rejects.toThrow(new Error(`Port ${port} is not available`))
+        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
 
         await killPort(5000)
     });
@@ -48,8 +51,9 @@ describe('server service test', () => {
         const container = new ServerService()
 
         const spy = jest.spyOn(container, 'stop');
-        await expect(container.run(submissionProject)).rejects.toThrow(new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT'))
+        await expect(container.run(submissionProject, submissionRequirement)).rejects.toThrow(new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT'))
         await expect(spy).toBeCalled()
+        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
     });
 
 
@@ -63,14 +67,16 @@ describe('server service test', () => {
         }
 
         const container = new ServerService()
-        await container.run(submissionProject)
+        await container.run(submissionProject, submissionRequirement)
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
+        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeTruthy()
 
         //kill server
         await container.stop()
         expect(await isPortUsed(5000)).toBeFalsy()
+
     });
     //
     it('should run container properly', async function () {
@@ -83,10 +89,12 @@ describe('server service test', () => {
         }
 
         const container = new ServerService()
-        await expect(container.run(submissionProject)).resolves.not.toThrow()
+        await expect(container.run(submissionProject, submissionRequirement)).resolves.not.toThrow()
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
+        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeTruthy()
+
 
         await container.stop()
     });
