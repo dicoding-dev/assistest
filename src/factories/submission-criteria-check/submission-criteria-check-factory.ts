@@ -1,13 +1,13 @@
-import SubmissionChecklist from "../../config/submission-checklist";
+import PostmanRequirement from "../../config/postman-requirement";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import SubmissionCriteriaCheck, {
     ReviewChecklistResult
 } from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
 
 class SubmissionCriteriaCheckFactory {
-    private submissionChecklists: SubmissionChecklist[];
+    private submissionChecklists: PostmanRequirement[];
 
-    constructor(submissionChecklists: SubmissionChecklist[]) {
+    constructor(submissionChecklists: PostmanRequirement[]) {
         this.submissionChecklists = submissionChecklists;
     }
 

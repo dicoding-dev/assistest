@@ -1,6 +1,6 @@
-import SubmissionChecklist from "./submission-checklist";
+import PostmanRequirement from "./postman-requirement";
 
-const backendPemulaChecklist: SubmissionChecklist[] = [
+const postmanRequirements: PostmanRequirement[] = [
         {
             name: 'API dapat menyimpan buku',
             requirements: [
@@ -40,4 +40,4 @@ const backendPemulaChecklist: SubmissionChecklist[] = [
         }
     ]
 
-export default backendPemulaChecklist
+export default postmanRequirements
