@@ -1,6 +1,7 @@
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
-import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
+import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
+import {SubmissionRequirement} from "../../../config/submission-requirement";
 
 
 class CourseSubmissionAcception {
@@ -8,7 +9,7 @@ class CourseSubmissionAcception {
     private _rating = 0
     private _messages: string
     private submissionRatingGenerator: SubmissionRatingFactory;
-    private readonly _reviewChecklistResults: ReviewChecklistResult[];
+    private readonly _reviewChecklistResults: SubmissionRequirement;
     private submissionCriteriaCheck: SubmissionCriteriaCheck;
 
     constructor(submissionCriteriaCheck: SubmissionCriteriaCheck, submissionRatingGenerator: SubmissionRatingFactory) {
@@ -25,7 +26,7 @@ class CourseSubmissionAcception {
     private getMessage() {
         const messageFromEslint = this.getMessageFromEslint()
         const messageFromOptionalTest = this.getMessageFromOptionalTest()
-        if (messageFromEslint || messageFromOptionalTest){
+        if (messageFromEslint || messageFromOptionalTest) {
             return messageFromEslint + messageFromOptionalTest
         }
         return 'Congrats.'
@@ -80,11 +81,12 @@ class CourseSubmissionAcception {
     get messages(): string {
         return this._messages;
     }
+
     get rating(): number {
         return this._rating;
     }
 
-    get reviewChecklistResults(): ReviewChecklistResult[] {
+    get reviewChecklistResults():  SubmissionRequirement {
         return this._reviewChecklistResults;
     }
 }

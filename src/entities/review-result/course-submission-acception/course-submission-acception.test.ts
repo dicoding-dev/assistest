@@ -2,6 +2,7 @@ import CourseSubmissionAcception from "./course-submission-acception";
 import EslintCheckResult from "../../../service/eslint-checker/eslint-check-result";
 import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
 import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
+import getSubmissionRequirement from "../../../config/submission-requirement";
 
 describe('course submission acception test', () => {
     it('should accept submission properly', function () {
@@ -21,14 +22,23 @@ describe('course submission acception test', () => {
             }
         }
 
+        const submissionRequirement = getSubmissionRequirement()
+        submissionRequirement.API_CAN_INSERT_BOOK.status = true
+        submissionRequirement.API_CAN_UPDATE_BOOK.status = true
+        submissionRequirement.API_CAN_DELETE_BOOK.status = true
+        submissionRequirement.API_CAN_GET_ALL_BOOK.status = true
+        submissionRequirement.API_CAN_GET_DETAIL_BOOK.status = true
+        submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
+        submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+
         const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{
-            reviewChecklistResult: []
+            reviewChecklistResult: submissionRequirement
         }, submissionRatingGenerator);
         courseSubmissionAcception.accept()
 
         expect(courseSubmissionAcception.rating).toStrictEqual(3)
         expect(courseSubmissionAcception.messages).not.toBeNull()
-        expect(courseSubmissionAcception.reviewChecklistResults).toStrictEqual([])
+        expect(courseSubmissionAcception.reviewChecklistResults).toStrictEqual(submissionRequirement)
     });
 
     it('should accept submission properly when eslint success', function () {
