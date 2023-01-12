@@ -1,10 +1,14 @@
 const submissionRequirements = {
-    PROJECT_HAVE_PORT_5000: {
+    PROJECT_HAVE_CORRECT_PORT: {
         status: false,
+    },
+    PROJECT_HAVE_CORRECT_RUNNER_SCRIPT: {
+        status: false
     },
     API_CAN_INSERT_BOOK: {
         status: false,
         postmanTestName: 'API dapat menyimpan buku',
+        reason: [],
         postmanTestRequirements: [
             '[Mandatory] Add Book With Complete Data',
             '[Mandatory] Add Book Without Name',
@@ -13,6 +17,7 @@ const submissionRequirements = {
     },
     API_CAN_GET_ALL_BOOK: {
         status: false,
+        reason: [],
         postmanTestName: 'API dapat menampilkan seluruh buku',
         postmanTestRequirements: [
             '[Mandatory] Get All Books',
@@ -20,6 +25,7 @@ const submissionRequirements = {
     },
     API_CAN_GET_DETAIL_BOOK: {
         status: false,
+        reason: [],
         postmanTestName: 'API dapat menampilkan detail buku',
         postmanTestRequirements:
             [
@@ -29,6 +35,7 @@ const submissionRequirements = {
     },
     API_CAN_UPDATE_BOOK: {
         status: false,
+        reason: [],
         postmanTestName: 'API dapat mengubah data buku',
         postmanTestRequirements: [
             '[Mandatory] Update Book With Complete Data',
@@ -39,6 +46,7 @@ const submissionRequirements = {
     },
     API_CAN_DELETE_BOOK: {
         status: false,
+        reason: [],
         postmanTestName: 'API dapat menghapus buku',
         postmanTestRequirements:
             [
@@ -48,4 +56,8 @@ const submissionRequirements = {
     }
 }
 
-export default submissionRequirements
+const getSubmissionRequirement = (): typeof submissionRequirements => {
+    return JSON.parse(JSON.stringify(submissionRequirements))
+}
+export default getSubmissionRequirement
+export type SubmissionRequirement = typeof submissionRequirements
