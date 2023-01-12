@@ -73,7 +73,7 @@ class Main {
 
     private createSubmissionProject = (submissionPath): SubmissionProject => {
         const projectPath = this.packageJsonFinderService.getPackageJsonDirectory(submissionPath)
-        return this.submissionProjectFactory.create(projectPath)
+        return this.submissionProjectFactory.create(this.submissionRequirements, projectPath)
     }
 
     private runServerAndTest = async (submissionProject: SubmissionProject) => {

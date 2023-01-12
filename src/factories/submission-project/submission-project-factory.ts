@@ -3,18 +3,21 @@ import ProjectErrorException from "../../exception/project-error-exception";
 import * as path from "path";
 import PackageJson from "../../entities/submission-project/package-json";
 import SubmissionProject from "../../entities/submission-project/submission-project";
+import {SubmissionRequirement} from "../../config/submission-requirement";
 
 
 export default class SubmissionProjectFactory {
     private packageJsonContent: PackageJson
 
-    public create(projectPath?: string): SubmissionProject {
+    public create(submissionRequirement: SubmissionRequirement, projectPath?: string): SubmissionProject {
         this.validate(projectPath)
 
+        const runnerCommand = this.getRunnerCommand()
+        submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
         return {
             packageJsonContent: this.packageJsonContent,
             packageJsonPath: projectPath,
-            runnerCommand: this.getRunnerCommand()
+            runnerCommand
         }
     }
 
