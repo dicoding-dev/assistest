@@ -1,11 +1,11 @@
 import SubmissionCriteriaCheckFactory from "./submission-criteria-check-factory";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import postmanRequirements from "../../config/postman/postman-requirement/postman-requirements";
+import submissionRequirements from "../../config/submisson-requirement";
 
 
 
 describe('mandatory criteria test', () => {
-    const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(postmanRequirements)
+    const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(submissionRequirements)
 
     it('should grouping failed test by criteria and return approval false', function () {
         const failurePostmanTest: Array<ResultTestFailure> = [

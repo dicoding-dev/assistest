@@ -2,24 +2,35 @@ import ResultTestFailure from "../../service/postman-runner/failure-test";
 import SubmissionCriteriaCheck, {
     ReviewChecklistResult
 } from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
-import PostmanRequirement from "../../config/postman/postman-requirement/postman-requirement";
+import submissionRequirements from "../../config/submisson-requirement"
 
 class SubmissionCriteriaCheckFactory {
-    private postmanRequirements: PostmanRequirement[];
+    private requirements: typeof submissionRequirements;
 
-    constructor(postmanRequirements: PostmanRequirement[]) {
-        this.postmanRequirements = postmanRequirements;
+    constructor(requirements: typeof submissionRequirements) {
+        this.requirements = requirements;
     }
 
     public check(failurePostmanTest: Array<ResultTestFailure> = null): SubmissionCriteriaCheck{
-        const reviewChecklistResult = this.postmanRequirements.map(criteria => {
-            const unfulfilledRequirement = failurePostmanTest?.filter(testResult => criteria.requirements.includes(testResult.name))
+
+        const postmanRequirements = [
+            this.requirements.API_CAN_INSERT_BOOK,
+            this.requirements.API_CAN_GET_ALL_BOOK,
+            this.requirements.API_CAN_GET_DETAIL_BOOK,
+            this.requirements.API_CAN_UPDATE_BOOK,
+            this.requirements.API_CAN_DELETE_BOOK
+        ]
+
+        const reviewChecklistResult = postmanRequirements.map(postmanRequirement => {
+
+            const unfulfilledRequirement = failurePostmanTest?.filter(testResult => postmanRequirement.postmanTestRequirements.includes(testResult.name))
             const checklistPass = unfulfilledRequirement?.length < 1
+            postmanRequirement.status = checklistPass
             return <ReviewChecklistResult>{
-                name: criteria.name,
+                name: postmanRequirement.postmanTestName,
                 reason: unfulfilledRequirement ?? [],
                 pass: checklistPass,
-                requirement: criteria.requirements
+                requirement: postmanRequirement.postmanTestRequirements
             }
         })
 
