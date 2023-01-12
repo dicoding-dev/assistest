@@ -1,10 +1,12 @@
 import SubmissionCriteriaCheckFactory from "./submission-criteria-check-factory";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import submissionRequirements from "../../config/submisson-requirement";
-
+import getSubmissionRequirements from "../../config/submission-requirement";
 
 
 describe('mandatory criteria test', () => {
+    const submissionRequirements = getSubmissionRequirements()
+    submissionRequirements.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+    submissionRequirements.PROJECT_HAVE_CORRECT_PORT.status = true
     const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory(submissionRequirements)
 
     it('should grouping failed test by criteria and return approval false', function () {
@@ -27,81 +29,38 @@ describe('mandatory criteria test', () => {
             }
         ]
 
+        const expectedReviewChecklistResult = getSubmissionRequirements()
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        expectedReviewChecklistResult.API_CAN_DELETE_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_GET_DETAIL_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_UPDATE_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_INSERT_BOOK.reason = [
+            {
+                "name": "[Mandatory] Add Book With Complete Data",
+                "tests": [
+                    {
+                        "message": "Failed to add book, 404",
+                        "test": "Add book with correct id",
+                    },
+                    {
+                        "message": "Failed to add book, 404",
+                        "test": "Status code should 201",
+                    },
+                ]
+            }]
+        expectedReviewChecklistResult.API_CAN_GET_ALL_BOOK.reason = [{
+            "name": "[Mandatory] Get All Books",
+            "tests": [{
+                "message": "Failed to add book, 404",
+                "test": "Status code should 200",
+            }],
+        }]
+
         const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
+
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
-        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
-            {
-                "name": "API dapat menyimpan buku",
-                "pass": false,
-                "reason": [
-                    {
-                        "name": "[Mandatory] Add Book With Complete Data",
-                        "tests": [
-                            {
-                                "message": "Failed to add book, 404",
-                                "test": "Add book with correct id"
-                            },
-                            {
-                                "message": "Failed to add book, 404",
-                                "test": "Status code should 201"
-                            }
-                        ]
-                    }
-                ],
-                "requirement": [
-                    "[Mandatory] Add Book With Complete Data",
-                    "[Mandatory] Add Book Without Name",
-                    "[Mandatory] Add Book with Page Read More Than Page Count"
-                ]
-            },
-            {
-                "name": "API dapat menampilkan seluruh buku",
-                "pass": false,
-                "reason": [
-                    {
-                        "name": "[Mandatory] Get All Books",
-                        "tests": [
-                            {
-                                "message": "Failed to add book, 404",
-                                "test": "Status code should 200"
-                            }
-                        ]
-                    }
-                ],
-                "requirement": [
-                    "[Mandatory] Get All Books"
-                ]
-            },
-            {
-                "name": "API dapat menampilkan detail buku",
-                "pass": true,
-                "reason": [],
-                "requirement": [
-                    "[Mandatory] Get Detail Books With Correct Id",
-                    "[Mandatory] Get Detail Books With Invalid Id"
-                ]
-            },
-            {
-                "name": "API dapat mengubah data buku",
-                "pass": true,
-                "reason": [],
-                "requirement": [
-                    "[Mandatory] Update Book With Complete Data",
-                    "[Mandatory] Update Book Without Name",
-                    "[Mandatory] Update Book With Page Read More Than Page Count",
-                    "[Mandatory] Update Book with Invalid Id"
-                ]
-            },
-            {
-                "name": "API dapat menghapus buku",
-                "pass": true,
-                "reason": [],
-                "requirement": [
-                    "[Mandatory] Delete Book with Correct Id",
-                    "[Mandatory] Delete Book with Invalid Id"
-                ]
-            }
-        ])
+        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
     })
 
     it('should return approval true', function () {
@@ -109,109 +68,27 @@ describe('mandatory criteria test', () => {
 
         const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(failurePostmanTest)
         expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
-        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
-            {
-                "name": "API dapat menyimpan buku",
-                "pass": true,
-                "requirement": [
-                    "[Mandatory] Add Book With Complete Data",
-                    "[Mandatory] Add Book Without Name",
-                    "[Mandatory] Add Book with Page Read More Than Page Count"
-                ],
-                "reason": []
-            },
-            {
-                "name": "API dapat menampilkan seluruh buku",
-                "pass": true,
-                "requirement": [
-                    "[Mandatory] Get All Books"
-                ],
-                "reason": []
-            },
-            {
-                "name": "API dapat menampilkan detail buku",
-                "pass": true,
-                "requirement": [
-                    "[Mandatory] Get Detail Books With Correct Id",
-                    "[Mandatory] Get Detail Books With Invalid Id"
-                ],
-                "reason": []
-            },
-            {
-                "name": "API dapat mengubah data buku",
-                "pass": true,
-                "requirement": [
-                    "[Mandatory] Update Book With Complete Data",
-                    "[Mandatory] Update Book Without Name",
-                    "[Mandatory] Update Book With Page Read More Than Page Count",
-                    "[Mandatory] Update Book with Invalid Id"
-                ],
-                "reason": []
-            },
-            {
-                "name": "API dapat menghapus buku",
-                "pass": true,
-                "requirement": [
-                    "[Mandatory] Delete Book with Correct Id",
-                    "[Mandatory] Delete Book with Invalid Id"
-                ],
-                "reason": []
-            }
-        ])
+
+        const expectedReviewChecklistResult = getSubmissionRequirements()
+        expectedReviewChecklistResult.API_CAN_INSERT_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_GET_ALL_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_GET_DETAIL_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_UPDATE_BOOK.status = true
+        expectedReviewChecklistResult.API_CAN_DELETE_BOOK.status = true
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+
+        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
     })
 
     it('should return approval false and all criteria is not passed when failed postman test not exist', function () {
         const submissionCriteriaCheck = submissionCriteriaCheckFactory.check()
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
-        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual([
-            {
-                "name": "API dapat menyimpan buku",
-                "pass": false,
-                "requirement": [
-                    "[Mandatory] Add Book With Complete Data",
-                    "[Mandatory] Add Book Without Name",
-                    "[Mandatory] Add Book with Page Read More Than Page Count"
-                ],
-                reason: []
-            },
-            {
-                "name": "API dapat menampilkan seluruh buku",
-                "pass": false,
-                "requirement": [
-                    "[Mandatory] Get All Books"
-                ],
-                reason: []
-            },
-            {
-                "name": "API dapat menampilkan detail buku",
-                "pass": false,
-                "requirement": [
-                    "[Mandatory] Get Detail Books With Correct Id",
-                    "[Mandatory] Get Detail Books With Invalid Id"
-                ],
-                reason: []
-            },
-            {
-                "name": "API dapat mengubah data buku",
-                "pass": false,
-                "requirement": [
-                    "[Mandatory] Update Book With Complete Data",
-                    "[Mandatory] Update Book Without Name",
-                    "[Mandatory] Update Book With Page Read More Than Page Count",
-                    "[Mandatory] Update Book with Invalid Id"
-                ],
-                reason: []
-            },
-            {
-                "name": "API dapat menghapus buku",
-                "pass": false,
-                "requirement": [
-                    "[Mandatory] Delete Book with Correct Id",
-                    "[Mandatory] Delete Book with Invalid Id"
-                ],
-                reason: []
-            }
-        ])
+        const expectedReviewChecklistResult = getSubmissionRequirements()
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
+
+        expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
         expect(submissionCriteriaCheck.failurePostmanTest).toBeNull()
     });
 })
