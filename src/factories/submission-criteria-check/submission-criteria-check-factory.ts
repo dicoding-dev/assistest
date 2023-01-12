@@ -1,8 +1,8 @@
-import PostmanRequirement from "../../config/postman-requirement";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
 import SubmissionCriteriaCheck, {
     ReviewChecklistResult
 } from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
+import PostmanRequirement from "../../config/postman/postman-requirement/postman-requirement";
 
 class SubmissionCriteriaCheckFactory {
     private postmanRequirements: PostmanRequirement[];

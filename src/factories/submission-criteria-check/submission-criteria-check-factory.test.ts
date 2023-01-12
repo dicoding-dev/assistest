@@ -1,6 +1,6 @@
 import SubmissionCriteriaCheckFactory from "./submission-criteria-check-factory";
 import ResultTestFailure from "../../service/postman-runner/failure-test";
-import postmanRequirements from "../../config/postman-requirements";
+import postmanRequirements from "../../config/postman/postman-requirement/postman-requirements";
 
 
 
