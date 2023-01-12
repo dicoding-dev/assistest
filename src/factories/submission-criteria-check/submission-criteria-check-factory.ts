@@ -5,14 +5,14 @@ import SubmissionCriteriaCheck, {
 } from "../../entities/review-result/submission-criteria-check/submission-criteria-check";
 
 class SubmissionCriteriaCheckFactory {
-    private submissionChecklists: PostmanRequirement[];
+    private postmanRequirements: PostmanRequirement[];
 
-    constructor(submissionChecklists: PostmanRequirement[]) {
-        this.submissionChecklists = submissionChecklists;
+    constructor(postmanRequirements: PostmanRequirement[]) {
+        this.postmanRequirements = postmanRequirements;
     }
 
     public check(failurePostmanTest: Array<ResultTestFailure> = null): SubmissionCriteriaCheck{
-        const reviewChecklistResult = this.submissionChecklists.map(criteria => {
+        const reviewChecklistResult = this.postmanRequirements.map(criteria => {
             const unfulfilledRequirement = failurePostmanTest?.filter(testResult => criteria.requirements.includes(testResult.name))
             const checklistPass = unfulfilledRequirement?.length < 1
             return <ReviewChecklistResult>{
