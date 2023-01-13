@@ -5,7 +5,6 @@ import {SubmissionRequirement} from "../../../config/submission-requirement";
 
 
 class CourseSubmissionAcception {
-    private completedChecklist: Array<number>;
     private _rating = 0
     private _messages: string
     private submissionRatingGenerator: SubmissionRatingFactory;
@@ -65,7 +64,8 @@ class CourseSubmissionAcception {
     //this function will create ellipsis between 10 first line and 10 last line if total line more than 10
     private ellipsisEslintLogError(eslintLog: string): string {
         const totalLines = eslintLog.split("\n").length
-        if (totalLines > 20 && eslintLog.includes('Oops! Something went wrong')) {
+
+        if (totalLines > 20 && !eslintLog.includes('Oops! Something went wrong')) {
             const firstIndexOfLine = 10
             const lastIndexOfLine = 10
 
