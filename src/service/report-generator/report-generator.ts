@@ -14,13 +14,18 @@ class ReportGenerator {
     generate(reviewResult: ReviewResult, submissionPath: string) {
         const isApproved = reviewResult.status === ReviewResultStatus.Approve
 
+        const completedChecklist = Object.keys(reviewResult.checklist)
+            .filter(checklistName => reviewResult.checklist[checklistName].status === true && reviewResult.checklist[checklistName].checklistId)
+            .map(checklistName => reviewResult.checklist[checklistName].checklistId)
+
         const summary = {
             review_id: Date.now(),
             is_approved: isApproved,
             rating: reviewResult.rating,
             failure: reviewResult.message,
             submission_path: submissionPath,
-            checklist: reviewResult.checklist
+            checklist: reviewResult.checklist,
+            completed_checklist: completedChecklist
         };
 
         this.result.push(summary);
