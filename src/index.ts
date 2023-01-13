@@ -11,6 +11,7 @@ import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-chec
 import ReviewResult from "./entities/review-result/course-submission-review/review-result";
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 import getSubmissionRequirement, {SubmissionRequirement} from "./config/submission-requirement";
+import ChecklistIdResolver from "./service/checklist-id-resolver/checklist-id-resolver";
 
 class Main {
     private postmanRunner: PostmanRunner;
@@ -20,6 +21,7 @@ class Main {
     private packageJsonFinderService: PackageJsonFinderService;
     private submissionCriteriaCheckFactory: SubmissionCriteriaCheckFactory
     private submissionRequirements: SubmissionRequirement;
+    private checklistIdResolver: ChecklistIdResolver;
 
     constructor(
         postmanRunner: PostmanRunner,
@@ -28,7 +30,8 @@ class Main {
         eslintChecker: EslintChecker,
         packageJsonFinderService: PackageJsonFinderService,
         submissionProjectFactory: SubmissionProjectFactory,
-        submissionCriteriaCheckFactory: SubmissionCriteriaCheckFactory
+        submissionCriteriaCheckFactory: SubmissionCriteriaCheckFactory,
+        checklistIdResolver: ChecklistIdResolver
     ) {
         this.submissionProjectFactory = submissionProjectFactory;
         this.packageJsonFinderService = packageJsonFinderService;
@@ -37,10 +40,12 @@ class Main {
         this.postmanRunner = postmanRunner;
         this.eslintChecker = eslintChecker;
         this.submissionCriteriaCheckFactory = submissionCriteriaCheckFactory
+        this.checklistIdResolver = checklistIdResolver;
     }
 
     public async reviewSubmission(submissionPath: string): Promise<ReviewResult> {
         this.submissionRequirements = getSubmissionRequirement()
+        this.checklistIdResolver.resolve(submissionPath, this.submissionRequirements)
         let submissionCriteriaCheck = null
         try {
             const submissionProject = this.createSubmissionProject(submissionPath)

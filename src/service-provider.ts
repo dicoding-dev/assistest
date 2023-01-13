@@ -8,6 +8,7 @@ import Main from "./index";
 import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-check/submission-criteria-check-factory";
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 import PackageJsonFinderService from "./service/project-path-finder/package-json-finder-service";
+import ChecklistIdResolver from "./service/checklist-id-resolver/checklist-id-resolver";
 
 const postmanRunner = new PostmanRunner(collection, env)
 const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory()
@@ -16,6 +17,7 @@ const serverService = new ServerService()
 const projectPreparationService = new ProjectPreparationService()
 const eslintChecker = new EslintChecker()
 const packageJsonFinderService = new PackageJsonFinderService()
+const checklistIdResolver = new ChecklistIdResolver()
 
 const main = new Main(
     postmanRunner,
@@ -24,7 +26,8 @@ const main = new Main(
     eslintChecker,
     packageJsonFinderService,
     submissionProjectFactory,
-    submissionCriteriaCheckFactory)
+    submissionCriteriaCheckFactory,
+    checklistIdResolver)
 
 export {main}
 
