@@ -1,12 +1,18 @@
 const submissionRequirements = {
     PROJECT_HAVE_CORRECT_PORT: {
         status: false,
+        possibleChecklistId: [],
+        checklistId: null,
     },
     PROJECT_HAVE_CORRECT_RUNNER_SCRIPT: {
-        status: false
+        status: false,
+        possibleChecklistId: [],
+        checklistId: null,
     },
     API_CAN_INSERT_BOOK: {
         status: false,
+        possibleChecklistId: [41620, 41470, 32797],
+        checklistId: null,
         postmanTestName: 'API dapat menyimpan buku',
         reason: [],
         postmanTestRequirements: [
@@ -18,6 +24,8 @@ const submissionRequirements = {
     API_CAN_GET_ALL_BOOK: {
         status: false,
         reason: [],
+        possibleChecklistId: [41625, 41475, 32802],
+        checklistId: null,
         postmanTestName: 'API dapat menampilkan seluruh buku',
         postmanTestRequirements: [
             '[Mandatory] Get All Books',
@@ -26,6 +34,8 @@ const submissionRequirements = {
     API_CAN_GET_DETAIL_BOOK: {
         status: false,
         reason: [],
+        possibleChecklistId: [41630, 41480, 32807],
+        checklistId: null,
         postmanTestName: 'API dapat menampilkan detail buku',
         postmanTestRequirements:
             [
@@ -36,6 +46,8 @@ const submissionRequirements = {
     API_CAN_UPDATE_BOOK: {
         status: false,
         reason: [],
+        possibleChecklistId: [41635, 41485, 32812],
+        checklistId: null,
         postmanTestName: 'API dapat mengubah data buku',
         postmanTestRequirements: [
             '[Mandatory] Update Book With Complete Data',
@@ -47,6 +59,8 @@ const submissionRequirements = {
     API_CAN_DELETE_BOOK: {
         status: false,
         reason: [],
+        possibleChecklistId: [41640, 41490, 32817],
+        checklistId: null,
         postmanTestName: 'API dapat menghapus buku',
         postmanTestRequirements:
             [
