@@ -65,7 +65,7 @@ class CourseSubmissionRejection {
     }
 
     get messages(): string {
-        return this._messages;
+        return `<li>${this._messages}</li>`
     }
 
     get reviewChecklistResults(): ReviewChecklistResult[] {

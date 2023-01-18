@@ -28,7 +28,7 @@ class CourseSubmissionAcception {
         if (messageFromEslint || messageFromOptionalTest) {
             return messageFromEslint + messageFromOptionalTest
         }
-        return 'Congrats.'
+        return '<li>Untuk mengetahui best practices yang ada, terutama penggunaan framework atau tools, cara terbaiknya adalah dengan bereksplorasi kepada dokumentasi resmi yang diberikan. Semakin kamu mengenal frameworknya tentu semakin paham best practice penggunaannya. Silakan eksplorasi dokumentasi beberapa stack framework dan tools yang dapat digunakan pada proyekmu.<ul><li><strong>Hapi Framework</strong>:&nbsp;<a data-mce-href="https://hapi.dev/tutorials/?lang=en_US" data-target-href="https://hapi.dev/tutorials/?lang=en_US" href="https://hapi.dev/tutorials/?lang=en_US" rel="noreferrer nofollow noopener">https://hapi.dev/tutorials/?lang=en_US</a><br>Kamu bisa eksplor tentang apa saja yang bisa digunakan pada framework Hapi.</li><li><strong>Joi</strong>:&nbsp;<a data-mce-href="https://joi.dev/" data-target-href="https://joi.dev/" href="https://joi.dev/" rel="noreferrer nofollow noopener">https://joi.dev/</a><br>Jika kamu ingin membuat validasi data dengan mudah kamu juga bisa menggunakan library Joi.</li><li><strong>Postgres</strong>:&nbsp;<a data-mce-href="https://www.postgresql.org/docs/current/index.html" data-target-href="https://www.postgresql.org/docs/current/index.html" href="https://www.postgresql.org/docs/current/index.html" rel="noreferrer nofollow noopener">https://www.postgresql.org/docs/current/index.html</a><br>Agar aplikasi yang kamu buat datanya bisa bertahan ketika server direstart, kamu bisa mempelajari postrgresql sebagai penyimpanan data.</li><li><strong>node-postgres</strong>:&nbsp;<a data-mce-href="https://node-postgres.com/" data-target-href="https://node-postgres.com/" href="https://node-postgres.com/" rel="noreferrer nofollow noopener">https://node-postgres.com/</a><br>Untuk menghubungkan aplikasi nodejs dengan postgresql kamu bisa menggunakan library node-postgres.</li></ul></li>'
     }
 
 
@@ -42,7 +42,7 @@ class CourseSubmissionAcception {
                 })
                 container += `${list}</ul></li>`
             })
-            return `Masih terdapat beberapa error pada kriteria optional <ul>${container}</ul>`
+            return `<li>Masih terdapat beberapa test yang error pada kriteria optional<ul>${container}</ul>Sebaiknya diperbaiki agar bisa melatih kemampuan mu dalam membuat aplikasi back-end</li>`
         }
         return ''
     }
@@ -55,7 +55,7 @@ class CourseSubmissionAcception {
                 const formattedLog = this.ellipsisEslintLogError(eslintCheckResult.reason)
                 message += `<pre>${formattedLog}</pre>`
             }
-            return message
+            return `<li>${message}</li>`
         }
 
         return ''
