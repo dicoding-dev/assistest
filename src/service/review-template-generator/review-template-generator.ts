@@ -7,7 +7,6 @@ export default class ReviewTemplateGenerator {
 
     constructor(projectPath: string) {
         const configFilePath = `${projectPath}/autoreview-config.json`
-        console.log(configFilePath)
         if (!existsSync(configFilePath)) {
             return
         }
@@ -17,7 +16,6 @@ export default class ReviewTemplateGenerator {
             return
         }
 
-        console.log(configFile.course_id)
         this.courseId = parseInt(configFile.course_id)
         this.submitterName = configFile.submitter
     }
