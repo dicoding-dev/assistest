@@ -33,7 +33,7 @@ describe('reject test', () => {
         courseSubmissionRejection.reject()
 
         expect(courseSubmissionRejection.messages).toStrictEqual(`
-                  Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut
+                  Masih terdapat error yang terjadi saat postman testing dijalankan, error yang muncul ada postman adalah sebagai berikut
                     <ul>
                         <li><b>[Mandatory] Add Book With Complete Data</b>
                             <ul>

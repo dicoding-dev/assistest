@@ -39,7 +39,7 @@ class CourseSubmissionRejection {
     }
 
     private composeRejectionMessageFromCriteria() {
-        const greeting = 'Masih terdapat error yang terjadi saat posting testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
+        const greeting = 'Masih terdapat error yang terjadi saat postman testing dijalankan, error yang muncul ada postman adalah sebagai berikut'
         const closing = 'Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.'
         let container = ''
         this.submissionCriteriaCheck.failurePostmanTest.forEach(failedTest => {
