@@ -23,7 +23,7 @@ class Cli {
                 console.log(`checking ${submission}`)
                 const submissionPath = path.resolve(this.folderPath, submission)
                 const reviewResult = await main.reviewSubmission(submissionPath)
-                reportGenerator.generate(reviewResult, submission)
+                reportGenerator.generate(reviewResult, submissionPath)
                 console.log()
             }
         } else {
