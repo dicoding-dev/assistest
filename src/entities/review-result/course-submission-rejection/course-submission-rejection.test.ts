@@ -33,7 +33,7 @@ describe('reject test', () => {
         courseSubmissionRejection.reject()
 
         expect(courseSubmissionRejection.messages).toStrictEqual(`
-                  Masih terdapat error yang terjadi saat postman testing dijalankan, error yang muncul ada postman adalah sebagai berikut
+                <li>Masih terdapat error yang terjadi saat postman testing dijalankan, error yang muncul ada postman adalah sebagai berikut
                     <ul>
                         <li><b>[Mandatory] Add Book With Complete Data</b>
                             <ul>
@@ -46,7 +46,7 @@ describe('reject test', () => {
                                 <li>Nama test: Status code should 200<br>Pesan error: Failed to add book, 404</li>
                             </ul>
                         </li>
-                    </ul>Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.`
+                    </ul>Pastikan semua test yang bersifat mandatory bisa berjalan semua, silakan diperbaiki yaa.</li>`
             .replace(minifyHtmlRegex, '').trim())
     });
 
