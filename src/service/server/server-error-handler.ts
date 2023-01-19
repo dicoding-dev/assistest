@@ -22,7 +22,7 @@ class ServerErrorHandler {
         throw new ServerErrorException(`SERVER_ERROR`,
             `command: ${runnerCommand}
             path: ${this.submissionProject.packageJsonPath.toString()}
-            hint: Maybe the port server is not 5000`,
+            hint: Maybe the port server is not 9000`,
             this.logErrors
         )
     }

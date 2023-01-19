@@ -12,7 +12,7 @@ describe('server service test', () => {
     const submissionRequirement =  getSubmissionRequirement()
     it.skip('should start & stop server', async function () {
         for (let i = 0; i < 10; i++) {
-            const port = 5000
+            const port = 9000
             await startFakeServer(port)
 
             expect(await isPortUsed(port)).toBeTruthy()
@@ -22,7 +22,7 @@ describe('server service test', () => {
     });
 
     it('should throw error when port is used', async function () {
-        const port = 5000
+        const port = 9000
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
             packageJsonContent: <PackageJson>{},
@@ -38,10 +38,10 @@ describe('server service test', () => {
         await expect(server.run(submissionProject, submissionRequirement)).rejects.toThrow(new Error(`Port ${port} is not available`))
         expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
 
-        await killPort(5000)
+        await killPort(9000)
     });
 
-    it('should throw error and stop server when app port is not 5000', async function () {
+    it('should throw error and stop server when app port is not 9000', async function () {
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/project-with-bad-port',
             packageJsonContent: <PackageJson>{},
@@ -58,7 +58,7 @@ describe('server service test', () => {
 
 
     it('should stop container properly', async function () {
-        const port = 5000
+        const port = 9000
         const host = 'localhost'
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
@@ -75,12 +75,12 @@ describe('server service test', () => {
 
         //kill server
         await container.stop()
-        expect(await isPortUsed(5000)).toBeFalsy()
+        expect(await isPortUsed(9000)).toBeFalsy()
 
     });
     //
     it('should run container properly', async function () {
-        const port = 5000
+        const port = 9000
         const host = 'localhost'
         const submissionProject: SubmissionProject = {
             packageJsonPath: 'test/student-project/sample-project',
