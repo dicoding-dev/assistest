@@ -59,7 +59,7 @@ describe('course submission acception test', () => {
         courseSubmissionAcception.accept()
 
         expect(courseSubmissionAcception.rating).toStrictEqual(5)
-        expect(courseSubmissionAcception.messages).toStrictEqual('Congrats.')
+        expect(courseSubmissionAcception.messages).toContain('<li>Untuk mengetahui best practices yang ada, terutama penggunaan')
     });
 
     it('should format eslint message when eslint have error log', function () {
