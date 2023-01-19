@@ -1,7 +1,6 @@
 import ReviewResult, {ReviewResultStatus} from "../../entities/review-result/course-submission-review/review-result";
 import * as fs from "fs";
 import {existsSync, readFileSync, writeFileSync} from "fs";
-import ReviewTemplateGenerator from "../review-template-generator/review-template-generator";
 import * as templates from "../../config/review-template.json";
 
 class ReportGenerator {
