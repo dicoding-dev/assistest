@@ -3,13 +3,16 @@
   "submitter": "snder12",
   "is_approved": false,
   "rating": 0,
+  "course_id": 261,
   "message": "&lt;p&gt;Hai &lt;strong&gt;snder12!&lt;/strong&gt; terima kasih telah sabar menunggu. Kami membutuhkan waktu untuk bisa memberikan &lt;em&gt;feedback&amp;nbsp;&lt;/em&gt;sekomprehensif mungkin. Setiap submission diperiksa satu per satu oleh tim reviewer yang memiliki sertifikasi global atau telah bekerja di perusahaan ternama.&lt;/p&gt;&lt;p&gt;Setelah dilakukan proses &lt;em&gt;review&amp;nbsp;&lt;/em&gt;&lt;em&gt;project&amp;nbsp;&lt;/em&gt;yang kamu kirimkan, project tersebut &lt;strong&gt;belum memenuhi kriteria&lt;/strong&gt; untuk lulus kelas &lt;em&gt;Belajar Membuat Aplikasi Back-End untuk Pemula&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;Oleh karena itu kami harus menolak submission project kamu. Berikut adalah &lt;em&gt;beberapa catatan yang harus terpenuhi&lt;/em&gt; untuk menyelesaikan tugas submission:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Walaupun hasil pengujian menggunakan Postman menyatakan sudah lulus semua, namun sebenarnya masih terdapat kriteria yang belum terpenuhi. Silahkan cek komentar kode untuk solusinya&lt;/li&gt;&lt;li&gt;Kamu bisa menggunakan ESLint dan salah satu style guide agar gaya penulisan kode JavaScript lebih konsisten.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Jika kamu sudah lebih dari 1x ditolak maka jangan pernah menyerah, karena ada lulusan Dicoding yang akhirnya lulus satu kelas setelah 48x ditolak. Meskipun demikian tim reviewer tetap profesional dan dengan senang hati memberikan &lt;em&gt;feedback&amp;nbsp;&lt;/em&gt;terbaik yang kami bisa.&lt;/p&gt;&lt;p&gt;Silakan &lt;em&gt;update&amp;nbsp;&lt;/em&gt;&lt;em&gt;project&amp;nbsp;&lt;/em&gt;kamu dengan mengikuti beberapa saran di atas. Jika ada pertanyaan atau kendala dalam menerapkan beberapa saran di atas, silakan bertanya di forum &lt;a href=\"https://www.dicoding.com/academies/261/discussions\" rel=\"noreferrer noopener\" target=\"_blank\"&gt;academy discussion&lt;/a&gt;. Dengan senang hati kami akan membantu menjawab pertanyaan kamu.&lt;/p&gt;&lt;hr&gt;&lt;p style=\"text-align:right;\"&gt;&lt;em&gt;Salam&lt;/em&gt;&lt;/p&gt;&lt;p style=\"text-align:right;\"&gt;&lt;span style=\"color:rgb(226,80,65);\"&gt;Dicoding Reviewer&lt;/span&gt;&lt;/p&gt;",
   "checklist": [
-    41620,
-    41625,
-    41630,
-    41635,
-    41640
+    42120,
+    42125,
+    42130,
+    42135,
+    42140,
+    42145,
+    42150
   ],
   "completed_checklist": [
     41625,
