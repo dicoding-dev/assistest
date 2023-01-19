@@ -8,7 +8,7 @@ Aplikasi untuk menjalankan automation review untuk kelas backend pemula
 2. Submission backend yang sudah diextract. Pastikan folder submission memiliki format `id_submission nama_siswa`,
    contohnya `00001 abdul`
 3. Install dependency menggunakan `npm i` atau `yarn`.
-4. Pastikan port 5000 tidak digunakan oleh aplikasi lain.
+4. Pastikan port 9000 tidak digunakan oleh aplikasi lain.
 
 ## Menjalankan aplikasi menggunakan yarn
 
