@@ -65,7 +65,6 @@ class CourseSubmissionRejection {
             return '&#'+i.charCodeAt(0)+';';
         });
         this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${logError}</pre>`
-        console.log(this._messages)
     }
 
     get messages(): string {
