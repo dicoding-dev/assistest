@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "@hapi/hapi": "^21.1.2"
+    "@hapi/hpi": "^21.1.4"
   }
 }
