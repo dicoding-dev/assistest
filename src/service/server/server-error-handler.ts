@@ -11,7 +11,7 @@ class ServerErrorHandler {
     constructor(logErrors: string[], submissionProject: SubmissionProject) {
         this.submissionProject = submissionProject;
         this.logErrors = logErrors
-        this.allErrorLog = logErrors.join('')
+        this.allErrorLog = logErrors.join('\n')
     }
 
     throwError() {
