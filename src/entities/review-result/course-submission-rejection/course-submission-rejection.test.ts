@@ -60,7 +60,7 @@ describe('reject test', () => {
 
     it('should get message properly when rejection type is server error', function () {
         const submissionCriteriaCheck = <SubmissionCriteriaCheck>{failurePostmanTest: []}
-        const exception = new ServerErrorException('PORT_IS_USED')
+        const exception = new ServerErrorException('PORT_IS_USED', '', [])
         const courseSubmissionRejection = new CourseSubmissionRejection(exception, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
         expect(courseSubmissionRejection.messages).toContain('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi')
