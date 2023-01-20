@@ -44,6 +44,20 @@ describe('create submission project test', () => {
 
     });
 
+    it('should throw error when project contain database dependency', function () {
+        mockFS.readFileSync.mockReturnValue('{ "scripts": { }, "dependencies": { "mysql": 10.2 }}')
+
+        expect(() => submissionProjectFactory.create(submissionRequirement,'.'))
+            .toThrow(new ProjectErrorException('PROJECT_CONTAIN_DATABASE_DEPENDENCY'))
+    });
+
+    it('should throw error when project contain other framework', function () {
+        mockFS.readFileSync.mockReturnValue('{ "scripts": { }, "dependencies": { "express": 10.2 }}')
+
+        expect(() => submissionProjectFactory.create(submissionRequirement,'.'))
+            .toThrow(new ProjectErrorException('PROJECT_CONTAIN_OTHER_FRAMEWORK_DEPENDENCY'))
+    });
+
     it('should create submission project properly', function () {
         mockFS.readFileSync.mockReturnValue('{ "scripts": { "start": "node src/index.js" }}')
 

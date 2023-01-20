@@ -11,6 +11,7 @@ export default class SubmissionProjectFactory {
 
     public create(submissionRequirement: SubmissionRequirement, projectPath?: string): SubmissionProject {
         this.validate(projectPath)
+        this.checkDependencies()
 
         const runnerCommand = this.getRunnerCommand()
         submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
@@ -47,6 +48,22 @@ export default class SubmissionProjectFactory {
             return 'start:ev'
         } else {
             throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
+        }
+    }
+
+    private checkDependencies() {
+        const dependencies = Object.keys(this.packageJsonContent.dependencies ?? {})
+
+        const possibleDatabaseDependencies = ['mongoose', 'mysql', 'pg', 'mssql', 'mariadb']
+        const iProjectContainDatabase = dependencies.some(dependency => possibleDatabaseDependencies.includes(dependency))
+        if (iProjectContainDatabase){
+            throw new ProjectErrorException('PROJECT_CONTAIN_DATABASE_DEPENDENCY')
+        }
+
+        const possibleOtherFrameworkDependencies = ['express']
+        const isProjectContainOtherFramework = dependencies.some(dependency => possibleOtherFrameworkDependencies.includes(dependency))
+        if (isProjectContainOtherFramework){
+            throw new ProjectErrorException('PROJECT_CONTAIN_OTHER_FRAMEWORK_DEPENDENCY')
         }
     }
 
