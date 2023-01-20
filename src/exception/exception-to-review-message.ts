@@ -9,7 +9,9 @@ const exceptionToReviewMessage = {
     'PORT_NOT_MEET_REQUIREMENT': 'port yang kamu gunakan untuk menjalankan aplikasi masih belum sesuai dengan kriteria submission, silakan dicek kembali kriterianya yaa.',
     'COMMAND_NOT_FOUND': 'command yang kamu masukkan tidak ditemukan, pastikan kamu sudah menginstallnya atau pastikan command yang kamu masukkan sudah benar dan tidak terjadi typo.',
     'MODULE_NOT_FOUND': 'sepertinya ada file yang tidak terimport dengan baik, pastikan path yang kamu gunakan sudah benar atau pastikan tidak ada typo pada path yang kamu masukkan.',
-    'FAIL_INSTALLING_PACKAGE': 'package pada aplikasi yang kamu buat belum bisa di-install dengan baik.'
+    'FAIL_INSTALLING_PACKAGE': 'package pada aplikasi yang kamu buat belum bisa di-install dengan baik.',
+    'PROJECT_CONTAIN_DATABASE_DEPENDENCY': 'file package.json yang kamu buat memiliki dependency database yang tidak diperbolehkan. Perlu diingat bahwa untuk mengerjakan submission ini kamu tidak dipebolehkan menggunakan database seperti Postgres, MSSQL, MySQL, MariaDB, atau MongooDB untuk menyimpan data. Silakan <b>hapus dependency<b> tersebut dari file package.json ya.',
+    'PROJECT_CONTAIN_OTHER_FRAMEWORK_DEPENDENCY': 'file package.json yang kamu buat memiliki dependency Framework lain yang tidak diperbolehkan. Perlu diingat bahwa untuk mengerjakan submission ini kamu tidak dipebolehkan menggunakan Framework lain selain Hapi Framework. Silakan <b>hapus dependency<b> tersebut dari file package.json ya.'
 }
 
 export default exceptionToReviewMessage
