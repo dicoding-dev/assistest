@@ -1,7 +1,13 @@
-FROM node:14.17.6
-WORKDIR /app
+FROM node:14
 
-COPY . .
+RUN mkdir /student-app && chown -R node:node /student-app
+RUN mkdir /report && chown -R node:node /report
+
+WORKDIR /app
+RUN chown -R node:node /app
+USER node
+
+COPY --chown=node:node . .
 RUN yarn
 
-ENTRYPOINT ["yarn", "assistest"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
