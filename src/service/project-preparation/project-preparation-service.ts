@@ -10,7 +10,7 @@ class ProjectPreparationService {
             const errorLog = e.stderr
                 .replace(/npm ERR! A complete log of this r.*/gs, '')
                 .trim()
-            throw new ServerErrorException('FAIL_INSTALLING_PACKAGE', '', errorLog)
+            throw new ServerErrorException('FAIL_INSTALLING_PACKAGE', '', [errorLog])
         }
     }
 }
