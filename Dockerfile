@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:18-slim
 
 RUN mkdir /student-app && chown -R node:node /student-app
 RUN mkdir /report && chown -R node:node /report
