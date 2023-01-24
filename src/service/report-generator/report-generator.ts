@@ -30,7 +30,9 @@ class ReportGenerator {
         this.result.push(summary);
         fs.mkdirSync(this.reportPath, {recursive: true});
 
-        writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result))
+        writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result), {
+            mode: '0664'
+        })
     }
 
     private getCompletedChecklist(reviewResult: ReviewResult, autoReviewConfig){
