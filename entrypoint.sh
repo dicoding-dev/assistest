@@ -1,3 +1,3 @@
 #!/bin/bash
-umask u=rwx,g=rw,o=r
+rm -f /reports/report.json || true
 "$@"
