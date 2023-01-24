@@ -35,7 +35,7 @@ describe('project preparation test', () => {
 
     it('should throw error when install dependencies is failed', async function () {
         const submissionProject = <SubmissionProject>{
-            packageJsonPath: '/home/agis/Desktop/assistest/source-code/test/student-project/project-with-bad-dependencies',
+            packageJsonPath: './test/student-project/project-with-bad-dependencies',
             packageJsonContent: {
                 "devDependencies": {
                     "@hapi/hapi": "^21.1.2"
