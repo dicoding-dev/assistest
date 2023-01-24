@@ -2,21 +2,20 @@ import axios from "axios";
 import * as tcpPortUsed from 'tcp-port-used';
 import ServerService from "./server-service";
 import SubmissionProject from "../../entities/submission-project/submission-project";
-import {exec, execSync} from "child_process";
-import * as kill from "tree-kill";
+import {spawn} from "child_process";
 import PackageJson from "../../entities/submission-project/package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
 import getSubmissionRequirement from "../../config/submission-requirement";
 
 describe('server service test', () => {
-    const submissionRequirement =  getSubmissionRequirement()
+    const submissionRequirement = getSubmissionRequirement()
     it.skip('should start & stop server', async function () {
         for (let i = 0; i < 10; i++) {
             const port = 9000
-            await startFakeServer(port)
+            const serverPid = await startFakeServer(port)
 
             expect(await isPortUsed(port)).toBeTruthy()
-            await killPort(port)
+            await killServer(serverPid, port)
             expect(await isPortUsed(port)).toBeFalsy()
         }
     });
@@ -32,13 +31,12 @@ describe('server service test', () => {
         const server = new ServerService()
 
         //fake container for first server
-        await startFakeServer(port)
+        const fakeServerPid = await startFakeServer(port)
 
         // test second sever in same port
         await expect(server.run(submissionProject, submissionRequirement)).rejects.toThrow(new Error(`Port ${port} is not available`))
         expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
-
-        await killPort(9000)
+        await killServer(fakeServerPid, port)
     });
 
     it('should throw error and stop server when app port is not 9000', async function () {
@@ -100,12 +98,14 @@ describe('server service test', () => {
     });
 
     async function startFakeServer(port) {
-        exec(`PORT=${port} node index.js`, {
+        const server = spawn('node', ['index.js'], {
             cwd: './test/student-project/simple-server',
+            detached: true
         })
 
         try {
             await tcpPortUsed.waitUntilUsed(port, null, 2000)
+            return server.pid
         } catch (e) {
             throw Error('Failed to start server')
         }
@@ -119,10 +119,8 @@ describe('server service test', () => {
             });
     }
 
-    async function killPort(port: number) {
-        const serverPid = await execSync(`lsof -t -i:${port}`)
-        const parsedServerPid = parseInt(serverPid.toString())
-        kill(parsedServerPid)
+    async function killServer(serverPid: number, port) {
+        process.kill(-serverPid)
         try {
             await tcpPortUsed.waitUntilFree(port, 100, 4000)
         } catch (e) {
