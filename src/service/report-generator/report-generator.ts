@@ -43,7 +43,7 @@ class ReportGenerator {
         Object.keys(reviewResult.checklist).forEach(requirementName => {
             const requirement = reviewResult.checklist[requirementName]
             requirement.checklistId = requirement.possibleChecklistId
-                .find(checklistId =>  autoReviewConfig.checklist.includes(checklistId)) ?? null
+                .find(checklistId =>  autoReviewConfig.checklist_ids?.includes(checklistId)) ?? null
         })
 
         return  Object.keys(reviewResult.checklist)
