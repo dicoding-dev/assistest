@@ -73,7 +73,7 @@ class ReportGenerator {
 
     private getAutoReviewConfig(projectPath: string): any|null {
 
-        const configFilePath = `${projectPath}/autoreview-config.json`
+        const configFilePath = `${projectPath}/auto-review-config.json`
         if (!existsSync(configFilePath)) {
             return
         }
