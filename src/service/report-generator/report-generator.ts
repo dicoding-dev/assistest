@@ -66,7 +66,7 @@ class ReportGenerator {
         }
 
         return template
-            .replace('$submitter_name', autoReviewConfig.submitter)
+            .replace('$submitter_name', autoReviewConfig.submitter_name)
             .replace('$review_message', reviewResult.message)
     }
 
