@@ -4,6 +4,7 @@ import ServerErrorHandler from "./server-error-handler";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {host, port} from "../../config/backend-pemula-project-requirement";
 import {SubmissionRequirement} from "../../config/submission-requirement";
+import * as http from "http";
 
 class ServerService {
     private _errorLog = [];
@@ -16,7 +17,7 @@ class ServerService {
         this.listenRunningServer(this.runningServer)
 
         try {
-            await tcpPortUsed.waitUntilUsed(port, null, 3000)
+            await this.validateServerActive(500, 3000)
             submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
         } catch (e) {
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
@@ -66,6 +67,29 @@ class ServerService {
         if (isUsed) {
             const isUsed = await tcpPortUsed.check(port, host)
             if (isUsed) throw new Error(`Port ${port} is not available`)
+        }
+    }
+
+    private async validateServerActive(retryTimeMs, timeOutMs) {
+        let timeOut = 0
+        while (timeOut <= timeOutMs) {
+            const isUrlActive = await new Promise((resolve, reject) => {
+                http.get(`http://0.0.0.0:${port}`, () => {
+                    resolve(true)
+                }).on('error', async (e) => {
+                    if (e.message.includes('ECONNREFUSED') && timeOut >= timeOutMs) {
+                        reject('server not started in localhost:9000')
+                    }
+                    resolve(false)
+                })
+            })
+
+            if (isUrlActive) {
+                break
+            }
+
+            await new Promise(resolve => setTimeout(resolve, retryTimeMs));
+            timeOut += retryTimeMs
         }
     }
 }
