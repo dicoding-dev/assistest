@@ -1,5 +1,6 @@
 import * as newman from 'newman';
 import ResultTestFailure from "./failure-test";
+import raiseDomainEvent from "../../common/domain-event";
 
 class PostmanRunner {
     private readonly collection: string;
@@ -20,7 +21,7 @@ class PostmanRunner {
             runningNewman.on('done', (_, summary) => resolve(summary.run.failures));
         })
 
-
+        raiseDomainEvent('postman testing completed')
         return this.groupResult(failureTest)
     }
 

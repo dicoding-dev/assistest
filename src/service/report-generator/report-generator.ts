@@ -2,6 +2,7 @@ import ReviewResult, {ReviewResultStatus} from "../../entities/review-result/cou
 import * as fs from "fs";
 import {existsSync, readFileSync, writeFileSync} from "fs";
 import * as templates from "../../config/review-template.json";
+import raiseDomainEvent from "../../common/domain-event";
 
 class ReportGenerator {
     private readonly reportPath: string;
@@ -33,6 +34,7 @@ class ReportGenerator {
         writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result), {
             mode: '0664'
         })
+        raiseDomainEvent('report generated')
     }
 
     private getCompletedChecklist(reviewResult: ReviewResult, autoReviewConfig){

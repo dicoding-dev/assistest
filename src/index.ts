@@ -11,6 +11,7 @@ import SubmissionCriteriaCheckFactory from "./factories/submission-criteria-chec
 import ReviewResult from "./entities/review-result/course-submission-review/review-result";
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 import getSubmissionRequirement, {SubmissionRequirement} from "./config/submission-requirement";
+import raiseDomainEvent from "./common/domain-event";
 
 class Main {
     private postmanRunner: PostmanRunner;
@@ -49,6 +50,7 @@ class Main {
             this.throwErrorIfCriteriaNotFullFilled(submissionCriteriaCheck)
 
             const eslintCheckResult = this.eslintChecker.check(submissionProject)
+            raiseDomainEvent('eslint check completed')
             return this.generateReviewResult(submissionCriteriaCheck, eslintCheckResult)
         } catch (e) {
             if (e instanceof SubmissionErrorException) {

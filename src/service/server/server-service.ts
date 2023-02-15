@@ -5,6 +5,7 @@ import SubmissionProject from "../../entities/submission-project/submission-proj
 import {host, port} from "../../config/backend-pemula-project-requirement";
 import {SubmissionRequirement} from "../../config/submission-requirement";
 import * as http from "http";
+import raiseDomainEvent from "../../common/domain-event";
 
 class ServerService {
     private _errorLog = [];
@@ -19,6 +20,7 @@ class ServerService {
         try {
             await this.validateServerActive(500, 3000)
             submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
+            raiseDomainEvent('server started')
         } catch (e) {
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             await this.stop()
@@ -53,7 +55,7 @@ class ServerService {
             process.kill(-this.runningServer.pid)
             this._errorLog = []
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
-            console.log('success to kill server')
+            raiseDomainEvent('server stopped')
         } catch (e) {
             if (!e.message.includes('ESRCH')){
                 throw new Error(`Failed to kill port ${port}, error: ${e}`)
