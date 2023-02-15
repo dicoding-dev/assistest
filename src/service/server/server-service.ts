@@ -24,7 +24,7 @@ class ServerService {
         } catch (e) {
             const serverErrorHandler = new ServerErrorHandler(this._errorLog, submissionProject)
             await this.stop()
-
+            console.log(e)
             serverErrorHandler.throwError()
         }
     }
