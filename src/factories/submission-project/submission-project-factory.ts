@@ -4,6 +4,7 @@ import * as path from "path";
 import PackageJson from "../../entities/submission-project/package-json";
 import SubmissionProject from "../../entities/submission-project/submission-project";
 import {SubmissionRequirement} from "../../config/submission-requirement";
+import domainEvent from "../../common/domain-event";
 
 
 export default class SubmissionProjectFactory {
@@ -15,6 +16,7 @@ export default class SubmissionProjectFactory {
 
         const runnerCommand = this.getRunnerCommand()
         submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        domainEvent('project has meet requirement')
         return {
             packageJsonContent: this.packageJsonContent,
             packageJsonPath: projectPath,
