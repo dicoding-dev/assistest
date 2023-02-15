@@ -57,7 +57,7 @@ class ServerService {
             await tcpPortUsed.waitUntilFree(port, 500, 4000)
             raiseDomainEvent('server stopped')
         } catch (e) {
-            if (!e.message.includes('ESRCH')){
+            if (!e.message.includes('ESRCH') && !e.message.includes('ECONNRESET')){
                 throw new Error(`Failed to kill port ${port}, error: ${e}`)
             }
         }
