@@ -43,11 +43,6 @@ class ServerService {
             }
         });
 
-        if (process.env.DEBUG_MODE) {
-            runningServer.on('close', () => {
-                console.log('server killed')
-            })
-        }
     }
 
     async stop() {
