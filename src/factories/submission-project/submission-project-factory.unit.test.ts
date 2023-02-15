@@ -66,6 +66,14 @@ describe('create submission project test', () => {
             .toThrow(new ProjectErrorException('PROJECT_CONTAIN_NODE_MODULES'))
     });
 
+    it('should throw error when start script use nodemon', function () {
+        mockFS.readFileSync.mockReturnValue('{ "scripts": { "start": "nodemon src/index.js" }}')
+        mockFS.existsSync.mockReturnValue(false)
+
+        expect(() => submissionProjectFactory.create(submissionRequirement,'.'))
+            .toThrow(new ProjectErrorException('RUNNER_COMMAND_CONTAIN_NODEMON'))
+    });
+
     it('should create submission project properly', function () {
         mockFS.readFileSync.mockReturnValue('{ "scripts": { "start": "node src/index.js" }}')
         mockFS.existsSync.mockReturnValue(false)

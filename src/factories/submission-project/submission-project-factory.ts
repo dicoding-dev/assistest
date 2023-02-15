@@ -17,6 +17,9 @@ export default class SubmissionProjectFactory {
 
 
         const runnerCommand = this.getRunnerCommand()
+
+        this.checkRunnerCommandUseNodeCommand(runnerCommand)
+
         submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
         domainEvent('project has meet requirement')
         return {
@@ -74,6 +77,12 @@ export default class SubmissionProjectFactory {
     private checkExistingNodeModules(projectPath: string) {
         if (fs.existsSync(path.resolve(projectPath, 'node_modules'))){
             throw new ProjectErrorException('PROJECT_CONTAIN_NODE_MODULES')
+        }
+    }
+
+    private checkRunnerCommandUseNodeCommand(runnerCommand: string){
+        if (this.packageJsonContent.scripts[runnerCommand].includes('nodemon')){
+            throw new ProjectErrorException('RUNNER_COMMAND_CONTAIN_NODEMON')
         }
     }
 
