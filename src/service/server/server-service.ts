@@ -18,7 +18,7 @@ class ServerService {
         this.listenRunningServer(this.runningServer)
 
         try {
-            await this.validateServerActive(500, 3000)
+            await this.validateServerActive(500, 10000)
             submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
             raiseDomainEvent('server started')
         } catch (e) {
