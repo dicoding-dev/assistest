@@ -54,7 +54,7 @@ Jika tidak ingin menggunakan path yang ada di container maka bisa gunakan volume
 ``` 
 docker run -it --rm \                                                    
 -v /home/user/download/:/submission-backend \
-dicoding/assistest -s /home/user/download/submission-backend -r /home/user/download//review-result
+dicoding/assistest yarn assistest -s /home/user/download/submission-backend -r /home/user/download/review-result
 ```
 
 ## Hasil Review
