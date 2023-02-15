@@ -32,14 +32,14 @@ class ServerService {
     private listenRunningServer(runningServer: ChildProcess) {
         runningServer.stdout.on('data', async (data) => {
             if (process.env.DEBUG_MODE) {
-                console.log(`stdout ${data}`);
+                console.log('\x1b[32m%s\x1b[0m', `stdout ${data}`)
             }
         });
 
         runningServer.stderr.on('data', (data) => {
             this._errorLog.push(data.toString())
             if (process.env.DEBUG_MODE) {
-                console.log(`stderr ${data}`);
+                console.log('\x1b[31m%s\x1b[0m', `stderr ${data}`);
             }
         });
 
