@@ -47,15 +47,9 @@ export default class SubmissionProjectFactory {
 
         if ('start' in scripts) {
             return 'start'
-        } else if ('dev' in scripts) {
-            return 'dev'
-        } else if ('start-dev' in scripts) {
-            return 'start-dev'
-        } else if ('start:dev' in scripts) {
-            return 'start:ev'
-        } else {
-            throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
         }
+
+        throw new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND')
     }
 
     private checkDependencies() {
@@ -75,13 +69,13 @@ export default class SubmissionProjectFactory {
     }
 
     private checkExistingNodeModules(projectPath: string) {
-        if (fs.existsSync(path.resolve(projectPath, 'node_modules'))){
+        if (fs.existsSync(path.resolve(projectPath, 'node_modules'))) {
             throw new ProjectErrorException('PROJECT_CONTAIN_NODE_MODULES')
         }
     }
 
-    private checkRunnerCommandUseNodeCommand(runnerCommand: string){
-        if (this.packageJsonContent.scripts[runnerCommand].includes('nodemon')){
+    private checkRunnerCommandUseNodeCommand(runnerCommand: string) {
+        if (this.packageJsonContent.scripts[runnerCommand].includes('nodemon')) {
             throw new ProjectErrorException('RUNNER_COMMAND_CONTAIN_NODEMON')
         }
     }
