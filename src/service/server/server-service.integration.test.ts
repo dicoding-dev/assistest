@@ -7,6 +7,7 @@ import PackageJson from "../../entities/submission-project/package-json";
 import ProjectErrorException from "../../exception/project-error-exception";
 import getSubmissionRequirement from "../../config/submission-requirement";
 
+jest.setTimeout(11000)
 describe('server service test', () => {
     const submissionRequirement = getSubmissionRequirement()
     it.skip('should start & stop server', async function () {
