@@ -1,4 +1,3 @@
-import ReviewType from "../review-type";
 import exceptionToReviewMessage from "../../../exception/exception-to-review-message";
 import SubmissionErrorException from "../../../exception/submission-error-excepion";
 import PostmanTestFailedException from "../../../exception/postman-test-failed-exception";
@@ -9,14 +8,9 @@ import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-crit
 
 class CourseSubmissionRejection {
 
-    private submissionId = 1
-    private reviewType = ReviewType.Reject
-    private completedChecklist: Array<number>;
-    private reviewerId = 123
-    private rating = 0
     private _messages: string
     private submissionCriteriaCheck: SubmissionCriteriaCheck;
-    private submissionErrorException: SubmissionErrorException;
+    private readonly submissionErrorException: SubmissionErrorException;
     private _reviewChecklistResults: ReviewChecklistResult[];
 
     constructor(submissionErrorException: SubmissionErrorException, submissionCriteriaCheck: SubmissionCriteriaCheck) {
