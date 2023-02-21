@@ -8,8 +8,11 @@ abstract class SubmissionErrorException extends Error{
     failurePostmanTest: ResultTestFailure[]
     postReviewMethod: PostReviewMethod = PostReviewMethod.Draft
 
-    protected constructor(message: string) {
+    protected constructor(message: string, postReviewMethod?: PostReviewMethod) {
         super(message);
+        if (postReviewMethod){
+            this.postReviewMethod = postReviewMethod
+        }
     }
 }
 
