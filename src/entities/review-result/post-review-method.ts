@@ -1,7 +1,7 @@
 enum PostReviewMethod{
-    Reject,
-    Accept,
-    Draft
+    Reject = 'Reject',
+    Accept = 'Accept',
+    Draft = 'Draft'
 }
 
 export default PostReviewMethod
