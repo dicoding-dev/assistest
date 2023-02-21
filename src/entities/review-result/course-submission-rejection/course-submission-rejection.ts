@@ -4,6 +4,7 @@ import PostmanTestFailedException from "../../../exception/postman-test-failed-e
 import ProjectErrorException from "../../../exception/project-error-exception";
 import ServerErrorException from "../../../exception/server-error-exception";
 import SubmissionCriteriaCheck, {ReviewChecklistResult} from "../submission-criteria-check/submission-criteria-check";
+import PostReviewMethod from "../post-review-method";
 
 
 class CourseSubmissionRejection {
@@ -18,7 +19,7 @@ class CourseSubmissionRejection {
         this.submissionErrorException = submissionErrorException;
     }
 
-    public reject(){
+    public reject() {
         if (this.submissionErrorException instanceof PostmanTestFailedException) {
             this.composeRejectionMessageFromCriteria()
         }
@@ -54,9 +55,9 @@ class CourseSubmissionRejection {
     }
 
     private composeRejectionMessageFromServerErrorMessage() {
-        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message] ??  'ada kesalahan pada project yang kamu buat.'
-        const logError = this.submissionErrorException.serverErrorLog.join('\n').replace(/[\u00A0-\u9999<>\&]/g, function(i) {
-            return '&#'+i.charCodeAt(0)+';';
+        const translatedException = exceptionToReviewMessage[this.submissionErrorException.message] ?? 'ada kesalahan pada project yang kamu buat.'
+        const logError = this.submissionErrorException.serverErrorLog.join('\n').replace(/[\u00A0-\u9999<>\&]/g, function (i) {
+            return '&#' + i.charCodeAt(0) + ';';
         });
         this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${logError}</pre>`
     }
@@ -67,6 +68,10 @@ class CourseSubmissionRejection {
 
     get reviewChecklistResults(): ReviewChecklistResult[] {
         return this._reviewChecklistResults;
+    }
+
+    get postReviewMethod(): PostReviewMethod {
+        return this.submissionErrorException.postReviewMethod
     }
 }
 
