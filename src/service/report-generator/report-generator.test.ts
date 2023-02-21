@@ -2,6 +2,7 @@ import getSubmissionRequirement from "../../config/submission-requirement";
 import ReportGenerator from "./report-generator";
 import ReviewResult, {ReviewResultStatus} from "../../entities/review-result/course-submission-review/review-result";
 import * as fs from "fs";
+import PostReviewMethod from "../../entities/review-result/post-review-method";
 
 describe('checklist id resolver test', () => {
     const reportGenerator = new ReportGenerator('./test/student/review-result/')
@@ -21,7 +22,8 @@ describe('checklist id resolver test', () => {
             rating: 5,
             status: ReviewResultStatus.Approve,
             checklist: submissionRequirement,
-            message: 'Selamat'
+            message: 'Selamat',
+            postReviewMethod: PostReviewMethod.Draft
         }
 
         const studentProjectPath = './test/student-project/project-with-correct-autoreview-config'
