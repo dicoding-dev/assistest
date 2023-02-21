@@ -1,4 +1,4 @@
-import SubmissionErrorException from "./submission-error-excepion";
+import SubmissionErrorException from "./submission-error-exception";
 
 class PostmanTestFailedException extends SubmissionErrorException{
     constructor(message: string, additionalMessage?: string, serverErrorLog?: string[]) {

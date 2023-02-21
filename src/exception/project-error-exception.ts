@@ -1,4 +1,4 @@
-import SubmissionErrorException from "./submission-error-excepion";
+import SubmissionErrorException from "./submission-error-exception";
 import PostReviewMethod from "../entities/review-result/post-review-method";
 
 class ProjectErrorException extends SubmissionErrorException {

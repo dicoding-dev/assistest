@@ -1,5 +1,5 @@
 import CourseSubmissionAcception from "../course-submission-acception/course-submission-acception";
-import SubmissionErrorException from "../../../exception/submission-error-excepion";
+import SubmissionErrorException from "../../../exception/submission-error-exception";
 import CourseSubmissionRejection from "../course-submission-rejection/course-submission-rejection";
 import EslintCheckResult from "../../../service/eslint-checker/eslint-check-result";
 import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
