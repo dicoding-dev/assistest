@@ -23,6 +23,7 @@ class ReportGenerator {
             is_approved: isApproved,
             rating: reviewResult.rating,
             message: this.getReviewMessageWithTemplate(reviewResult, autoReviewConfig),
+            post_review_method: reviewResult.postReviewMethod,
             submission_path: submissionPath,
             checklist: reviewResult.checklist,
             checklist_completed: this.getCompletedChecklist(reviewResult, autoReviewConfig)
