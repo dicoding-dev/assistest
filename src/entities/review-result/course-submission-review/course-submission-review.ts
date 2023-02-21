@@ -5,6 +5,7 @@ import EslintCheckResult from "../../../service/eslint-checker/eslint-check-resu
 import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
 import ReviewResult, {ReviewResultStatus} from "./review-result";
 import SubmissionRatingFactory from "../../../factories/submission-rating/submission-rating-factory";
+import PostReviewMethod from "../post-review-method";
 
 class CourseSubmissionReview {
     private readonly submissionCriteriaCheck: SubmissionCriteriaCheck;
@@ -39,6 +40,7 @@ class CourseSubmissionReview {
             rating: courseSubmissionAcception.rating,
             message: courseSubmissionAcception.messages,
             status: ReviewResultStatus.Approve,
+            postReviewMethod: PostReviewMethod.Draft,
             checklist: this.submissionCriteriaCheck.reviewChecklistResult
         }
     }
@@ -51,6 +53,7 @@ class CourseSubmissionReview {
         return <ReviewResult>{
             rating: 0,
             message: courseSubmissionRejection.messages,
+            postReviewMethod: courseSubmissionRejection.postReviewMethod,
             status: ReviewResultStatus.Reject,
             checklist: this.submissionCriteriaCheck.reviewChecklistResult
         }
