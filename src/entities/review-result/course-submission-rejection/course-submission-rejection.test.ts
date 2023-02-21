@@ -4,6 +4,7 @@ import PostmanTestFailedException from "../../../exception/postman-test-failed-e
 import ProjectErrorException from "../../../exception/project-error-exception";
 import ServerErrorException from "../../../exception/server-error-exception";
 import SubmissionCriteriaCheck from "../submission-criteria-check/submission-criteria-check";
+import PostReviewMethod from "../post-review-method";
 
 const minifyHtmlRegex = /<!--(.*?)-->|\s\B/gm
 
@@ -52,10 +53,11 @@ describe('reject test', () => {
 
     it('should get message properly when rejection type is project error', function () {
         const submissionCriteriaCheck = <SubmissionCriteriaCheck>{failurePostmanTest: []}
-        const exception = new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON')
+        const exception = new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON', null, null, PostReviewMethod.Reject)
         const courseSubmissionRejection = new CourseSubmissionRejection(exception, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
         expect(courseSubmissionRejection.messages).toContain('Project yang kamu buat masih belum memenuhi kriteria submission, hal ini terjadi karena')
+        expect(courseSubmissionRejection.postReviewMethod).toStrictEqual(PostReviewMethod.Reject)
     });
 
     it('should get message properly when rejection type is server error', function () {
@@ -64,5 +66,6 @@ describe('reject test', () => {
         const courseSubmissionRejection = new CourseSubmissionRejection(exception, submissionCriteriaCheck)
         courseSubmissionRejection.reject()
         expect(courseSubmissionRejection.messages).toContain('Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi')
+        expect(courseSubmissionRejection.postReviewMethod).toStrictEqual(PostReviewMethod.Draft)
     });
 })
