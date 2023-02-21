@@ -1,10 +1,12 @@
 import {SubmissionRequirement} from "../../../config/submission-requirement";
+import PostReviewMethod from "../post-review-method";
 
 interface ReviewResult {
     rating: number,
     message: string,
     status: ReviewResultStatus,
-    checklist: SubmissionRequirement
+    checklist: SubmissionRequirement,
+    postReviewMethod: PostReviewMethod
 }
 
 export enum ReviewResultStatus {
