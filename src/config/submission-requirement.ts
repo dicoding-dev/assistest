@@ -3,8 +3,8 @@ const submissionRequirements = {
         status: false,
         possibleChecklistId: [
             42145,
-            42215,
-            42180
+            42180,
+            42865 //google cloud
         ],
         checklistId: null,
     },
@@ -12,8 +12,8 @@ const submissionRequirements = {
         status: false,
         possibleChecklistId: [
             42150,
-            42220,
-            42185
+            42185,
+            42870  //google cloud
         ],
         checklistId: null,
     },
@@ -21,8 +21,8 @@ const submissionRequirements = {
         status: false,
         possibleChecklistId: [
             42120,
-            42190,
-            42155
+            42155,
+            42840, //google cloud
         ],
         checklistId: null,
         postmanTestName: 'API dapat menyimpan buku',
@@ -38,8 +38,8 @@ const submissionRequirements = {
         reason: [],
         possibleChecklistId: [
             42125,
-            42195,
-            42160
+            42160,
+            42845, //google cloud
         ],
         checklistId: null,
         postmanTestName: 'API dapat menampilkan seluruh buku',
@@ -52,8 +52,8 @@ const submissionRequirements = {
         reason: [],
         possibleChecklistId: [
             42130,
-            42200,
-            42165
+            42165,
+            42850, //google cloud
         ],
         checklistId: null,
         postmanTestName: 'API dapat menampilkan detail buku',
@@ -68,8 +68,8 @@ const submissionRequirements = {
         reason: [],
         possibleChecklistId: [
             42135,
-            42205,
-            42170
+            42170,
+            42855 //google cloud
         ],
         checklistId: null,
         postmanTestName: 'API dapat mengubah data buku',
@@ -85,8 +85,8 @@ const submissionRequirements = {
         reason: [],
         possibleChecklistId: [
             42140,
-            42210,
-            42175
+            42175,
+            42860 //google cloud
         ],
         checklistId: null,
         postmanTestName: 'API dapat menghapus buku',
