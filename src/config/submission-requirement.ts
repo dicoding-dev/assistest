@@ -2,7 +2,7 @@ const submissionRequirements = {
     PROJECT_HAVE_CORRECT_PORT: {
         status: false,
         possibleChecklistId: [
-            42145,
+            43220, //aws
             42180,
             42865 //google cloud
         ],
@@ -11,7 +11,7 @@ const submissionRequirements = {
     PROJECT_HAVE_CORRECT_RUNNER_SCRIPT: {
         status: false,
         possibleChecklistId: [
-            42150,
+            43225, //aws
             42185,
             42870  //google cloud
         ],
@@ -20,7 +20,7 @@ const submissionRequirements = {
     API_CAN_INSERT_BOOK: {
         status: false,
         possibleChecklistId: [
-            42120,
+            43195, //aws
             42155,
             42840, //google cloud
         ],
@@ -37,7 +37,7 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            42125,
+            43200, //aws
             42160,
             42845, //google cloud
         ],
@@ -51,7 +51,7 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            42130,
+            43205, //aws
             42165,
             42850, //google cloud
         ],
@@ -67,7 +67,7 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            42135,
+            43210, //aws
             42170,
             42855 //google cloud
         ],
@@ -84,7 +84,7 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            42140,
+            43215, //aws
             42175,
             42860 //google cloud
         ],
