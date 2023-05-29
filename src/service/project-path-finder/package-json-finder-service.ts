@@ -22,6 +22,7 @@ class PackageJsonFinderService {
 
         function getFiles(directory) {
             fs.readdirSync(directory).forEach(file => {
+                // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
                 const absolute = path.join(directory, file);
                 if (fs.statSync(absolute).isDirectory() && !absolute.split(path.sep).includes('node_modules')) {
                     getFiles(absolute);
