@@ -2,27 +2,27 @@ const submissionRequirements = {
     PROJECT_HAVE_CORRECT_PORT: {
         status: false,
         possibleChecklistId: [
-            43220, //aws
-            42180,
-            42865 //google cloud
+            47395, //aws 261
+            42180, //cloudeka 510
+            45840 //google cloud 342
         ],
         checklistId: null,
     },
     PROJECT_HAVE_CORRECT_RUNNER_SCRIPT: {
         status: false,
         possibleChecklistId: [
-            43225, //aws
-            42185,
-            42870  //google cloud
+            47400, //aws 261
+            42185, //cloudeka 510
+            45845  //google cloud 342
         ],
         checklistId: null,
     },
     API_CAN_INSERT_BOOK: {
         status: false,
         possibleChecklistId: [
-            43195, //aws
-            42155,
-            42840, //google cloud
+            47370, //aws 261
+            42155, //cloudeka 510
+            45815, //google cloud 342
         ],
         checklistId: null,
         postmanTestName: 'API dapat menyimpan buku',
@@ -37,9 +37,9 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            43200, //aws
-            42160,
-            42845, //google cloud
+            47375, //aws 261
+            42160, //cloudeka 510
+            45820, //google cloud 342
         ],
         checklistId: null,
         postmanTestName: 'API dapat menampilkan seluruh buku',
@@ -51,9 +51,9 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            43205, //aws
-            42165,
-            42850, //google cloud
+            47380, //aws 261
+            42165, //cloudeka 510
+            45825, //google cloud 342
         ],
         checklistId: null,
         postmanTestName: 'API dapat menampilkan detail buku',
@@ -67,9 +67,9 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            43210, //aws
-            42170,
-            42855 //google cloud
+            47385, //aws 261
+            42170, //cloudeka 510
+            45830 //google cloud 342
         ],
         checklistId: null,
         postmanTestName: 'API dapat mengubah data buku',
@@ -84,9 +84,9 @@ const submissionRequirements = {
         status: false,
         reason: [],
         possibleChecklistId: [
-            43215, //aws
-            42175,
-            42860 //google cloud
+            47390, //aws 261
+            42175, //cloudeka 510
+            45835 //google cloud 342
         ],
         checklistId: null,
         postmanTestName: 'API dapat menghapus buku',
