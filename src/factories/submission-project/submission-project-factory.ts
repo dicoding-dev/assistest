@@ -69,7 +69,7 @@ export default class SubmissionProjectFactory {
         }
     }
 
-    private checkExistingNodeModules(projectPath: string) {\
+    private checkExistingNodeModules(projectPath: string) {
         // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
         if (fs.existsSync(path.resolve(projectPath, 'node_modules'))) {
             throw new ProjectErrorException('PROJECT_CONTAIN_NODE_MODULES')
