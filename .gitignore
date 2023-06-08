@@ -5,3 +5,4 @@ experiment-storage
 .env
 /test/**/package-lock.json
 /test/student/review-result/report.json
+logs
