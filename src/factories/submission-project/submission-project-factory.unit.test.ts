@@ -3,6 +3,9 @@ import ProjectErrorException from "../../exception/project-error-exception";
 import SubmissionProjectFactory from "./submission-project-factory";
 import getSubmissionRequirement from "../../config/submission-requirement";
 
+/**
+ * @review need to remove mock
+ */
 jest.mock('fs');
 const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs
 
