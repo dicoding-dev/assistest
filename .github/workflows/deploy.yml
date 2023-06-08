@@ -19,7 +19,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            whoami
-            ls -al
             which docker
- #           docker pull ghcr.io/${{ github.repository }}:master
+            docker pull ghcr.io/${{ github.repository }}:master
