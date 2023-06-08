@@ -19,5 +19,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            which /home/web/bin/docker
             /home/web/bin/docker pull ghcr.io/${{ github.repository }}:master
