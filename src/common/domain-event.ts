@@ -1,5 +1,4 @@
 import * as events from "events";
-import * as fs from "fs";
 import * as util from "util";
 import {createWriteStream, existsSync, mkdirSync} from "fs";
 
@@ -20,5 +19,11 @@ export default raiseDomainEvent
 eventEmitter.on('domain', (...args)=>{
     const parameters = args.join(', ');
     const log = (new Date().toISOString() + ": " + parameters)
-    logFile.write(util.format(log) + '\n');
+
+    /**
+     * @review need to remove if fs in unit test has removed
+     */
+    if (process.env.RUN_MODE !== 'TEST'){
+        logFile.write(util.format(log) + '\n');
+    }
 });
