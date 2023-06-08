@@ -21,4 +21,5 @@ jobs:
           script: |
             whoami
             ls -al
+            which docker
  #           docker pull ghcr.io/${{ github.repository }}:master
