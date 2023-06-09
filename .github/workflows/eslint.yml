@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: ESLint
 
 on:
   pull_request:
@@ -26,6 +26,6 @@ jobs:
       - name: yarn install and test
         run: |
           yarn
-          yarn test
+          npx eslint ./
         env:
           CI: true
