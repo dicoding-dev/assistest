@@ -61,7 +61,7 @@ class CourseSubmissionRejection {
 
     private composeRejectionMessageFromServerErrorMessage() {
         const translatedException = exceptionToReviewMessage[this.submissionErrorException.message] ??  'ada kesalahan pada project yang kamu buat.'
-        const logError = this.submissionErrorException.serverErrorLog.join('\n').replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+        const logError = this.submissionErrorException.serverErrorLog.join('\n').replace(/[\u00A0-\u9999<>&]/g, function(i) {
             return '&#'+i.charCodeAt(0)+';';
         });
         this._messages = `Project yang kamu buat masih belum bisa dijalankan dengan baik, hal ini terjadi karena ${translatedException} Berikut merupakan log error yang muncul ketika aplikasi dijalankan: <pre>${logError}</pre>`
