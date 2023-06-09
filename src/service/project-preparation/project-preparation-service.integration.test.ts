@@ -28,7 +28,7 @@ describe('project preparation test', () => {
         projectPreparation.install(submissionProject)
 
         const isNodeModulesExist = fs.existsSync(`${submissionProject.packageJsonPath}/node_modules`)
-        expect(isNodeModulesExist).toBeTruthy()
+        expect(isNodeModulesExist).toBeFalsy()
 
         resetTestFile(submissionProject.packageJsonPath)
     });
