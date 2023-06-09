@@ -6,9 +6,9 @@
   "repository": "git@github.com:agissept/assistest.git",
   "scripts": {
     "start": "ts-node src/interface/implementation-test.ts",
-    "test": "jest -i",
-    "unit-test": "jest --testPathPattern=unit.test",
-    "integration-test": "jest --testPathPattern=integration.test -i",
+    "test": "RUN_MODE=TEST jest -i",
+    "unit-test": "RUN_MODE=TEST jest --testPathPattern=unit.test",
+    "integration-test": "RUN_MODE=TEST jest --testPathPattern=integration.test -i",
     "assistest": "ts-node src/interface/cli.ts",
     "assistest-verbose": "DEBUG_MODE=true ts-node src/interface/cli.ts"
   },
