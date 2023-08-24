@@ -8,11 +8,11 @@ class SubmissionCriteriaCheckFactory {
     public check(submissionRequirements: SubmissionRequirement, failurePostmanTest: Array<ResultTestFailure> = null): SubmissionCriteriaCheck{
 
         const postmanRequirements = [
-            submissionRequirements.API_CAN_INSERT_BOOK,
-            submissionRequirements.API_CAN_GET_ALL_BOOK,
-            submissionRequirements.API_CAN_GET_DETAIL_BOOK,
-            submissionRequirements.API_CAN_UPDATE_BOOK,
-            submissionRequirements.API_CAN_DELETE_BOOK
+            submissionRequirements.api_can_insert_book,
+            submissionRequirements.api_can_get_all_book,
+            submissionRequirements.api_can_get_detail_book,
+            submissionRequirements.api_can_update_book,
+            submissionRequirements.api_can_delete_book
         ]
 
         postmanRequirements.forEach(postmanRequirement => {

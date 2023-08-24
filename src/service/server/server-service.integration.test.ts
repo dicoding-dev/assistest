@@ -36,7 +36,7 @@ describe('server service test', () => {
 
         // test second sever in same port
         await expect(server.run(submissionProject, submissionRequirement)).rejects.toThrow(new Error(`Port ${port} is not available`))
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_port.status).toBeFalsy()
         await killServer(fakeServerPid, port)
     });
 
@@ -52,7 +52,7 @@ describe('server service test', () => {
         const spy = jest.spyOn(container, 'stop');
         await expect(container.run(submissionProject, submissionRequirement)).rejects.toThrow(new ProjectErrorException('PORT_NOT_MEET_REQUIREMENT'))
         await expect(spy).toBeCalled()
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_port.status).toBeFalsy()
     });
 
 
@@ -70,7 +70,7 @@ describe('server service test', () => {
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeTruthy()
+        expect(submissionRequirement.project_have_correct_port.status).toBeTruthy()
 
         //kill server
         await container.stop()
@@ -92,7 +92,7 @@ describe('server service test', () => {
 
         const response = await axios.get(`http://${host}:${port}`)
         await expect(response.status).toStrictEqual(200)
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status).toBeTruthy()
+        expect(submissionRequirement.project_have_correct_port.status).toBeTruthy()
 
 
         await container.stop()

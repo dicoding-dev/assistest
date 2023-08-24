@@ -16,7 +16,7 @@ describe('create submission project test', () => {
     it('should throw error when project path not contain package.json', function () {
         expect(() => submissionProjectFactory.create(submissionRequirement, null))
             .toThrow(new ProjectErrorException('PATH_NOT_CONTAIN_PACKAGE_JSON'))
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_runner_script.status).toBeFalsy()
     });
 
     it('should throw error when package.json cannot be parsed', function () {
@@ -24,7 +24,7 @@ describe('create submission project test', () => {
 
         expect(() => submissionProjectFactory.create(submissionRequirement, './xxxx'))
             .toThrow(new ProjectErrorException('CANNOT_PARSE_PACKAGE_JSON'))
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_runner_script.status).toBeFalsy()
 
     });
 
@@ -33,7 +33,7 @@ describe('create submission project test', () => {
 
         expect(() => submissionProjectFactory.create(submissionRequirement, './xxxx'))
             .toThrow(new ProjectErrorException('PACKAGE_JSON_NOT_CONTAIN_SCRIPT_PROPERTY'))
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_runner_script.status).toBeFalsy()
 
     });
 
@@ -43,7 +43,7 @@ describe('create submission project test', () => {
 
         expect(() => submissionProjectFactory.create(submissionRequirement,'.'))
             .toThrow(new ProjectErrorException('RUNNER_SCRIPT_NOT_FOUND'))
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status).toBeFalsy()
+        expect(submissionRequirement.project_have_correct_runner_script.status).toBeFalsy()
 
     });
 
@@ -85,7 +85,7 @@ describe('create submission project test', () => {
             .create(submissionRequirement, '/home/app/1234')
         expect(submissionProject.packageJsonContent).toStrictEqual({ "scripts": { "start": "node src/index.js" }})
         expect(submissionProject.packageJsonPath).toStrictEqual('/home/app/1234')
-        expect(submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status).toBeTruthy()
+        expect(submissionRequirement.project_have_correct_runner_script.status).toBeTruthy()
     });
 
 
