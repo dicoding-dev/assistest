@@ -1,33 +1,12 @@
 const submissionRequirements = {
-    PROJECT_HAVE_CORRECT_PORT: {
+    project_have_correct_port: {
         status: false,
-        possibleChecklistId: [
-            47395, //aws 261
-            42180, //cloudeka 510
-            45840, //google cloud 342,
-            1, //test
-        ],
-        checklistId: null,
     },
-    PROJECT_HAVE_CORRECT_RUNNER_SCRIPT: {
+    project_have_correct_runner_script: {
         status: false,
-        possibleChecklistId: [
-            47400, //aws 261
-            42185, //cloudeka 510
-            45845,  //google cloud 342,
-            2, //test
-        ],
-        checklistId: null,
     },
-    API_CAN_INSERT_BOOK: {
+    api_can_insert_book: {
         status: false,
-        possibleChecklistId: [
-            47370, //aws 261
-            42155, //cloudeka 510
-            45815, //google cloud 342
-            3, //test
-        ],
-        checklistId: null,
         postmanTestName: 'API dapat menyimpan buku',
         reason: [],
         postmanTestRequirements: [
@@ -36,31 +15,17 @@ const submissionRequirements = {
             '[Mandatory] Add Book with Page Read More Than Page Count'
         ]
     },
-    API_CAN_GET_ALL_BOOK: {
+    api_can_get_all_book: {
         status: false,
         reason: [],
-        possibleChecklistId: [
-            47375, //aws 261
-            42160, //cloudeka 510
-            45820, //google cloud 342
-            4, //test
-        ],
-        checklistId: null,
         postmanTestName: 'API dapat menampilkan seluruh buku',
         postmanTestRequirements: [
             '[Mandatory] Get All Books',
         ]
     },
-    API_CAN_GET_DETAIL_BOOK: {
+    api_can_get_detail_book: {
         status: false,
         reason: [],
-        possibleChecklistId: [
-            47380, //aws 261
-            42165, //cloudeka 510
-            45825, //google cloud 342
-            5, //test
-        ],
-        checklistId: null,
         postmanTestName: 'API dapat menampilkan detail buku',
         postmanTestRequirements:
             [
@@ -68,16 +33,9 @@ const submissionRequirements = {
                 '[Mandatory] Get Detail Books With Invalid Id'
             ]
     },
-    API_CAN_UPDATE_BOOK: {
+    api_can_update_book: {
         status: false,
         reason: [],
-        possibleChecklistId: [
-            47385, //aws 261
-            42170, //cloudeka 510
-            45830, //google cloud 342
-            6, //test
-        ],
-        checklistId: null,
         postmanTestName: 'API dapat mengubah data buku',
         postmanTestRequirements: [
             '[Mandatory] Update Book With Complete Data',
@@ -86,16 +44,9 @@ const submissionRequirements = {
             '[Mandatory] Update Book with Invalid Id'
         ]
     },
-    API_CAN_DELETE_BOOK: {
+    api_can_delete_book: {
         status: false,
         reason: [],
-        possibleChecklistId: [
-            47390, //aws 261
-            42175, //cloudeka 510
-            45835, //google cloud 342
-            7 //test
-        ],
-        checklistId: null,
         postmanTestName: 'API dapat menghapus buku',
         postmanTestRequirements:
             [
