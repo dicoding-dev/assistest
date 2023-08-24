@@ -5,8 +5,8 @@ import getSubmissionRequirements from "../../config/submission-requirement";
 
 describe('mandatory criteria test', () => {
     const submissionRequirements = getSubmissionRequirements()
-    submissionRequirements.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
-    submissionRequirements.PROJECT_HAVE_CORRECT_PORT.status = true
+    submissionRequirements.project_have_correct_runner_script.status = true
+    submissionRequirements.project_have_correct_port.status = true
     const submissionCriteriaCheckFactory = new SubmissionCriteriaCheckFactory()
 
     it('should grouping failed test by criteria and return approval false', function () {
@@ -30,12 +30,12 @@ describe('mandatory criteria test', () => {
         ]
 
         const expectedReviewChecklistResult = getSubmissionRequirements()
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
-        expectedReviewChecklistResult.API_CAN_DELETE_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_GET_DETAIL_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_UPDATE_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_INSERT_BOOK.reason = [
+        expectedReviewChecklistResult.project_have_correct_port.status = true
+        expectedReviewChecklistResult.project_have_correct_runner_script.status = true
+        expectedReviewChecklistResult.api_can_delete_book.status = true
+        expectedReviewChecklistResult.api_can_get_detail_book.status = true
+        expectedReviewChecklistResult.api_can_update_book.status = true
+        expectedReviewChecklistResult.api_can_insert_book.reason = [
             {
                 "name": "[Mandatory] Add Book With Complete Data",
                 "tests": [
@@ -49,7 +49,7 @@ describe('mandatory criteria test', () => {
                     },
                 ]
             }]
-        expectedReviewChecklistResult.API_CAN_GET_ALL_BOOK.reason = [{
+        expectedReviewChecklistResult.api_can_get_all_book.reason = [{
             "name": "[Mandatory] Get All Books",
             "tests": [{
                 "message": "Failed to add book, 404",
@@ -70,13 +70,13 @@ describe('mandatory criteria test', () => {
         expect(submissionCriteriaCheck.approvalStatus).toBeTruthy()
 
         const expectedReviewChecklistResult = getSubmissionRequirements()
-        expectedReviewChecklistResult.API_CAN_INSERT_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_GET_ALL_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_GET_DETAIL_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_UPDATE_BOOK.status = true
-        expectedReviewChecklistResult.API_CAN_DELETE_BOOK.status = true
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        expectedReviewChecklistResult.api_can_insert_book.status = true
+        expectedReviewChecklistResult.api_can_get_all_book.status = true
+        expectedReviewChecklistResult.api_can_get_detail_book.status = true
+        expectedReviewChecklistResult.api_can_update_book.status = true
+        expectedReviewChecklistResult.api_can_delete_book.status = true
+        expectedReviewChecklistResult.project_have_correct_port.status = true
+        expectedReviewChecklistResult.project_have_correct_runner_script.status = true
 
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
     })
@@ -85,8 +85,8 @@ describe('mandatory criteria test', () => {
         const submissionCriteriaCheck = submissionCriteriaCheckFactory.check(submissionRequirements)
         expect(submissionCriteriaCheck.approvalStatus).toBeFalsy()
         const expectedReviewChecklistResult = getSubmissionRequirements()
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
-        expectedReviewChecklistResult.PROJECT_HAVE_CORRECT_PORT.status = true
+        expectedReviewChecklistResult.project_have_correct_runner_script.status = true
+        expectedReviewChecklistResult.project_have_correct_port.status = true
 
         expect(submissionCriteriaCheck.reviewChecklistResult).toStrictEqual(expectedReviewChecklistResult)
         expect(submissionCriteriaCheck.failurePostmanTest).toBeNull()

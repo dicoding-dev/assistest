@@ -23,13 +23,13 @@ describe('course submission acception test', () => {
         }
 
         const submissionRequirement = getSubmissionRequirement()
-        submissionRequirement.API_CAN_INSERT_BOOK.status = true
-        submissionRequirement.API_CAN_UPDATE_BOOK.status = true
-        submissionRequirement.API_CAN_DELETE_BOOK.status = true
-        submissionRequirement.API_CAN_GET_ALL_BOOK.status = true
-        submissionRequirement.API_CAN_GET_DETAIL_BOOK.status = true
-        submissionRequirement.PROJECT_HAVE_CORRECT_PORT.status = true
-        submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        submissionRequirement.api_can_insert_book.status = true
+        submissionRequirement.api_can_update_book.status = true
+        submissionRequirement.api_can_delete_book.status = true
+        submissionRequirement.api_can_get_all_book.status = true
+        submissionRequirement.api_can_get_detail_book.status = true
+        submissionRequirement.project_have_correct_port.status = true
+        submissionRequirement.project_have_correct_runner_script.status = true
 
         const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{
             reviewChecklistResult: submissionRequirement
@@ -108,7 +108,7 @@ describe('course submission acception test', () => {
                 }
             }
         }
-        
+
         const courseSubmissionAcception = new CourseSubmissionAcception(<SubmissionCriteriaCheck>{}, submissionRatingFactory);
         courseSubmissionAcception.accept()
 

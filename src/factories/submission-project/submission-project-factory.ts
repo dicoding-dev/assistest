@@ -20,7 +20,7 @@ export default class SubmissionProjectFactory {
 
         this.checkRunnerCommandUseNodeCommand(runnerCommand)
 
-        submissionRequirement.PROJECT_HAVE_CORRECT_RUNNER_SCRIPT.status = true
+        submissionRequirement.project_have_correct_runner_script.status = true
         domainEvent('project has meet requirement')
         return {
             packageJsonContent: this.packageJsonContent,
