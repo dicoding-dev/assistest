@@ -25,7 +25,7 @@ class ReportGenerator {
             message: this.getReviewMessageWithTemplate(reviewResult, autoReviewConfig),
             submission_path: submissionPath,
             checklist: reviewResult.checklist,
-            checklist_completed: this.getCompletedChecklist(reviewResult, autoReviewConfig)
+            checklist_keys: this.getCompletedChecklist(reviewResult)
         };
 
         this.result.push(summary);
@@ -37,20 +37,10 @@ class ReportGenerator {
         raiseDomainEvent('report generated')
     }
 
-    private getCompletedChecklist(reviewResult: ReviewResult, autoReviewConfig){
-        if (!autoReviewConfig){
-            return []
-        }
+    private getCompletedChecklist(reviewResult: ReviewResult) {
+        return Object.keys(reviewResult.checklist)
+            .filter(requirementName => reviewResult.checklist[requirementName].status)
 
-        Object.keys(reviewResult.checklist).forEach(requirementName => {
-            const requirement = reviewResult.checklist[requirementName]
-            requirement.checklistId = requirement.possibleChecklistId
-                .find(checklistId =>  autoReviewConfig.checklist_ids?.includes(checklistId)) ?? null
-        })
-
-        return  Object.keys(reviewResult.checklist)
-            .filter(checklistName => reviewResult.checklist[checklistName].status === true && reviewResult.checklist[checklistName].checklistId)
-            .map(checklistName => reviewResult.checklist[checklistName].checklistId)
     }
 
     getReviewMessageWithTemplate(reviewResult: ReviewResult, autoReviewConfig) {
@@ -73,7 +63,7 @@ class ReportGenerator {
     }
 
 
-    private getAutoReviewConfig(projectPath: string): any|null {
+    private getAutoReviewConfig(projectPath: string): any | null {
 
         const configFilePath = `${projectPath}/auto-review-config.json`
         if (!existsSync(configFilePath)) {
