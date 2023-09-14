@@ -25,7 +25,9 @@ class ReportGenerator {
             message: this.getReviewMessageWithTemplate(reviewResult, autoReviewConfig),
             submission_path: submissionPath,
             checklist: reviewResult.checklist,
-            checklist_keys: this.getCompletedChecklist(reviewResult)
+            checklist_keys: this.getCompletedChecklist(reviewResult),
+            is_passed: isApproved,
+            is_draft: true,
         };
 
         this.result.push(summary);

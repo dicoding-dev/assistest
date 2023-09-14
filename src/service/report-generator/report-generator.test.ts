@@ -3,6 +3,21 @@ import ReportGenerator from "./report-generator";
 import ReviewResult, {ReviewResultStatus} from "../../entities/review-result/course-submission-review/review-result";
 import * as fs from "fs";
 
+function itShouldMeetAGRSReportSpec(report: any): void {
+    expect(report.submission_id).toBeDefined()
+    expect(typeof report.submission_id).toEqual('number')
+    expect(report.message).toBeDefined()
+    expect(typeof report.message).toEqual('string')
+    expect(report.rating).toBeDefined()
+    expect(typeof report.rating).toEqual('number')
+    expect(report.is_passed).toBeDefined()
+    expect(typeof report.is_passed).toEqual('boolean')
+    expect(report.is_draft).toBeDefined()
+    expect(typeof report.is_draft).toEqual('boolean')
+    expect(report.checklist_keys).toBeDefined()
+    expect(Array.isArray(report.checklist_keys)).toEqual(true)
+}
+
 describe('checklist id resolver test', () => {
     const reportGenerator = new ReportGenerator('./test/student/review-result/')
 
@@ -28,6 +43,8 @@ describe('checklist id resolver test', () => {
         reportGenerator.generate(reviewResult, studentProjectPath)
 
         const result = JSON.parse(fs.readFileSync('./test/student/review-result/report.json').toString())[0]
+
+        itShouldMeetAGRSReportSpec(result)
 
         expect(result.checklist_keys).toEqual([
             "project_have_correct_port",
