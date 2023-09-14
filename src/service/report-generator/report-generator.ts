@@ -3,6 +3,7 @@ import * as fs from "fs";
 import {existsSync, readFileSync, writeFileSync} from "fs";
 import * as templates from "../../config/review-template.json";
 import raiseDomainEvent from "../../common/domain-event";
+import {join} from "path";
 
 class ReportGenerator {
     private readonly reportPath: string;
@@ -32,8 +33,9 @@ class ReportGenerator {
 
         this.result.push(summary);
         fs.mkdirSync(this.reportPath, {recursive: true});
+        const fileReportPath = join(this.reportPath, 'report.json')
 
-        writeFileSync(`${this.reportPath}/report.json`, JSON.stringify(this.result), {
+        writeFileSync(fileReportPath, JSON.stringify(this.result), {
             mode: '0664'
         })
         raiseDomainEvent('report generated')

@@ -12,6 +12,7 @@ import ReviewResult from "./entities/review-result/course-submission-review/revi
 import SubmissionProjectFactory from "./factories/submission-project/submission-project-factory";
 import getSubmissionRequirement, {SubmissionRequirement} from "./config/submission-requirement";
 import raiseDomainEvent from "./common/domain-event";
+import { sync } from 'del'
 
 class Main {
     private postmanRunner: PostmanRunner;
@@ -59,6 +60,9 @@ class Main {
             } else {
                 console.log(e)
             }
+        } finally {
+            // remove all files in submissionPath except report.json
+            sync([`${submissionPath}/**`, `!${submissionPath}/report.json`])
         }
     }
 
