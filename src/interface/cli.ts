@@ -3,6 +3,7 @@ import {readdirSync} from "fs";
 import ReportGenerator from "../service/report-generator/report-generator";
 import * as path from "path";
 import * as minimist from 'minimist';
+import {sync} from "del";
 
 class Cli {
     private reportPath: string;
@@ -30,6 +31,8 @@ class Cli {
             const submissionPath = path.resolve(this.folderPath)
             const reviewResult = await main.reviewSubmission(submissionPath)
             reportGenerator.generate(reviewResult, submissionPath)
+            // remove all files in submissionPath except report.json
+            sync([`${submissionPath}/**`, `!${submissionPath}/report.json`], { force: true })
         }
     }
 
