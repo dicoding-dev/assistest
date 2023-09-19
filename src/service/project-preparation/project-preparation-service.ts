@@ -9,9 +9,16 @@ class ProjectPreparationService {
     install(submissionProject: SubmissionProject) {
         try {
             const isPackageLockExist = fs.existsSync(join(submissionProject.packageJsonPath, 'package-lock.json'))
+            const isYarnLockExist = fs.existsSync(join(submissionProject.packageJsonPath, 'yarn.lock'))
 
             if (isPackageLockExist) {
                 execSync('npm ci', {cwd: submissionProject.packageJsonPath, stdio: 'pipe', encoding:'utf-8'})
+                raiseDomainEvent('dependencies installed')
+                return
+            }
+
+            if (isYarnLockExist) {
+                execSync('yarn install --frozen-lockfile', {cwd: submissionProject.packageJsonPath, stdio: 'pipe', encoding:'utf-8'})
                 raiseDomainEvent('dependencies installed')
                 return
             }
