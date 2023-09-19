@@ -12,7 +12,7 @@ async function run() {
         const submissionPath = join(experimentStorageProjectPath, submission)
         const reviewResult = await main.reviewSubmission(submissionPath)
         const reportGenerator = new ReportGenerator(submissionPath)
-        reportGenerator.generate(reviewResult, submission)
+        reportGenerator.generate(reviewResult, submissionPath)
     }
 }
 
