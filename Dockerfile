@@ -9,6 +9,7 @@ RUN chown -R node:node /app
 USER node
 
 COPY --chown=node:node . .
+RUN npm config set package-lock false
 RUN yarn install --production=true
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
