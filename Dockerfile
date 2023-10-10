@@ -1,20 +1,20 @@
 FROM node:18-slim
 
-RUN mkdir /student-app && chown -R node:node /student-app
-RUN mkdir /report && chown -R node:node /report
-RUN usermod -aG root node
+ARG AGRSGROUP
+
+RUN groupadd --force -g $AGRSGROUP assistest
+RUN useradd -ms /bin/bash --no-user-group -g $AGRSGROUP -u 1337 assistest
+
+RUN mkdir /student-app && chown -R assistest:assistest /student-app
+RUN mkdir /report && chown -R assistest:assistest /report
+RUN usermod -aG root assistest
 
 WORKDIR /app
-RUN chown -R node:node /app
+RUN chown -R assistest:assistest /app
 
-ARG AGRSGROUP=1001
+USER assistest
 
-RUN groupadd --force -g $AGRSGROUP agrs
-RUN usermod -a -G $AGRSGROUP node
-
-USER node
-
-COPY --chown=node:node . .
+COPY --chown=assistest:assistest . .
 RUN npm config set package-lock false
 RUN yarn install --production=true
 
