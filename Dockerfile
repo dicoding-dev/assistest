@@ -7,7 +7,7 @@ RUN usermod -aG root node
 WORKDIR /app
 RUN chown -R node:node /app
 
-ARG AGRSGROUP
+ARG AGRSGROUP=1001
 
 RUN groupadd --force -g $AGRSGROUP agrs
 RUN usermod -a -G $AGRSGROUP node
