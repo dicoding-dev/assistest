@@ -8,6 +8,8 @@ RUN useradd -ms /bin/bash --no-user-group -g $AGRSGROUP -u 1337 assistest
 RUN mkdir /home/assistest/student-app && chown -R assistest:assistest /home/assistest/student-app
 RUN mkdir /home/assistest/report && chown -R assistest:assistest /home/assistest/report
 
+VOLUME ["/home/assistest/student-app"]
+
 WORKDIR /home/assistest/app
 RUN chown -R assistest:assistest /home/assistest/app
 
