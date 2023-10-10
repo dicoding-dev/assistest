@@ -1,6 +1,6 @@
 FROM node:18-slim
 
-ARG AGRSGROUP
+ARG AGRSGROUP=1004
 
 RUN groupadd --force -g $AGRSGROUP assistest
 RUN useradd -ms /bin/bash --no-user-group -g $AGRSGROUP -u 1337 assistest
