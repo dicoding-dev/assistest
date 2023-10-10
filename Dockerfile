@@ -10,7 +10,7 @@ RUN chown -R node:node /app
 ARG AGRSGROUP
 
 RUN groupadd --force -g $AGRSGROUP agrs
-RUN usermode -a -G agrs node
+RUN usermod -a -G agrs node
 
 USER node
 
